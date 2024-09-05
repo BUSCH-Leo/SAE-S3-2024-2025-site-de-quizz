@@ -9,13 +9,19 @@
     z-index: -1;
 }
 
-/* Center the title */
-#title {
+/* Center the image */
+#rotating-image {
     position: absolute;
     top: 20%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.2s ease-in-out;
+    animation: rotate 4s infinite alternate ease-in-out;
+}
+
+/* Style for the rotating effect */
+@keyframes rotate {
+    0% { transform: translate(-50%, -50%) rotate(-10deg); }
+    100% { transform: translate(-50%, -50%) rotate(10deg); }
 }
 
 /* Menu Style */
