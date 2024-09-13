@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     acceptMusic.addEventListener('click', function() {
         music.play().then(() => {
             isMusicPlaying = true;
-            toggleIcon.src = 'ressource/speaker_on.png';
+            toggleIcon.src = '../ressource/speaker_on.png';
         }).catch(error => {
             console.error('Error playing music:', error);
         });
@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', function() {
     musicToggle.addEventListener('click', function() {
         if (isMusicPlaying) {
             music.pause();
-            toggleIcon.src = 'ressource/speaker_off.png';
+            toggleIcon.src = '../ressource/speaker_off.png';
         } else {
             music.play().then(() => {
-                toggleIcon.src = 'ressource/speaker_on.png';
+                toggleIcon.src = '../ressource/speaker_on.png';
             }).catch(error => {
                 console.error('Error playing music:', error);
             });
