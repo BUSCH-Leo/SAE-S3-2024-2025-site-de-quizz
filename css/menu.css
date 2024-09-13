@@ -1,13 +1,15 @@
-/* Fullscreen background video */
-#bg-video {
+/* Fullscreen background gif */
+#background-gif {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    object-fit: cover;
+    object-fit: cover; /* Ensures the image covers the entire screen */
     z-index: -1;
 }
+
+
 
 /* Center the image */
 #rotating-image {
