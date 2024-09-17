@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jouer au Quiz</title>
+    <link rel="stylesheet" href="../css/quiz_random.css">
+</head>
+<body>
+    <div id="quiz-header">
+        <button id="quit-button">Quitter</button>
+        <span id="timer">01:05</span>
+        <span id="quiz-type">Choix multiple</span>
+    </div>
+    
+    <div id="quiz-container">
+        <div id="question-container">
+            <p id="question-text">Parmi les propositions suivantes, lesquels sont des noms d'arbre ?</p>
+        </div>
+        
+        <div id="answers-container">
+            <div class="answer-option">
+                <button class="answer-button">Le sapin</button>
+                <span class="answer-indicator"></span>
+            </div>
+            <div class="answer-option">
+                <button class="answer-button">Le chêne</button>
+                <span class="answer-indicator"></span>
+            </div>
+            <div class="answer-option">
+                <button class="answer-button">Le bouleau</button>
+                <span class="answer-indicator"></span>
+            </div>
+            <div class="answer-option">
+                <button class="answer-button">Une Audi RS3</button>
+                <span class="answer-indicator"></span>
+            </div>
+        </div>
+    </div>
+    
+    <button id="submit-button">Soumettre les réponses</button>
+    
+    <script src="../models/quiz_random.js"></script>
+</body>
+</html>
