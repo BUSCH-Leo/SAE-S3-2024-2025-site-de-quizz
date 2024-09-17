@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let isMusicPlaying = false;
 
-    // Show popup on page load to request permission for music
+    // popup for music
     musicPopup.style.display = 'block';
 
     acceptMusic.addEventListener('click', function() {
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
         musicPopup.style.display = 'none';
     });
 
-    // Toggle music on/off when clicking the speaker button
+    // toggle button
     musicToggle.addEventListener('click', function() {
         if (isMusicPlaying) {
             music.pause();
