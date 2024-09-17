@@ -13,13 +13,21 @@ async function fetchQuiz(quizId) {
 
 function displayQuiz() {
     const quizContainer = document.getElementById('quiz-container');
-    quizContainer.innerHTML = ''; 
+    quizContainer.innerHTML = ''; // Vider le conteneur avant d'ajouter les questions
 
-    quizData.questions.forEach((question, index) => {
+    if (!quizData.questions || quizData.questions.length === 0) {
+        quizContainer.innerHTML = '<p>Aucune question disponible pour ce quiz.</p>';
+        return;
+    }
+
+    // Limiter le nombre de questions à 10
+    const limitedQuestions = quizData.questions.slice(0, 10);
+
+    limitedQuestions.forEach((question, index) => {
         const questionElement = document.createElement('div');
-        questionElement.innerHTML = `<h3>${question.question}</h3>`;
-        
-        const answers = [...question.incorrect_answers, question.correct_answer]; // Toutes les réponses
+        questionElement.innerHTML = `<h3>${index + 1}. ${question.question}</h3>`;
+
+        const answers = [...question.incorrect_answers, question.correct_answer]; // Mélanger les réponses (correcte + incorrectes)
         answers.forEach((answer) => {
             const answerElement = document.createElement('div');
             answerElement.innerHTML = `
@@ -32,6 +40,7 @@ function displayQuiz() {
         quizContainer.appendChild(questionElement);
     });
 }
+
 
 document.getElementById('submit').addEventListener('click', () => {
     userAnswers = [];
@@ -55,4 +64,4 @@ function calculateScore() {
     document.getElementById('score').innerText = `Votre score est : ${score}/${quizData.questions.length}`;
 }
 
-fetchQuiz('66d9ac76e1496d2db8fe1198');  
+fetchQuiz('66e4431754cdf354a9b8e51b');  

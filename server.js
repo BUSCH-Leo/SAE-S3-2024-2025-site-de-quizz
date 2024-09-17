@@ -26,13 +26,23 @@ app.get('/', (req, res) => {
 });
 
 // Route pour récupérer un quiz par ID
+// Route pour récupérer un quiz par ID avec un maximum de 10 questions
 app.get('/api/quiz/:id', async (req, res) => {
     try {
         const quiz = await Quiz.findById(req.params.id);
+
         if (!quiz) {
             return res.status(404).json({ message: 'Quiz non trouvé' });
         }
-        res.json(quiz);
+
+        // Limiter à 10 questions
+        const limitedQuestions = quiz.questions.slice(0, 10);  // Utilise .slice pour limiter à 10 questions
+
+        // Retourner le quiz avec les 10 premières questions
+        res.json({
+            ...quiz.toObject(),  // Convertir le quiz en objet JS
+            questions: limitedQuestions  // Remplacer les questions par la version limitée
+        });
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur' });
     }
