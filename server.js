@@ -25,24 +25,23 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'Test.html'));
 });
 
-// Route pour récupérer un quiz par ID
-// Route pour récupérer un quiz par ID avec un maximum de 10 questions
-app.get('/api/quiz/:id', async (req, res) => {
+// Route pour récupérer 10 questions aléatoires
+app.get('/api/quiz/random', async (req, res) => {
     try {
-        const quiz = await Quiz.findById(req.params.id);
+        const quiz = await Quiz.aggregate([{ $sample: { size: 10 } }]); // Récupérer 10 quiz aléatoires
 
-        if (!quiz) {
-            return res.status(404).json({ message: 'Quiz non trouvé' });
+        if (!quiz || quiz.length === 0) {
+            return res.status(404).json({ message: 'Aucun quiz disponible' });
         }
 
-        // Limiter à 10 questions
-        const limitedQuestions = quiz.questions.slice(0, 10);  // Utilise .slice pour limiter à 10 questions
+        // Limiter à 10 questions pour chaque quiz
+        const questions = quiz.map(q => ({
+            title: q.title,
+            description: q.description,
+            questions: q.questions.slice(0, 10)  // Limiter à 10 questions
+        }));
 
-        // Retourner le quiz avec les 10 premières questions
-        res.json({
-            ...quiz.toObject(),  // Convertir le quiz en objet JS
-            questions: limitedQuestions  // Remplacer les questions par la version limitée
-        });
+        res.json(questions);  // Retourner les quiz avec les 10 questions
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur' });
     }

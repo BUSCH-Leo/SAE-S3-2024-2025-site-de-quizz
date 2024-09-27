@@ -1,14 +1,29 @@
-let quizData = [];
+let quizData = {};
 let userAnswers = [];
 let currentQuestionIndex = 0;
 let timer;
 let timePerQuestion = 10;
 const maxTime = timePerQuestion; 
 
-async function fetchQuiz(quizId) {
+async function fetchQuiz() {
     try {
-        const response = await fetch(`/api/quiz/${quizId}`);
-        quizData = await response.json();
+        const response = await fetch('/api/quiz/random');
+        const quizList = await response.json();
+
+        // Vérifier si des quiz sont disponibles
+        if (quizList.length === 0) {
+            alert('Aucun quiz disponible.');
+            return;
+        }
+
+        // Choisir le premier quiz récupéré
+        const selectedQuiz = quizList[0];
+
+        // Remplir les questions du quiz sélectionné
+        quizData = selectedQuiz; // Réassigner à quizData
+        currentQuestionIndex = 0; // Réinitialiser l'index de la question
+        userAnswers = []; // Réinitialiser les réponses de l'utilisateur
+
         displayCurrentQuestion();
         startTimer();
     } catch (error) {
@@ -29,7 +44,7 @@ function displayCurrentQuestion() {
             return;
         }
 
-        const question = quizData.questions[currentQuestionIndex];
+        const question = quizData.questions[currentQuestionIndex]; // Obtenir la question actuelle
         const questionElement = document.createElement('div');
         questionElement.classList.add('col-12', 'text-center', 'question-card', 'p-4');
         questionElement.innerHTML = `<h3>${currentQuestionIndex + 1}. ${question.question}</h3>`;
@@ -51,7 +66,7 @@ function displayCurrentQuestion() {
             answerElement.addEventListener('click', () => {
                 document.querySelectorAll('.answer-card').forEach(card => card.classList.remove('answer-selected'));
                 answerElement.classList.add('answer-selected');
-                saveAnswer(answer);
+                saveAnswer(answer); // Enregistre la réponse sélectionnée
             });
         });
 
@@ -74,22 +89,25 @@ function startTimer() {
 
         if (timeLeft < 0) {
             clearInterval(timer);
-            nextQuestion();
+            alert("Temps écoulé pour cette question !");
+            nextQuestion(); 
         }
     }, 1000);
 }
 
 function saveAnswer(selectedAnswer) {
-    userAnswers[currentQuestionIndex] = selectedAnswer;
+    userAnswers[currentQuestionIndex] = selectedAnswer; 
 }
 
 function nextQuestion() {
-    currentQuestionIndex++;
+    currentQuestionIndex++; 
+
+    // Vérifie si l'index de la question actuelle est inférieur à la longueur des questions
     if (currentQuestionIndex < quizData.questions.length) {
         displayCurrentQuestion(); 
         startTimer(); 
     } else {
-        clearInterval(timer); 
+        clearInterval(timer); // Arrête le timer
         calculateScore(); 
     }
 }
@@ -112,14 +130,16 @@ function calculateScore() {
     document.getElementById('progress-bar').style.width = '0'; // Réinitialiser la barre de progression
 }
 
-// Ajout de l'événement de clic sur le bouton "Soumettre"
+
 document.getElementById('submit').addEventListener('click', () => {
-    clearInterval(timer); // Arrêter le timer pour la question actuelle
+    clearInterval(timer); 
+
     if (document.querySelector('.answer-selected')) {
-        nextQuestion(); // Passer à la question suivante si une réponse est sélectionnée
+        nextQuestion();
     } else {
-        alert('Veuillez sélectionner une réponse avant de continuer.');
+        alert('Veuillez sélectionner une réponse avant de continuer.'); // Alerte si aucune réponse n'est sélectionnée
     }
 });
 
-fetchQuiz('66e4431754cdf354a9b8e51b');
+
+fetchQuiz();
