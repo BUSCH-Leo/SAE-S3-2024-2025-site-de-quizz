@@ -3,54 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
     <title>Menu Quizz</title>
     <link rel="stylesheet" href="../css/menu.css">
-    <script src="../script/menu.js" defer></script>
-    <script src="../models/AudioPlay.js" defer></script>
+    <script src="../models/menu.js" defer></script>
+    <script src="../models/No_Zoomies.js" defer></script>
 </head>
 <body>
-    <!-- Background gif -->
-    <div id="background-gif">
-		<img id="background-gif" src="https://i.pinimg.com/originals/59/69/84/59698460a33a71e42ddf46e185e17737.gif" alt="Background">
-    </div>
+    <div id="container">
+        <div id="background">
+            <img id="background_img" src="../ressource/quizine2.jpeg" alt="Background">
+        </div>
 
-    <!-- image_title -->
-    <div id="image_title_pulse">
-		<div id="image_title_swing">
-			<img src="../ressource/quiz.png" alt="image_title">
-		</div>
-    </div>
+        <div id="image_title_pulse">
+            <div id="image_title_swing">
+                <img src="../ressource/logo_quizzine fond blanc.png" alt="image_title">
+            </div>
+        </div>
 
-    <!-- Menu Section -->
-    <div id="menu">
-        <div class="buttons">
-            <button id="play">JOUER</button>
-            <button id="create">CRÉER</button>
+        <div id="menu">
+            <div id="zone_jouer" class="button_zone">
+                <button id="jouer">JOUER</button>
+            </div>
+
+            <div id="zone_créer" class="button_zone">
+                <button id="créer">CRÉER</button>
+            </div>
         </div>
     </div>
-
-    <!-- Background Music -->
-    <audio id="bg-music" loop>
-        <source src="../ressource/menu_music.mp3" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-
-    <!-- Popup for music permission -->
-    <div id="music-popup" class="popup">
-        <p>Voulez-vous activer la musique de fond ?</p>
-        <button id="accept-music">Oui</button>
-        <button id="decline-music">Non</button>
-    </div>
-
-    <!-- Music toggle button -->
-    <div id="music-toggle" class="toggle">
-        <img src="../ressource/speaker_off.png" alt="Music Toggle" id="toggle-icon">
-    </div>
-    <script>
-        document.getElementById('play').addEventListener('click', function() {
-            window.location.href = 'http://localhost:3000'; // Redirige vers la page de quiz (Test.html)
-        });
-    </script>
 </body>
 </html>
