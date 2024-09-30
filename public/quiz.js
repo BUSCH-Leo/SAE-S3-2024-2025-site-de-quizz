@@ -11,10 +11,10 @@ function getCategoryFromURL() {
 }
 
 async function fetchQuiz() {
-    const categoryId = getCategoryFromURL();
+    const categoryId = getCategoryFromURL();  // Récupère l'ID de la catégorie depuis l'URL
 
     try {
-        const response = await fetch(`/api/quiz/category/${categoryId}`);
+        const response = await fetch(`/api/quiz/category/${categoryId}`);  // Récupère les quiz pour la catégorie sélectionnée
         const quizList = await response.json();
 
         if (quizList.length === 0) {
@@ -22,16 +22,18 @@ async function fetchQuiz() {
             return;
         }
 
-        quizData = quizList[0];
-        currentQuestionIndex = 0;
-        userAnswers = [];
+        const selectedQuiz = quizList[0];  // Sélectionner le premier quiz récupéré
+        quizData = selectedQuiz; // Affecte les données du quiz
+        currentQuestionIndex = 0; // Réinitialise l'index de la question
+        userAnswers = []; // Réinitialise les réponses
 
-        displayCurrentQuestion();
-        startTimer();
+        displayCurrentQuestion();  // Affiche la première question
+        startTimer();  // Démarre le timer
     } catch (error) {
         console.error('Erreur lors de la récupération du quiz', error);
     }
 }
+
 
 function displayCurrentQuestion() {
     const quizContainer = document.getElementById('quiz-container');

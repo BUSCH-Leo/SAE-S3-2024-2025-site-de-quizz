@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const Category = require('./models/category');
+const Quiz = require('./models/quizz'); // Assurez-vous que le chemin est correct
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.get('/', (req, res) => {
 
 // Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test.html')); // Assurez-vous que 'quiz.html' est dans le dossier 'public'
+    res.sendFile(path.join(__dirname, 'public', 'test.html')); // Assurez-vous que 'test.html' est dans le dossier 'public'
 });
 
 // Route pour récupérer toutes les catégories
@@ -33,7 +34,22 @@ app.get('/api/categories', async (req, res) => {
 });
 
 // Route pour récupérer des quiz par ID de catégorie
-// Ajoutez ici votre route pour récupérer des quiz par ID de catégorie
+app.get('/api/quiz/category/:categoryId', async (req, res) => {
+    const { categoryId } = req.params;
+
+    try {
+        // Récupérer jusqu'à 10 quiz pour la catégorie donnée
+        const quizzes = await Quiz.find({ category: categoryId }).limit(10); // Limite à 10 quiz
+
+        if (!quizzes || quizzes.length === 0) {
+            return res.status(404).json({ message: 'Aucun quiz disponible pour cette catégorie' });
+        }
+
+        res.json(quizzes); // Retourner les quiz trouvés
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur serveur' });
+    }
+});
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
