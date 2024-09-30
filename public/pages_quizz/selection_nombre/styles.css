@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('../../../ressource/pages_quizz/selection_nombre/background.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.status {
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 5px 10px;
+    border-radius: 15px;
+    color: green;
+}
+
+.logo img {
+    width: 150px;
+}
+
+main {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.question-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.question-area {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.progress-bar {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #fceb66;
+    width: 100%;
+    transition: width 1s linear;
+}
+
+#time-left {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+    color: #9f9f9f;
+    font-size: 16px;
+}
+
+.question-text {
+    font-size: 18px;
+    margin-bottom: 20px; /* Ajout d'espace entre la question et le curseur */
+}
+
+.slider-container {
+    position: relative; /* Pour que le texte soit positionné relativement à ce conteneur */
+    margin: 20px 0; /* Ajoute de l'espace autour de la barre */
+}
+
+.slider-labels {
+    display: flex;
+    justify-content: space-between; /* Espace entre les valeurs */
+    margin-bottom: 5px; /* Espace entre les labels et le curseur */
+}
+
+.slider-value {
+    font-weight: bold;
+    color: #333; /* Couleur du texte */
+}
+
+#value-slider {
+    width: 100%; /* La largeur complète */
+    -webkit-appearance: none; /* Pour supprimer le style par défaut */
+    background: transparent; /* Retire le fond par défaut */
+}
+
+/* Styles pour la barre du slider */
+#value-slider::-webkit-slider-runnable-track {
+    height: 8px; /* Hauteur de la barre */
+    background: linear-gradient(to right, #FFC107 0%, #FFC107 var(--value), #e0e0e0 var(--value), #e0e0e0 100%); /* Couleurs de la barre */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+#value-slider::-moz-range-track {
+    height: 8px; /* Hauteur de la barre */
+    background: linear-gradient(to right, #FFC107 0%, #FFC107 var(--value), #e0e0e0 var(--value), #e0e0e0 100%); /* Couleurs de la barre */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+/* Styles pour le curseur */
+#value-slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Supprimer le style par défaut */
+    appearance: none;
+    width: 20px; /* Largeur du curseur */
+    height: 20px; /* Hauteur du curseur */
+    border-radius: 50%; /* Forme ronde */
+    background: #333; /* Couleur du curseur en gris foncé */
+    cursor: pointer; /* Curseur main au survol */
+}
+
+#value-slider::-moz-range-thumb {
+    width: 20px; /* Largeur du curseur */
+    height: 20px; /* Hauteur du curseur */
+    border-radius: 50%; /* Forme ronde */
+    background: #333; /* Couleur du curseur en gris foncé */
+    cursor: pointer; /* Curseur main au survol */
+}
+
+/* Styles pour le bouton Valider */
+.submit {
+    background-color: #FFEB3B;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.submit:hover {
+    background-color: #FDD835;
+}
+
+.question-number {
+    text-align: center;
+    font-size: 18px;
+    margin-top: 10px;
+    color: #333; /* Couleur du texte */
+}
