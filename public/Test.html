@@ -4,130 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masterclass Quiz</title>
-    <!-- Intégration de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <style>
+        /* Styles de base pour la page de quiz */
         body {
             background-color: #f5f7fa;
         }
-
-        .question-card {
-            transition: transform 0.6s ease, box-shadow 0.6s ease;
-            border-radius: 12px;
-            background-color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transform: perspective(1000px) rotateY(0deg);
-        }
-
-        .question-card:hover {
-            transform: perspective(1000px) rotateY(10deg);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .answer-card {
-            transition: all 0.3s ease-in-out;
-            cursor: pointer;
-            border-radius: 8px;
-            background-color: #f8f9fa;
-        }
-
-        .answer-card:hover {
-            transform: scale(1.05);
-            background-color: #e2e6ea;
-        }
-
-        .answer-selected {
-            background-color: #ffcc00 !important;
-            color: white;
-            transform: scale(1.05);
-            border: 2px solid #ffcc00;
-        }
-
-        .answer-correct {
-            background-color: #28a745 !important;
-            color: white;
-            transform: scale(1.05);
-            border: 2px solid #28a745;
-        }
-
-        .answer-wrong {
-            background-color: #dc3545 !important;
-            color: white;
-            transform: scale(1.05);
-            border: 2px solid #dc3545;
-        }
-
-        .progress-bar {
-            background-color: #28a745;
-            height: 6px;
-        }
-
-        .fade-out {
-            animation: fadeOut 0.5s forwards;
-        }
-
-        .fade-in {
-            animation: fadeIn 0.5s forwards;
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(0.95); }
-        }
-
-        @keyframes fadeIn {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-
-        .score-section {
-            animation: scoreShow 1s forwards;
-            transform: translateY(30px);
-            opacity: 0;
-        }
-
-        @keyframes scoreShow {
-            0% { opacity: 0; transform: translateY(30px); }
-            100% { opacity: 1; transform: translateY(0); }
-        }
-
-        .finish-animation {
-            font-size: 2.5rem;
-            font-weight: bold;
-            background-color: #28a745;
-            color: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
+        /* Autres styles ici... */
     </style>
 </head>
-
 <body>
     <div class="container mt-5">
-
         <h1 class="text-center mb-4">Masterclass Quiz</h1>
-
-        <!-- Barre de progression -->
         <div class="progress mb-4">
-            <div id="progress-bar" class="progress-bar"></div>
+            <div id="progress-bar" class="progress-bar" style="width: 0;"></div>
         </div>
-
-        <!-- Conteneur pour le quiz -->
         <div id="quiz-container" class="quiz-container row g-4 justify-content-center"></div>
-
-
         <div id="timer" class="text-center mt-4"></div>
-
-
         <div id="score" class="text-center mt-4 score-section"></div>
-
         <div class="text-center mt-4">
             <button id="submit" class="btn btn-primary">Soumettre les réponses</button>
         </div>
     </div>
-
     <script src="/quiz.js"></script>
 </body>
 </html>

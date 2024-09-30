@@ -1,54 +1,41 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
-const Quiz = require('./models/quizz');
+const Category = require('./models/category');
 
-// Créer l'application Express
 const app = express();
 
-// Middleware pour traiter le JSON
-app.use(express.json());
+mongoose.connect('mongodb://localhost:27017/quizDB')
+    .then(() => console.log('Connecté à MongoDB'))
+    .catch((error) => console.error('Erreur de connexion à MongoDB:', error));
 
-// Connexion à MongoDB
-mongoose.connect('mongodb://localhost:27017/quizDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-})
-.then(() => console.log('Connecté à MongoDB'))
-.catch((error) => console.log('Erreur de connexion à MongoDB', error));
-
-// Servir les fichiers statiques (HTML, CSS, JS) depuis le dossier "public"
+// Servir les fichiers statiques depuis le dossier "public"
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Route pour servir index.html lorsqu'on accède à la racine "/"
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'Test.html'));
+    res.sendFile(path.join(__dirname, 'public', 'index.html')); // Assurez-vous que 'index.html' est dans le dossier 'public'
 });
 
-// Route pour récupérer 10 questions aléatoires
-app.get('/api/quiz/random', async (req, res) => {
+// Route pour servir la page de quiz
+app.get('/quiz', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'test.html')); // Assurez-vous que 'quiz.html' est dans le dossier 'public'
+});
+
+// Route pour récupérer toutes les catégories
+app.get('/api/categories', async (req, res) => {
     try {
-        const quiz = await Quiz.aggregate([{ $sample: { size: 10 } }]); // Récupérer 10 quiz aléatoires
-
-        if (!quiz || quiz.length === 0) {
-            return res.status(404).json({ message: 'Aucun quiz disponible' });
-        }
-
-        // Limiter à 10 questions pour chaque quiz
-        const questions = quiz.map(q => ({
-            title: q.title,
-            description: q.description,
-            questions: q.questions.slice(0, 10)  // Limiter à 10 questions
-        }));
-
-        res.json(questions);  // Retourner les quiz avec les 10 questions
+        const categories = await Category.find();
+        res.json(categories);
     } catch (error) {
-        res.status(500).json({ message: 'Erreur serveur' });
+        res.status(500).json({ message: 'Erreur lors de la récupération des catégories' });
     }
 });
 
-// Démarrer le serveur sur le port 3000
-const PORT = 3000;
+// Route pour récupérer des quiz par ID de catégorie
+// Ajoutez ici votre route pour récupérer des quiz par ID de catégorie
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log(`Serveur démarré sur http://localhost:${PORT}`);
+    console.log(`Serveur démarré sur le port ${PORT}`);
 });
