@@ -6,6 +6,7 @@ const Quiz = require('./models/quizz'); // Assurez-vous que le chemin est correc
 
 const app = express();
 
+// Connexion à MongoDB
 mongoose.connect('mongodb://localhost:27017/quizDB')
     .then(() => console.log('Connecté à MongoDB'))
     .catch((error) => console.error('Erreur de connexion à MongoDB:', error));
@@ -16,11 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Route pour servir index.html lorsqu'on accède à la racine "/"
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Assurez-vous que 'index.html' est dans le dossier 'public'
-});
-
-// Route pour servir la page de quiz
-app.get('/quiz', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test.html')); // Assurez-vous que 'test.html' est dans le dossier 'public'
 });
 
 // Route pour récupérer toutes les catégories
@@ -51,6 +47,20 @@ app.get('/api/quiz/category/:categoryId', async (req, res) => {
     }
 });
 
+// Route pour afficher la page de quiz selon le type
+app.get('/quiz/:type', (req, res) => {
+    const { type } = req.params;
+
+    if (type === 'multiple') {
+        res.sendFile(path.join(__dirname, 'public', 'multiple-choice.html')); // Chemin vers la page des choix multiples
+    } else if (type === 'boolean') {
+        res.sendFile(path.join(__dirname, 'public', 'boolean.html')); // Chemin vers la page des questions booléennes
+    } else {
+        res.status(404).send('Type de quiz non trouvé');
+    }
+});
+
+// Démarrer le serveur
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Serveur démarré sur le port ${PORT}`);
