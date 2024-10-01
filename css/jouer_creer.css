@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('../ressource/pages_quizz/selection_multiple/background.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -9,18 +8,26 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.content-box {
+    background-color: rgba(255, 255, 255, 0.292);
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 10%;
+    max-width: 80%;
 }
 
 .page-title {
     font-size: 6rem;
     font-weight: bold;
     color: rgb(251, 188, 0);
-    margin: 20px 0;
-    margin-top: 100px;
-    text-align: center;
-    opacity: 0; /* Début à 0% de visibilité */
-    transform: translateY(-50px); /* Position initiale */
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Transition des propriétés */
+    margin-bottom: 35%;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
 .button-container {
@@ -28,7 +35,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-grow: 1;
 }
 
 .quiz-button {
@@ -45,10 +51,9 @@ body {
     border-radius: 5px;
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease, padding 0.4s ease;
+    transition: opacity 0.5s ease, transform 0.5s ease, background-color 0.3s ease;
 }
 
 .quiz-button:hover {
     background-color: #9b7f2a;
-    padding: 17px 50px;
 }
