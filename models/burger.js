@@ -1,3 +1,5 @@
+console.log('burger.js chargé');
+
 const burgerIcon = document.getElementById('burger-icon');
 const slideMenu = document.getElementById('slide-menu');
 
