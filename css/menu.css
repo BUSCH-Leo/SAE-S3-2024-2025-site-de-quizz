@@ -55,6 +55,7 @@
 }
 
 button {
+	position: relative;
     font-size: 2vw;
     padding: 2vh 2vw;
     background-color: rgb(251, 188, 0);
@@ -69,30 +70,74 @@ button {
 
 img.plate {
     position: absolute;
-    bottom: -5%;
+    bottom: -6%;
     width: 100%;
     transform-origin: center;
     animation: none;
     z-index: 3;
 }
+img.knife {
+    position: absolute;
+    bottom: 0%;
+    width: 15%;
+    transform-origin: center;
+    animation: none;
+    z-index: 1;
+	left: 50%;
+    transform: translateX(-50%);
+}
+img.fork {
+    position: absolute;
+    bottom: 0%;
+    width: 15%;
+    transform-origin: center;
+    animation: none;
+    z-index: 1;
+	left: 50%;
+    transform: translateX(-50%);
+}
 
 .button_zone:hover img.plate {
-    animation: plate 2s linear forwards;
+    animation: plate 1s linear forwards;
 }
 
 @keyframes plate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% { transform: translateY(0%); }
+    20% { transform: translateY(-10px); }
+    100% { transform: translateY(0%); }
 }
 
-#zone_jouer button:hover {
-    animation: jouer 1s ease-in-out forwards;
+#zone_jouer:hover button {
+    animation: jouer 0.5s ease-in-out forwards;
 }
 
 @keyframes jouer {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-10%); }
+    0% { transform: translateY(0) scaleY(1); }
+    50% { transform: translateY(0%) scaleY(0.8); }
+    100% { transform: translateY(-20%) scaleY(1); }
 }
+
+#zone_jouer:hover img.fork {
+    animation: fork 1s forwards;
+}
+
+@keyframes fork {
+    0% { transform: translateX(0%) translateY(0%) scale(0%); }
+    50% { transform: translateX(0%) translateY(-10%) scale(0%); }
+    100% { transform: translateX(-450%) translateY(-20%) scale(100%); }
+}
+
+#zone_jouer:hover img.knife {
+    animation: knife 1s forwards;
+}
+
+
+@keyframes knife {
+    0% { transform: translateX(0%) translateY(0%) scale(0%); }
+    50% { transform: translateX(0%) translateY(-10%) scale(0%); }
+    100% { transform: translateX(350%) translateY(-20%) scale(100%); }
+}
+
 
 img.pan {
     position: absolute;
@@ -112,7 +157,9 @@ img.pan {
     0% { transform: rotate(0deg) translateX(0); }
     40% { transform: rotate(20deg) translateX(5%) translateY(5%); }
     60% { transform: rotate(-20deg) translateX(5%) translateY(-5%); }
-    100% { transform: rotate(0deg) translateX(0); }
+    90% { transform: rotate(0deg) translateX(0); }
+	95% { transform: rotate(10deg) translateY(10%); }
+	100% { transform: rotate(0deg) translateY(0); }
 }
 
 #zone_créer:hover button {
@@ -121,9 +168,11 @@ img.pan {
 
 @keyframes creer {
     0% { transform: translateX(0) translateY(0) rotate(0deg);}
-    40% { transform: translateX(15%) translateY(3%); }
-    50% { transform: translateX(10%) translateY(-20 %); }
-    60% { transform: translateX(0%) translateY(-40%); }
+    40% { transform: translateX(15%) translateY(3%) rotate(0deg); }
+    50% { transform: translateX(10%) translateY(-20 %) rotate(0deg); }
+    60% { transform: translateX(0%) translateY(-40%) rotate(-180deg); }
+    90% { transform: translateX(0) translateY(0) rotate(-360deg); }
+    95% { transform: translateX(0) translateY(8%) rotate(-360deg); }
     100% { transform: translateX(0) translateY(0) rotate(-360deg); }
 }
 
