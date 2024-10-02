@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masterclass Quiz</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/test.css">
-    <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
-    <style>
-        /* styles.css */
+/* styles.css */
 
 /* Réinitialisation et styles globaux */
 * {
@@ -57,11 +47,11 @@ h1 {
 .progress {
     height: 20px;
     border-radius: 10px;
-    background-color:#e0e0e0;
+    background-color: #e0e0e0;
 }
 
 .progress-bar {
-    background-color: #fceb66; /* Couleur de la barre de progression */
+    background-color: #3498db; /* Couleur de la barre de progression */
 }
 
 /* Zone de questions */
@@ -86,7 +76,7 @@ h1 {
 .answer {
     width: 100%;
     max-width: 350px;
-    background-color: #FFC107;
+    background-color: #3498db;
     color: white;
     border: none;
     padding: 15px;
@@ -99,17 +89,17 @@ h1 {
 }
 
 .answer:hover {
-    background-color: #daa70e; /* Couleur au survol */
+    background-color: #2980b9; /* Couleur au survol */
     transform: translateY(-3px); /* Effet de levée au survol */
 }
 
 .answer.selected {
-    background-color:  #FDD835;/* Couleur verte pour la réponse sélectionnée */
+    background-color: #27ae60; /* Couleur verte pour la réponse sélectionnée */
 }
 
 /* Bouton soumettre */
 .submit {
-    background-color:  #fceb66; /* Couleur orange pour le bouton Soumettre */
+    background-color: #f39c12; /* Couleur orange pour le bouton Soumettre */
     color: #fff;
     border: none;
     padding: 15px;
@@ -133,38 +123,3 @@ h1 {
     text-align: center;
     margin-top: 20px;
 }
-
-    </style>
-</head>
-<body>
-    <div class="container mt-5">
-        <header class="d-flex justify-content-between align-items-center mb-4">
-            <div class="logo">
-                <img src="../ressource/logo_quizzine.png" alt="Logo" class="img-fluid">
-            </div>
-            <div class="profile d-flex align-items-center">
-                <img src="../ressource/profile.png" alt="Profile" class="profile-img rounded-circle">
-                <span class="status">Connecté</span>
-            </div>
-        </header>
-        
-        <h1 class="text-center mb-4">Masterclass Quiz</h1>
-        
-        <div class="progress mb-4">
-            <div id="progress-bar" class="progress-bar" style="width: 0;"></div>
-        </div>
-        
-        <div id="quiz-container" class="quiz-container row g-4 justify-content-center"></div>
-        
-        <div id="timer" class="text-center mt-4 timer"></div>
-        
-        <div id="score" class="text-center mt-4 score-section"></div>
-        
-        <div class="text-center mt-4">
-            <button id="submit" class="btn btn-primary submit">Soumettre les réponses</button>
-        </div>
-    </div>
-    
-    <script src="quiz.js"></script>
-</body>
-</html>

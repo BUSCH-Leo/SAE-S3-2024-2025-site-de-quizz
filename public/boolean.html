@@ -4,19 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzine</title>
-    <link rel="stylesheet" href="../../../css/pages_quizz/selection_unique/styles.css">
+<<<<<<< HEAD:public/boolean.html
+    <link rel="stylesheet" href="../css/boolean.css">
+    <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
+=======
+    <link rel="stylesheet" href="../../../css/pages_quizz/selection_vrai_ou_faux/styles.css">
     <link rel="icon" href="../../../ressource/logo_quizzine_petit.png" type="image/x-icon">
     <script src="../../../models/No_Zoomies.js" defer></script>
+>>>>>>> bbdcb438750a56c5cdb5f8220e60a0d77cbbf521:public/pages_quizz/selection_vrai_ou_faux/page.html
 </head>
 <body>
     <div class="container">
         <header>
             <div class="profile">
-                <img src="../../../ressource/profile-image-exemple.png" alt="Profile" class="profile-img">
+                <img src="../ressource/profile-image-exemple.png" alt="Profile" class="profile-img">
                 <span class="status">Connecté</span>
             </div>
             <div class="logo">
-                <img src="../../../ressource/logo_quizzine_réduis.png" alt="Quizzine">
+                <img src="../ressource/logo_quizzine_réduis.png" alt="Quizzine">
             </div>
             <div class="question-number">
                 <span>Question : 5/20</span>
@@ -25,7 +30,7 @@
         
         <main>
             <div class="question-image">
-                <img src="../../../ressource/pages_quizz/selection_unique/question-image.jpg" alt="Image de la question">
+                <img src="../ressource/pages_quizz/selection_vrai_ou_faux/question-image.jpg" alt="Image de la question">
             </div>
             <div class="question-area">
                 <div class="progress-bar">
@@ -34,17 +39,15 @@
                 </div>
                 <p id="time-up" style="display: none;">Temps écoulé !</p>
                 <p class="question-text">La question</p>
-                <div class="answers">
-                    <button class="answer"><span class="letter">A</span><span class="text">Réponse A</span></button>
-                    <button class="answer"><span class="letter">B</span><span class="text">Réponse B</span></button>
-                    <button class="answer"><span class="letter">C</span><span class="text">Réponse C</span></button>
-                    <button class="answer"><span class="letter">D</span><span class="text">Réponse D</span></button>
-                </div>                
+                <div class="answer-section">
+                    <button class="answer" id="true">Vrai</button>
+                    <button class="answer" id="false">Faux</button>
+                </div>                         
                 <button class="submit">Valider</button>
             </div>
         </main>
     </div>
 
-    <script src="../../../models/pages_quizz/selection_unique/script.js"></script>
+    <script src="../models/boolean.js"></script>
 </body>
 </html>
