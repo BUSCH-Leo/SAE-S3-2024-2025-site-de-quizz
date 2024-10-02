@@ -11,10 +11,10 @@ function getCategoryFromURL() {
 }
 
 async function fetchQuiz() {
-    const categoryId = getCategoryFromURL();  // Récupère l'ID de la catégorie depuis l'URL
+    const categoryId = getCategoryFromURL();
 
     try {
-        const response = await fetch(`/api/quiz/category/${categoryId}`);  // Récupère les quiz pour la catégorie sélectionnée
+        const response = await fetch(`/api/quiz/category/${categoryId}`);
         const quizList = await response.json();
 
         if (quizList.length === 0) {
@@ -22,18 +22,17 @@ async function fetchQuiz() {
             return;
         }
 
-        const selectedQuiz = quizList[0];  // Sélectionner le premier quiz récupéré
-        quizData = selectedQuiz; // Affecte les données du quiz
-        currentQuestionIndex = 0; // Réinitialise l'index de la question
-        userAnswers = []; // Réinitialise les réponses
+        const selectedQuiz = quizList[0];
+        quizData = selectedQuiz;
+        currentQuestionIndex = 0;
+        userAnswers = [];
 
-        displayCurrentQuestion();  // Affiche la première question
-        startTimer();  // Démarre le timer
+        displayCurrentQuestion();
+        startTimer();
     } catch (error) {
         console.error('Erreur lors de la récupération du quiz', error);
     }
 }
-
 
 function displayCurrentQuestion() {
     const quizContainer = document.getElementById('quiz-container');
@@ -50,24 +49,20 @@ function displayCurrentQuestion() {
 
         const question = quizData.questions[currentQuestionIndex];
         const questionElement = document.createElement('div');
-        questionElement.classList.add('col-12', 'text-center', 'question-card', 'p-4');
-        questionElement.innerHTML = `<h3>${currentQuestionIndex + 1}. ${question.question}</h3>`;
+        questionElement.classList.add('question-area', 'p-4');
+        questionElement.innerHTML = `<h3 class="question-text">${currentQuestionIndex + 1}. ${question.question}</h3>`;
         quizContainer.appendChild(questionElement);
 
         const answers = [...question.incorrect_answers, question.correct_answer].sort();
-        answers.forEach((answer) => {
-            const answerElement = document.createElement('div');
-            answerElement.classList.add('col-md-5', 'answer-card', 'p-3', 'text-center', 'm-2');
-            answerElement.innerHTML = `
-                <div class="card-body">
-                    <h5>${answer}</h5>
-                </div>
-            `;
+        answers.forEach((answer, index) => {
+            const answerElement = document.createElement('button');
+            answerElement.classList.add('answer', 'btn', 'm-2');
+            answerElement.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span> <span class="text">${answer}</span>`;
             quizContainer.appendChild(answerElement);
 
             answerElement.addEventListener('click', () => {
-                document.querySelectorAll('.answer-card').forEach(card => card.classList.remove('answer-selected'));
-                answerElement.classList.add('answer-selected');
+                document.querySelectorAll('.answer').forEach(btn => btn.classList.remove('selected'));
+                answerElement.classList.add('selected');
                 saveAnswer(answer);
             });
         });
@@ -82,6 +77,7 @@ function startTimer() {
     const timerElement = document.getElementById('timer');
     const progressBar = document.getElementById('progress-bar');
     timerElement.innerText = `Temps restant : ${timePerQuestion}s`;
+    progressBar.style.width = '100%';
 
     clearInterval(timer);
     timer = setInterval(() => {
@@ -134,7 +130,7 @@ function calculateScore() {
 document.getElementById('submit').addEventListener('click', () => {
     clearInterval(timer);
 
-    if (document.querySelector('.answer-selected')) {
+    if (document.querySelector('.selected')) {
         nextQuestion();
     } else {
         alert('Veuillez sélectionner une réponse avant de continuer.');
