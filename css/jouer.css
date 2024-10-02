@@ -1,14 +1,14 @@
-/* jouer.css */
 .modal {
-    display: none; /* Cachée par défaut */
+    display: flex; /* Utiliser flex pour centrer le contenu */
+    flex-direction: column; /* Disposer les éléments en colonne */
+    justify-content: center; /* Centrer verticalement */
+    align-items: center; /* Centrer horizontalement */
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
     z-index: 1000;
 }
 
@@ -17,7 +17,9 @@
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    width: 300px;
+    width: 50%; /* Changer la largeur à 50% */
+    max-width: 500px; /* Optionnel : définir une largeur maximale */
+    margin: 0 auto; /* Centrer horizontalement */
 }
 
 .drop-zone {
@@ -40,15 +42,11 @@ button {
     cursor: pointer;
 }
 
-/* Flexbox pour aligner les boutons sur la même ligne */
-.modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 50%; /* Changer la largeur à 50% */
-    max-width: 500px; /* Optionnel : définir une largeur maximale */
-    margin: 0 auto; /* Centrer horizontalement */
+/* Flexbox pour centrer les boutons */
+.button-container-fenetre {
+    display: flex;
+    justify-content: center; /* Centrer les boutons horizontalement */
+    margin-top: 10px; /* Espace au-dessus des boutons */
 }
 
 button.disabled {
@@ -68,6 +66,6 @@ button:hover:not(.disabled) {
 /* Styles pour les boutons dans la fenêtre modale */
 #validate-button,
 #remove-button {
-    flex: 1; /* Prendre toute la largeur disponible */
-    margin: 5px; /* Marge pour espacer les boutons */
+    margin: 5px; /* Espace entre les boutons */
+    color: white;
 }
