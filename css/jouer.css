@@ -1,0 +1,73 @@
+/* jouer.css */
+.modal {
+    display: none; /* Cachée par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+}
+
+.drop-zone {
+    border: 2px dashed #bbb;
+    padding: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+}
+
+.drop-zone:hover {
+    background-color: #f0f0f0;
+}
+
+/* Styles pour les boutons */
+button {
+    margin-top: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Flexbox pour aligner les boutons sur la même ligne */
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 50%; /* Changer la largeur à 50% */
+    max-width: 500px; /* Optionnel : définir une largeur maximale */
+    margin: 0 auto; /* Centrer horizontalement */
+}
+
+button.disabled {
+    background-color: rgba(251, 188, 0, 0.5); /* Semi-transparent */
+    cursor: not-allowed;
+}
+
+button:not(.disabled) {
+    background-color: rgb(251, 188, 0); /* Couleur active */
+    color: white;
+}
+
+button:hover:not(.disabled) {
+    background-color: #9b7f2a;
+}
+
+/* Styles pour les boutons dans la fenêtre modale */
+#validate-button,
+#remove-button {
+    flex: 1; /* Prendre toute la largeur disponible */
+    margin: 5px; /* Marge pour espacer les boutons */
+}
