@@ -7,146 +7,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../css/test.css">
     <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
-    <style>
-        /* styles.css */
-
-/* Réinitialisation et styles globaux */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('../../ressource/pages_quizz/selection_multiple/background.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.container {
-    max-width: 800px;
-    margin: 20px;
-    padding: 30px;
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* En-tête */
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-/* Chronomètre */
-.timer {
-    font-size: 20px;
-    color: #e67e22;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-/* Barre de progression */
-.progress {
-    height: 20px;
-    border-radius: 10px;
-    background-color:#e0e0e0;
-}
-
-.progress-bar {
-    background-color: #fceb66; /* Couleur de la barre de progression */
-}
-
-/* Zone de questions */
-.question-area {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.question-text {
-    font-size: 20px;
-    margin-bottom: 20px;
-    color: #2c3e50;
-}
-
-/* Réponses */
-.answers {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.answer {
-    width: 100%;
-    max-width: 350px;
-    background-color: #FFC107;
-    color: white;
-    border: none;
-    padding: 15px;
-    margin: 10px 0;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.answer:hover {
-    background-color: #daa70e; /* Couleur au survol */
-    transform: translateY(-3px); /* Effet de levée au survol */
-}
-
-.answer.selected {
-    background-color:  #FDD835;/* Couleur verte pour la réponse sélectionnée */
-}
-
-/* Bouton soumettre */
-.submit {
-    background-color:  #fceb66; /* Couleur orange pour le bouton Soumettre */
-    color: #fff;
-    border: none;
-    padding: 15px;
-    border-radius: 10px;
-    font-size: 18px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s;
-    margin-top: 20px;
-}
-
-.submit:hover {
-    background-color: #e67e22; /* Couleur au survol */
-}
-
-/* Section de résultats */
-.finish-animation {
-    font-size: 24px;
-    font-weight: bold;
-    color: #27ae60;
-    text-align: center;
-    margin-top: 20px;
-}
-.form-range {
-    width: 100%;
-    margin: 15px 0;
-}
-
-#slider-value {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-}
-
-
-    </style>
 </head>
 <body>
     <div class="container mt-5">
@@ -156,19 +16,18 @@ h1 {
             </div>
             <div class="profile d-flex align-items-center">
                 <img src="../ressource/profile.png" alt="Profile" class="profile-img rounded-circle">
-                <span class="status">Connecté</span>
+                <span class="status ms-2">Connecté</span>
             </div>
         </header>
         
         <h1 class="text-center mb-4">Masterclass Quiz</h1>
         
         <div class="progress mb-4">
-            <div id="progress-bar" class="progress-bar" style="width: 0;"></div>
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+            <span id="timer" class="timer position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); color: #ffbaba;">00:00</span>
         </div>
         
         <div id="quiz-container" class="quiz-container row g-4 justify-content-center"></div>
-        
-        <div id="timer" class="text-center mt-4 timer"></div>
         
         <div id="score" class="text-center mt-4 score-section"></div>
         
@@ -176,7 +35,15 @@ h1 {
             <button id="submit" class="btn btn-primary submit">Soumettre les réponses</button>
         </div>
     </div>
-    
+
+    <div id="alert-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="modal-message"></p>
+            <button id="modal-confirm" class="btn btn-primary">OK</button>
+        </div>
+    </div>
+
     <script src="quiz.js"></script>
     <div id="burger-menu"></div>
     <script src="../models/importer_burger.js" defer></script>

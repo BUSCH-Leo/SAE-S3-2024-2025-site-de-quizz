@@ -1,6 +1,39 @@
-/* styles.css */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
 
-/* Réinitialisation et styles globaux */
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #333;
+    cursor: pointer;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -24,49 +57,47 @@ body {
     margin: 20px;
     padding: 30px;
     background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* En-tête */
 h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
+    font-weight: 600;
 }
 
-/* Chronomètre */
-.timer {
-    font-size: 20px;
-    color: #e67e22;
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-/* Barre de progression */
 .progress {
-    height: 20px;
-    border-radius: 10px;
+    position: relative;
+    height: 30px;
     background-color: #e0e0e0;
+    border-radius: 15px;
 }
 
 .progress-bar {
-    background-color: #3498db; /* Couleur de la barre de progression */
+    background-color: #f39c12; /* Couleur plus intense pour la barre de progression */
+    transition: width 0.4s ease;
+    border-radius: 15px;
 }
 
-/* Zone de questions */
+.timer {
+    font-weight: bold;
+    font-size: 18px;
+    color: #1f1d1d; /* Texte de la minuterie en blanc */
+}
+
 .question-area {
     text-align: center;
     margin-bottom: 20px;
 }
 
 .question-text {
-    font-size: 20px;
+    font-size: 22px;
     margin-bottom: 20px;
     color: #2c3e50;
 }
 
-/* Réponses */
 .answers {
     display: flex;
     flex-direction: column;
@@ -76,13 +107,13 @@ h1 {
 .answer {
     width: 100%;
     max-width: 350px;
-    background-color: #3498db;
+    background-color: #FFC107; /* Couleur de fond des réponses */
     color: white;
     border: none;
     padding: 15px;
     margin: 10px 0;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     transition: background-color 0.3s, transform 0.3s;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -90,16 +121,15 @@ h1 {
 
 .answer:hover {
     background-color: #2980b9; /* Couleur au survol */
-    transform: translateY(-3px); /* Effet de levée au survol */
+    transform: translateY(-3px);
 }
 
 .answer.selected {
-    background-color: #27ae60; /* Couleur verte pour la réponse sélectionnée */
+    background-color: #c3861d;
 }
 
-/* Bouton soumettre */
 .submit {
-    background-color: #f39c12; /* Couleur orange pour le bouton Soumettre */
+    background-color: #f39c12; 
     color: #fff;
     border: none;
     padding: 15px;
@@ -109,17 +139,29 @@ h1 {
     width: 100%;
     transition: background-color 0.3s;
     margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .submit:hover {
     background-color: #e67e22; /* Couleur au survol */
 }
 
-/* Section de résultats */
 .finish-animation {
     font-size: 24px;
     font-weight: bold;
     color: #27ae60;
     text-align: center;
     margin-top: 20px;
+}
+
+.form-range {
+    width: 100%;
+    margin: 15px 0;
+}
+
+#slider-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
 }

@@ -1,39 +1,40 @@
-let quizData = {};
-let userAnswers = [];
+let quizData = [];
+let currentQuizIndex = 0;
 let currentQuestionIndex = 0;
+let userAnswers = [];
 let timer;
-let timePerQuestion = 10;
-const maxTime = timePerQuestion;
+const timePerQuestion = 10;
 
+// Récupération de la catégorie depuis l'URL
 function getCategoryFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('category');
 }
 
-async function fetchQuiz() {
+// Fonction pour récupérer les quizzes
+async function fetchQuizzes() {
     const categoryId = getCategoryFromURL();
 
     try {
         const response = await fetch(`/api/quiz/category/${categoryId}`);
-        const quizList = await response.json();
+        quizData = await response.json();
 
-        if (quizList.length === 0) {
-            alert('Aucun quiz disponible pour cette catégorie.');
+        if (quizData.length === 0) {
+            showAlert('Aucun quiz disponible pour cette catégorie.');
             return;
         }
 
-        const selectedQuiz = quizList[0];
-        quizData = selectedQuiz;
+        currentQuizIndex = 0;
         currentQuestionIndex = 0;
         userAnswers = [];
-
         displayCurrentQuestion();
         startTimer();
     } catch (error) {
-        console.error('Erreur lors de la récupération du quiz', error);
+        console.error('Erreur lors de la récupération des quiz', error);
     }
 }
 
+// Fonction pour afficher la question actuelle
 function displayCurrentQuestion() {
     const quizContainer = document.getElementById('quiz-container');
     quizContainer.classList.remove('fade-in');
@@ -42,61 +43,39 @@ function displayCurrentQuestion() {
     setTimeout(() => {
         quizContainer.innerHTML = '';
 
-        if (!quizData.questions || quizData.questions.length === 0) {
+        const currentQuiz = quizData[currentQuizIndex];
+
+        if (!currentQuiz.questions || currentQuiz.questions.length === 0) {
             quizContainer.innerHTML = '<p>Aucune question disponible pour ce quiz.</p>';
             return;
         }
 
-        const question = quizData.questions[currentQuestionIndex];
+        const question = currentQuiz.questions[currentQuestionIndex];
         const questionElement = document.createElement('div');
         questionElement.classList.add('question-area', 'p-4');
-        questionElement.innerHTML = `<h3 class="question-text">${currentQuestionIndex + 1}. ${question.question}</h3>`;
+        questionElement.innerHTML = `<h3 class="question-text">Question ${currentQuestionIndex + 1} sur ${currentQuiz.questions.length}: ${question.question}</h3>`;
         quizContainer.appendChild(questionElement);
 
-        // Vérifiez si la question contient "year"
-        if (question.question.toLowerCase().includes('year')) {
-            const sliderElement = document.createElement('input');
-            sliderElement.type = 'range';
-            sliderElement.min = 1900; // Vous pouvez ajuster les limites selon le contexte
-            sliderElement.max = 2024; // Ajustez également cela
-            sliderElement.value = 2000; // Valeur par défaut
-            sliderElement.classList.add('form-range');
-            sliderElement.id = 'year-slider';
+        const answers = [...question.incorrect_answers, question.correct_answer].sort();
+        answers.forEach((answer, index) => {
+            const answerElement = document.createElement('button');
+            answerElement.classList.add('answer', 'btn', 'm-2');
+            answerElement.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span> <span class="text">${answer}</span>`;
+            quizContainer.appendChild(answerElement);
 
-            // Afficher la valeur sélectionnée
-            const sliderValue = document.createElement('div');
-            sliderValue.id = 'slider-value';
-            sliderValue.innerText = `Valeur sélectionnée : ${sliderElement.value}`;
-
-            sliderElement.oninput = function() {
-                sliderValue.innerText = `Valeur sélectionnée : ${this.value}`;
-            };
-
-            quizContainer.appendChild(sliderElement);
-            quizContainer.appendChild(sliderValue);
-        } else {
-            // Autres types de réponses
-            const answers = [...question.incorrect_answers, question.correct_answer].sort();
-            answers.forEach((answer, index) => {
-                const answerElement = document.createElement('button');
-                answerElement.classList.add('answer', 'btn', 'm-2');
-                answerElement.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span> <span class="text">${answer}</span>`;
-                quizContainer.appendChild(answerElement);
-
-                answerElement.addEventListener('click', () => {
-                    document.querySelectorAll('.answer').forEach(btn => btn.classList.remove('selected'));
-                    answerElement.classList.add('selected');
-                    saveAnswer(answer);
-                });
+            answerElement.addEventListener('click', () => {
+                document.querySelectorAll('.answer').forEach(btn => btn.classList.remove('selected'));
+                answerElement.classList.add('selected');
+                saveAnswer(answer);
             });
-        }
+        });
 
         quizContainer.classList.remove('fade-out');
         quizContainer.classList.add('fade-in');
     }, 500);
 }
 
-
+// Fonction pour démarrer le timer
 function startTimer() {
     let timeLeft = timePerQuestion;
     const timerElement = document.getElementById('timer');
@@ -107,66 +86,93 @@ function startTimer() {
     clearInterval(timer);
     timer = setInterval(() => {
         timerElement.innerText = `Temps restant : ${timeLeft}s`;
-        progressBar.style.width = `${(timeLeft / maxTime) * 100}%`;
+        progressBar.style.width = `${(timeLeft / timePerQuestion) * 100}%`;
         timeLeft--;
 
         if (timeLeft < 0) {
             clearInterval(timer);
-            alert("Temps écoulé pour cette question !");
+            showAlert("Temps écoulé pour cette question !");
             nextQuestion();
         }
     }, 1000);
 }
 
+// Fonction pour enregistrer la réponse
 function saveAnswer(selectedAnswer) {
-    // Si un slider est utilisé, récupérez sa valeur
-    const sliderElement = document.getElementById('year-slider');
-    if (sliderElement) {
-        userAnswers[currentQuestionIndex] = sliderElement.value; // Enregistrez la valeur du slider
-    } else {
-        userAnswers[currentQuestionIndex] = selectedAnswer; // Sinon, enregistrez la réponse normale
-    }
+    userAnswers[currentQuizIndex] = userAnswers[currentQuizIndex] || [];
+    userAnswers[currentQuizIndex][currentQuestionIndex] = selectedAnswer;
 }
 
-
+// Fonction pour passer à la question suivante
 function nextQuestion() {
-    currentQuestionIndex++;
+    const currentQuiz = quizData[currentQuizIndex];
 
-    if (currentQuestionIndex < quizData.questions.length) {
+    if (currentQuestionIndex < currentQuiz.questions.length - 1) {
+        currentQuestionIndex++;
         displayCurrentQuestion();
         startTimer();
     } else {
         clearInterval(timer);
-        calculateScore();
+        if (currentQuizIndex < quizData.length - 1) {
+            currentQuizIndex++;
+            currentQuestionIndex = 0;
+            displayCurrentQuestion();
+            startTimer();
+        } else {
+            calculateScore();
+        }
     }
 }
 
+// Fonction pour calculer le score
 function calculateScore() {
-    let score = 0;
+    let totalScore = 0;
+    let totalQuestions = 0;
 
-    quizData.questions.forEach((question, index) => {
-        if (userAnswers[index] === question.correct_answer) {
-            score++;
-        }
+    quizData.forEach((quiz, quizIndex) => {
+        quiz.questions.forEach((question, questionIndex) => {
+            totalQuestions++;
+            if (userAnswers[quizIndex] && userAnswers[quizIndex][questionIndex] === question.correct_answer) {
+                totalScore++;
+            }
+        });
     });
 
     const scoreElement = document.getElementById('score');
     scoreElement.innerHTML = `
-        <div class="finish-animation">Félicitations ! Votre score est de ${score}/${quizData.questions.length}</div>
+        <div class="finish-animation">Félicitations ! Votre score est de ${totalScore}/${totalQuestions}</div>
     `;
     document.getElementById('quiz-container').innerHTML = '';
     document.getElementById('timer').remove();
     document.getElementById('progress-bar').style.width = '0';
 }
 
-document.getElementById('submit').addEventListener('click', () => {
-    clearInterval(timer);
+// Fonction pour afficher les alertes dans une modale
+function showAlert(message) {
+    const modalMessage = document.getElementById('modal-message');
+    modalMessage.innerText = message;
+    document.getElementById('alert-modal').style.display = 'block';
+}
 
+// Fonction pour fermer la modale
+function closeModal() {
+    document.getElementById('alert-modal').style.display = 'none';
+}
+
+// Événement pour le bouton OK de la modale
+document.getElementById('modal-confirm').addEventListener('click', closeModal);
+
+// Événement pour la croix de fermeture de la modale
+document.querySelector('.close').addEventListener('click', closeModal);
+
+// Événement de soumission
+document.getElementById('submit').addEventListener('click', () => {
     if (document.querySelector('.selected')) {
         nextQuestion();
     } else {
-        alert('Veuillez sélectionner une réponse avant de continuer.');
+        showAlert('Veuillez sélectionner une réponse avant de continuer.');
     }
 });
 
-fetchQuiz();
+// Démarrer le quiz
+fetchQuizzes();
