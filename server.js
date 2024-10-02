@@ -17,6 +17,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html')); // Assurez-vous que 'index.html' est dans le dossier 'public'
 });
+app.use('/ressource', express.static(path.join(__dirname, 'ressource')));
+app.use('/models', express.static(path.join(__dirname, 'models')));
+app.use('/css', express.static(path.join(__dirname, 'css')));
+
+
 
 // Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
