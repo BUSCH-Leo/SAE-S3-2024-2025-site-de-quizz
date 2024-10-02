@@ -53,24 +53,49 @@ function displayCurrentQuestion() {
         questionElement.innerHTML = `<h3 class="question-text">${currentQuestionIndex + 1}. ${question.question}</h3>`;
         quizContainer.appendChild(questionElement);
 
-        const answers = [...question.incorrect_answers, question.correct_answer].sort();
-        answers.forEach((answer, index) => {
-            const answerElement = document.createElement('button');
-            answerElement.classList.add('answer', 'btn', 'm-2');
-            answerElement.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span> <span class="text">${answer}</span>`;
-            quizContainer.appendChild(answerElement);
+        // Vérifiez si la question contient "year"
+        if (question.question.toLowerCase().includes('year')) {
+            const sliderElement = document.createElement('input');
+            sliderElement.type = 'range';
+            sliderElement.min = 1900; // Vous pouvez ajuster les limites selon le contexte
+            sliderElement.max = 2024; // Ajustez également cela
+            sliderElement.value = 2000; // Valeur par défaut
+            sliderElement.classList.add('form-range');
+            sliderElement.id = 'year-slider';
 
-            answerElement.addEventListener('click', () => {
-                document.querySelectorAll('.answer').forEach(btn => btn.classList.remove('selected'));
-                answerElement.classList.add('selected');
-                saveAnswer(answer);
+            // Afficher la valeur sélectionnée
+            const sliderValue = document.createElement('div');
+            sliderValue.id = 'slider-value';
+            sliderValue.innerText = `Valeur sélectionnée : ${sliderElement.value}`;
+
+            sliderElement.oninput = function() {
+                sliderValue.innerText = `Valeur sélectionnée : ${this.value}`;
+            };
+
+            quizContainer.appendChild(sliderElement);
+            quizContainer.appendChild(sliderValue);
+        } else {
+            // Autres types de réponses
+            const answers = [...question.incorrect_answers, question.correct_answer].sort();
+            answers.forEach((answer, index) => {
+                const answerElement = document.createElement('button');
+                answerElement.classList.add('answer', 'btn', 'm-2');
+                answerElement.innerHTML = `<span class="letter">${String.fromCharCode(65 + index)}</span> <span class="text">${answer}</span>`;
+                quizContainer.appendChild(answerElement);
+
+                answerElement.addEventListener('click', () => {
+                    document.querySelectorAll('.answer').forEach(btn => btn.classList.remove('selected'));
+                    answerElement.classList.add('selected');
+                    saveAnswer(answer);
+                });
             });
-        });
+        }
 
         quizContainer.classList.remove('fade-out');
         quizContainer.classList.add('fade-in');
     }, 500);
 }
+
 
 function startTimer() {
     let timeLeft = timePerQuestion;
@@ -94,8 +119,15 @@ function startTimer() {
 }
 
 function saveAnswer(selectedAnswer) {
-    userAnswers[currentQuestionIndex] = selectedAnswer;
+    // Si un slider est utilisé, récupérez sa valeur
+    const sliderElement = document.getElementById('year-slider');
+    if (sliderElement) {
+        userAnswers[currentQuestionIndex] = sliderElement.value; // Enregistrez la valeur du slider
+    } else {
+        userAnswers[currentQuestionIndex] = selectedAnswer; // Sinon, enregistrez la réponse normale
+    }
 }
+
 
 function nextQuestion() {
     currentQuestionIndex++;
