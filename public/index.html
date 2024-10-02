@@ -8,6 +8,7 @@
 	<link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
     <script src="../models/menu.js" defer></script>
     <script src="../models/No_Zoomies.js" defer></script>
+    <script src="../models/AudioPlay.js" defer></script>
 </head>
 <body>
     <div id="container">
@@ -32,6 +33,23 @@
 			</div>
 		</div>
     </div>
+	
+	
+	<audio id="bg-music" loop>
+        <source src="../ressource/menu_music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="music-popup" class="popup">
+        <p>Voulez-vous activer la musique de fond ?</p>
+        <button class="popup_button" id="accept-music">Oui</button>
+        <button class="popup_button" id="decline-music">Non</button>
+    </div>
+
+    <div id="music-toggle" class="toggle">
+        <img src="../ressource/speaker_off.png" alt="Music Toggle" id="toggle-icon">
+    </div>
+	
 	<div id="burger-menu"></div>
 	<script src="../models/importer_burger.js" defer></script>
 </body>
