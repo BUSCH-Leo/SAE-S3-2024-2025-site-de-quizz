@@ -66,6 +66,7 @@ button {
     height: 100%;
     transition: transform 0.2s ease-in-out;
     z-index: 2;
+	border: 1px solid yellow;
 }
 
 img.plate {
@@ -98,12 +99,12 @@ img.fork {
 }
 
 .button_zone:hover img.plate {
-    animation: plate 1s linear forwards;
+    animation: plate 0.5s linear forwards;
 }
 
 @keyframes plate {
     0% { transform: translateY(0%); }
-    20% { transform: translateY(-10px); }
+    40% { transform: translateY(-10px); }
     100% { transform: translateY(0%); }
 }
 
@@ -118,7 +119,7 @@ img.fork {
 }
 
 #zone_jouer:hover img.fork {
-    animation: fork 1s forwards;
+    animation: fork 0.8s forwards;
 }
 
 @keyframes fork {
@@ -128,7 +129,7 @@ img.fork {
 }
 
 #zone_jouer:hover img.knife {
-    animation: knife 1s forwards;
+    animation: knife 0.8s forwards;
 }
 
 
@@ -178,14 +179,14 @@ img.pan {
 
 @media (max-width: 1000px) {
     #zone_jouer {
-        top: 50%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: auto;
         height: auto;
     }
     #zone_créer {
-        top: 60%; 
+        top: 65%; 
         left: 50%;
         transform: translate(-50%, -50%);
         width: auto;
@@ -201,12 +202,12 @@ img.pan {
         justify-content: center;
         align-items: center;
     }
-    img.plate, img.pan {
+    img.plate, img.pan, img.fork, img.knife {
         display: none;
     }
 }
 
-@media (max-height: 500px) {
+@media (max-height: 550px) {
     #zone_jouer {
         top: 60%;
         left: 30%;
@@ -231,7 +232,10 @@ img.pan {
         justify-content: center;
         align-items: center;
     }
-    img.plate, img.pan {
+    img.plate, img.pan, img.fork, img.knife {
         display: none;
     }
+	#title {
+		top : -15%;
+	}
 }
