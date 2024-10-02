@@ -57,7 +57,7 @@
 button {
     font-size: 2vw;
     padding: 2vh 2vw;
-    background-color: #dab10d;
+    background-color: rgb(251, 188, 0);
     color: black;
     cursor: pointer;
     border-radius: 100%;
