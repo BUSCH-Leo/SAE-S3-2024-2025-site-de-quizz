@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.target === modalContainer) {
             modalContainer.style.display = 'none';
             uploadModal.style.display = 'none'; // Masquer la modale d'importation
-            projectsModal.style.display = 'none'; // Masquer la modale des projets
         }
     });
 
@@ -73,4 +72,25 @@ document.addEventListener('DOMContentLoaded', function() {
         removeButton.classList.add('disabled');
         validateButton.classList.add('disabled');
     });
+});
+
+
+// ---------------------------------------------------------------------
+
+// Sélection de la nouvelle modale et des boutons
+const newQuizButton = document.getElementById('new-quiz-btn');
+const projectNameModal = document.getElementById('project-name-modal');
+const saveProjectNameButton = document.getElementById('save-project-name-btn');
+const cancelProjectNameButton = document.getElementById('cancel-project-name-btn');
+const projectNameInput = document.getElementById('project-name-input');
+
+// Ouvrir la modale pour le nom du projet
+newQuizButton.addEventListener('click', function() {
+    projectNameModal.style.display = 'flex'; // Afficher la modale pour le nom du projet
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target === projectNameModal) {
+        projectNameModal.style.display = 'none';
+    }
 });

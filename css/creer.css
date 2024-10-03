@@ -98,3 +98,11 @@ button:hover:not(.disabled) {
     margin: 5px;
     color: white;
 }
+
+#project-name-modal .modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    margin: 0 auto;
+}
