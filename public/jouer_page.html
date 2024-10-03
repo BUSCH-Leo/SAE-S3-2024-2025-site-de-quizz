@@ -30,21 +30,35 @@
         </div>
     </div>
 
-    <!-- Fenêtre modale pour le drag and drop -->
-    <div class="modal" id="upload-modal">
-        <div class="modal-content">
-            <h2>Importer un fichier</h2>
-            <div class="drop-zone" id="drop-zone">
-                <p>Glissez et déposez un fichier ici ou cliquez pour sélectionner un fichier.</p>
-            </div>
-            <input type="file" id="file-input" style="display: none;">
-            
-            <div class="button-container-fenetre">
-                <button id="validate-button" class="disabled" disabled>Valider</button>
-                <button id="remove-button" class="disabled" disabled>Retirer</button>
-            </div>                                     
+    <div class="modal" style="display: none;">
+        <div id="upload-modal" style="display: flex;">
+            <div class="modal-content">
+                <h2>Importer un fichier</h2>
+                <div class="drop-zone" id="drop-zone">
+                    <p>Glissez et déposez un fichier ici ou cliquez pour sélectionner un fichier.</p>
+                </div>
+                <input type="file" id="file-input" style="display: none;">
+                
+                <div class="button-container-fenetre">
+                    <button id="validate-button" class="disabled" disabled>Valider</button>
+                    <button id="remove-button" class="disabled" disabled>Retirer</button>
+                </div>                                     
+            </div>        
+        </div>
+    
+        <div id="projects-modal" style="display: flex;">
+            <div class="modal-content">
+                <h2>Vos projets</h2>
+                <ul id="projects-list">
+                    <li class="project-item">Projet 1</li>
+                    <li class="project-item">Projet 2</li>
+                    <li class="project-item">Projet 3</li>
+                    <li class="project-item">Projet 4</li>
+                    <li class="project-item">Projet 5</li>
+                </ul>
+            </div>        
         </div>        
-    </div>
+    </div>    
 
     <script src="../models/jouer_creer.js" defer></script>
     <script src="../models/jouer.js" defer></script>

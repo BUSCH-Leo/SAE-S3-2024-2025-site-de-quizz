@@ -12,15 +12,9 @@
     z-index: 1000;
 }
 
-#upload-modal {
-    width: 30%;
-    /* Enlever margin-right pour que la largeur soit uniforme */
-    display: flex; /* Pour s'assurer que le contenu est centré */
-}
-
+#upload-modal,
 #projects-modal {
     width: 30%;
-    /* Enlever margin-right pour que la largeur soit uniforme */
     display: flex; /* Pour s'assurer que le contenu est centré */
 }
 
@@ -33,10 +27,6 @@
     max-width: 90%;
     margin: 0 auto;
     overflow: auto;
-}
-
-#projects-modal {
-    display: flex;
 }
 
 #projects-list {
