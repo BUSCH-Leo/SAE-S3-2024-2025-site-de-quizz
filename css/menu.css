@@ -168,9 +168,9 @@ img.pan {
 }
 
 @keyframes creer {
-    0% { transform: translateX(0) translateY(0) rotate(0deg);}
+    0% { transform: translateX(0) translateY(0) rotate(0deg); }
     40% { transform: translateX(15%) translateY(3%) rotate(0deg); }
-    50% { transform: translateX(10%) translateY(-20 %) rotate(0deg); }
+    50% { transform: translateX(10%) translateY(-20%) rotate(0deg); }
     60% { transform: translateX(0%) translateY(-40%) rotate(-180deg); }
     90% { transform: translateX(0) translateY(0) rotate(-360deg); }
     95% { transform: translateX(0) translateY(8%) rotate(-360deg); }
@@ -178,33 +178,40 @@ img.pan {
 }
 
 .popup {
+    font-size: 18px;
+    font-weight: bold;
     position: fixed;
-    top: 0;
+    top: 50px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: 10px;
     text-align: center;
     z-index: 10;
     display: none;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
 }
 
+.popup p {
+    margin-bottom: 10px;
+}
+
 .popup_button {
     position: relative;
-    font-size: 2vw;
-    padding: 2vh 2vw;
+    font-size: 20px;
+    padding: 3% 15%;
     background-color: rgb(251, 188, 0);
     color: black;
     cursor: pointer;
-    border-radius: 10%;
+    border-radius: 10px;
     width: auto;
     height: auto;
     transition: transform 0.2s ease-in-out;
     z-index: 2;
 	border: 1px solid yellow;
+    margin: 5px;
 }
 
 #music-toggle {
@@ -217,6 +224,13 @@ img.pan {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 50%;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.popup-image {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: middle;
 }
 
 #music-toggle img {
@@ -239,7 +253,7 @@ img.pan {
         width: auto;
         height: auto;
     }
-    button {
+    #container button {
         font-size: 5vw;
         padding: 1vh 3vw;
         border-radius: 0;
@@ -269,7 +283,7 @@ img.pan {
         width: auto;
         height: auto;
     }
-    button {
+    #container button {
         font-size: 5vw;
         padding: 1vh 3vw;
         border-radius: 0;
