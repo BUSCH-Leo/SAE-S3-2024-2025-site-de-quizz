@@ -58,5 +58,5 @@ app.get('/api/quiz/category/:categoryId', async (req, res) => {
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-    console.log("Serveur démarré sur le port ${PORT}");
+    console.log("Serveur démarré sur le port 3001 connecté vous sur http://localhost:3001");
 });

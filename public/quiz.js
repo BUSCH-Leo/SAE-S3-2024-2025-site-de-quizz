@@ -128,24 +128,34 @@ function nextQuestion() {
 function calculateScore() {
     let totalScore = 0;
     let totalQuestions = 0;
+    let memoData = [];
 
     quizData.forEach((quiz, quizIndex) => {
+        let questionsMemo = [];
         quiz.questions.forEach((question, questionIndex) => {
             totalQuestions++;
-            if (userAnswers[quizIndex] && userAnswers[quizIndex][questionIndex] === question.correct_answer) {
+            const userAnswer = userAnswers[quizIndex] && userAnswers[quizIndex][questionIndex];
+            const correctAnswer = question.correct_answer;
+            if (userAnswer === correctAnswer) {
                 totalScore++;
             }
+
+            questionsMemo.push({
+                question: question.question,
+                userAnswer: userAnswer || "Aucune réponse",
+                correctAnswer: correctAnswer
+            });
         });
+        memoData.push({ questions: questionsMemo });
     });
 
-    const scoreElement = document.getElementById('score');
-    scoreElement.innerHTML = `
-        <div class="finish-animation">Félicitations ! Votre score est de ${totalScore}/${totalQuestions}</div>
-    `;
-    document.getElementById('quiz-container').innerHTML = '';
-    document.getElementById('timer').remove();
-    document.getElementById('progress-bar').style.width = '0';
+    // Sauvegarder les mémos dans localStorage
+    localStorage.setItem('memos', JSON.stringify(memoData));
+
+    // Rediriger vers la page des mémos
+    window.location.href = '/memo.html';
 }
+
 
 // Fonction pour afficher les alertes dans une modale
 function showAlert(message) {
