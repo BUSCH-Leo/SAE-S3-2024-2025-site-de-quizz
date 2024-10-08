@@ -1,6 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    background-image: url('../ressource/gestion_comptes/background_connexion.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -16,7 +15,7 @@ body {
     border-radius: 15px;
     text-align: center;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 5%;
+    padding: 2%;
     max-width: 500px;
     width: 100%;
 }
@@ -49,6 +48,7 @@ body {
     text-align: center;
     font-size: 16px;
     margin-top: 20px;
+    margin-bottom: 15px;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
@@ -94,4 +94,23 @@ body {
 #mdp_oublie:hover {
     transition: color 0.5s ease;
     color:rgb(107, 107, 107);
+}
+
+#inscription,#connexion {
+    transition: color 0.5s ease;
+    color: black;
+}
+
+#inscription:hover,#connexion:hover {
+    transition: color 0.5s ease;
+    color:rgb(107, 107, 107);
+}
+
+p {
+    margin-bottom: 2px;
+}
+
+#champ_obligatoire {
+    font-size: 12px;
+    color: red;
 }
