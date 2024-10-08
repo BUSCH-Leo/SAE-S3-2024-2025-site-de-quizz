@@ -9,25 +9,24 @@
     <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
 </head>
 <body>
-    <div class="container mt-5">
-        <header class="d-flex justify-content-between align-items-center mb-4">
-            <div class="logo">
-                <img src="../ressource/logo_quizzine.png" alt="Logo" class="img-fluid">
-            </div>
-            <div class="profile d-flex align-items-center">
-                <img src="../ressource/profile.png" alt="Profile" class="profile-img rounded-circle">
-                <span class="status ms-2">Connecté</span>
-            </div>
-        </header>
-        
-        <h1 class="text-center mb-4">Masterclass Quiz</h1>
-        
-        <div class="progress mb-4">
-            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
-            <span id="timer" class="timer position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); color: #ffbaba;">00:00</span>
+    <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="logo">
+            <img src="../ressource/logo_quizzine_réduis.png" alt="Logo" class="img-fluid">
         </div>
+        <div class="profile d-flex align-items-center">
+            <img src="../ressource/profile-image-exemple.png" alt="Profile" class="profile-img">
+            <span class="status ms-2">Connecté</span>
+        </div>
+    </header>    
+
+    <div class="container mt-5">
         
         <div id="quiz-container" class="quiz-container row g-4 justify-content-center"></div>
+
+        <div class="progress mb-4" id="progress-bar-box">
+            <div id="progress-bar" class="progress-bar" role="progressbar" style="width: 0%;"></div>
+            <span id="timer" class="timer position-absolute" style="right: 10px; top: 50%; transform: translateY(-50%); color: #818181;">00:00</span>
+        </div>
         
         <div id="score" class="text-center mt-4 score-section"></div>
         
