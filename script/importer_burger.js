@@ -10,7 +10,7 @@ fetch('burger.html')
 // Charge dynamiquement burger.js
 function loadBurgerJS() {
     const script = document.createElement('script');
-    script.src = '../models/burger.js';
+    script.src = '../script/burger.js';
     script.defer = true;
     document.body.appendChild(script);
 }
