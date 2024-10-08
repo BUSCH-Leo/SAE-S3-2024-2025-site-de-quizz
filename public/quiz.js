@@ -158,6 +158,7 @@ function calculateScore() {
 
 
 // Fonction pour afficher les alertes dans une modale
+
 function showAlert(message) {
     const modalMessage = document.getElementById('modal-message');
     modalMessage.innerText = message;
@@ -169,11 +170,17 @@ function closeModal() {
     document.getElementById('alert-modal').style.display = 'none';
 }
 
-// Événement pour le bouton OK de la modale
-document.getElementById('modal-confirm').addEventListener('click', closeModal);
-
 // Événement pour la croix de fermeture de la modale
 document.querySelector('.close').addEventListener('click', closeModal);
+
+// (Optionnel) Fermer la modale en cliquant en dehors du contenu
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('alert-modal');
+    if (event.target === modal) {
+        closeModal();
+    }
+});
+
 
 // Événement de soumission
 document.getElementById('submit').addEventListener('click', () => {
