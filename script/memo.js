@@ -1,7 +1,13 @@
-document.addEventListener('DOMContentLoaded', displayMemos);
+document.addEventListener('DOMContentLoaded', function () {
+    displayMemos();
+    displayScore();
+    displayJoke();
+});
+
+const userScore = 846; // a modifié pour connecter au score
 
 function displayMemos() {
-    const memoData = JSON.parse(localStorage.getItem('memos')); // Récupérer les mémos du localStorage
+    const memoData = JSON.parse(localStorage.getItem('memos'));
     const memoContainer = document.getElementById('memo-content');
 
     if (memoData) {
@@ -20,7 +26,6 @@ function displayMemos() {
 
             memoContainer.appendChild(memoElement);
 
-            // Animation légère pour chaque mémo
             setTimeout(() => {
                 memoElement.style.opacity = '1';
                 memoElement.style.transform = 'translateY(0)';
@@ -29,4 +34,43 @@ function displayMemos() {
     } else {
         memoContainer.innerHTML = '<p>Aucune réponse enregistrée.</p>';
     }
+}
+
+function displayScore() {
+    document.getElementById('user-score').innerText = userScore; // Use the single score variable
+}
+
+function displayJoke() {
+    const jokes = [
+        `c'est deux fois plus que : ${Math.floor(userScore / 2)}`,
+        `c'est presque autant que : ${userScore + 1}`,
+        `vous avez dépassé le score de : ${Math.floor(Math.random() * (userScore - 1)) + 1}`,
+        `vous avez battu votre record précédent de : ${userScore - 10}`,
+        `vous êtes sur la bonne voie pour atteindre : ${userScore * 1.5}`,
+        `personne n'a fait mieux que : ${Math.floor(Math.random() * (userScore - 1)) + 1}`,
+        `Vous êtes dans le top ${Math.floor(Math.random() * 99) + 1} %`,
+        `Vous êtes plus intelligent que ${Math.floor(Math.random() * 99) + 1} % de la population`,
+        `Vous êtes à ${Math.floor(1000 - userScore)} points de 1000 points`,
+        `Vous avez aussi bien réussi le quiz que quelqu'un qui a bien réussi le quiz`,
+        `c'est quatre fois plus que : ${Math.floor(userScore / 4)}`,
+        `c'est deux fois moins que : ${Math.floor(userScore * 2)}`
+    ];
+
+    function getRandomJokes(jokesArray, n) {
+        const shuffled = [...jokesArray].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, n);
+    }
+
+    const selectedJokes = getRandomJokes(jokes, 3);
+
+    const jokeList = document.createElement('ul');
+    selectedJokes.forEach(joke => {
+        const listItem = document.createElement('li');
+        listItem.textContent = joke;
+        jokeList.appendChild(listItem);
+    });
+
+    const jokeContainer = document.getElementById('joke-text');
+    jokeContainer.innerHTML = '';
+    jokeContainer.appendChild(jokeList);
 }

@@ -1,24 +1,29 @@
-/* Style de la carte mémos */
+body {
+    background-image: url('../ressource/background_memo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
 .memo-card {
     border-radius: 10px;
-    background-color: #f9f9f9;
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* Titre centré */
 .memo-card h2 {
-    color: #007bff;
+    color: #FFB500;
     font-weight: bold;
     margin-bottom: 20px;
 }
 
-/* Style des réponses */
 .memo-item {
     margin-bottom: 20px;
     padding: 15px;
     background-color: #fff;
-    border-left: 5px solid #007bff;
+    border-left: 5px solid #FFB500;
     border-radius: 5px;
     transition: transform 0.3s ease;
 }
@@ -28,7 +33,6 @@
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Question et réponse */
 .memo-item h4 {
     font-size: 18px;
     color: #333;
@@ -48,7 +52,6 @@
     color: #dc3545;
 }
 
-/* Animation fade-in pour le contenu */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -62,14 +65,80 @@
     animation: fadeIn 1s ease;
 }
 
-/* Bouton de retour */
+.score-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.trophy-img {
+    width: 20vh;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    z-index: 1;
+}
+
+.trapezoid {
+    --p: 20%;
+    height: 20vh;
+    clip-path: polygon(var(--p) 0, calc(100% - var(--p)) 0, 100% 100%, 0 100%);
+    background: linear-gradient(0deg, white, #FFFF1A);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    width: 70%;
+}
+
+#user-score {
+    color: black;
+    font-size: 8vh;
+    font-weight: bold;
+    z-index: 1;
+}
+
+#bigscore {
+    margin-top: 20px;
+    font-size: 5vh;
+    color: black;
+    font-weight: bold;
+}
+
+#bigscore-container {
+    border: 3px solid #FFB500;
+    border-radius: 15px;
+    padding: 0.1vh;
+    background-color: rgba(255, 255, 255, 0.9);
+    margin-top: 0;
+    width: 90%;
+    display: inline-block;
+    text-align: center;
+}
+
+.joke-text {
+    color: orange;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
 .btn-lg {
     padding: 10px 20px;
     font-size: 18px;
     border-radius: 50px;
 }
 
-/* Media queries pour mobile */
+.btn-primary {
+    background-color: #FFB500;
+    border-color: #FFB500;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #e0a800;
+    border-color: #e0a800;
+    color: white;
+}
+
 @media (max-width: 767px) {
     .memo-card {
         padding: 15px;

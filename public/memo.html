@@ -4,24 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vos Mémos</title>
-    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/memo.css">
 </head>
 <body>
 
     <div class="container mt-5">
-        <div class="row justify-content-center">
+        <div class="row">
+            <!-- score et phrase drole -->
+            <div class="col-lg-4">
+				<div class="memo-card shadow-lg p-4 mb-4 bg-white">
+					<div id="scorediv" class="text-center position-relative">
+						<img src="../ressource/trophy.png" class="trophy-img" alt="Trophy Image">
+						<div class="trapezoid">
+							<h3 id="user-score"></h3>
+						</div>
+						<div id="bigscore-container">
+							<h2 id="bigscore">SCORE</h2>
+						</div>
+					</div>
+					<p class="joke-text" id="joke-text"></p>
+					<div class="text-center mt-4">
+						<button class="btn btn-primary btn-lg" onclick="window.location.href='/'">Revenir à l'accueil</button>
+					</div>
+				</div>
+			</div>
+
+            <!-- correction -->
             <div class="col-lg-8">
                 <div class="memo-card shadow-lg p-4 mb-4 bg-white">
-                    <h2 class="text-center">Votre Score</h2>
-                    <div class="text-center" id="totalScore"></div>
                     <h2 class="text-center">Vos Réponses et les Bonnes Réponses</h2>
                     <div id="memo-content" class="mt-4"></div>
-                    <div class="text-center mt-4">
-                        <button class="btn btn-primary btn-lg" onclick="window.location.href='/'">Revenir à l'accueil</button>
-                    </div>
                 </div>
             </div>
         </div>
