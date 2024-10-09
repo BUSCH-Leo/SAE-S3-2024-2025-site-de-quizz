@@ -15,17 +15,16 @@ document.addEventListener('DOMContentLoaded', function() {
     function playRandomAudio() {
         const randomNumber = getRandomAudioNumber();
         const audioFilePath = `../ressource/la quizzine ${randomNumber}.mp3`;
-        console.log(`Playing audio: ${audioFilePath}`); // Log the audio file path
+        console.log(`Playing audio: ${audioFilePath}`);
         
         const audio = new Audio(audioFilePath);
         audio.play().then(() => {
-            console.log('Audio is playing'); // Confirm successful play
+            console.log('Audio is playing');
         }).catch(error => {
             console.error('Error playing sound effect:', error);
         });
     }
 
-    // Select buttons directly using their IDs
     const jouerButton = document.getElementById('jouer');
     const creerButton = document.getElementById('créer');
     const title = document.getElementById('title');
@@ -43,6 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
     title.addEventListener('click', function() {
         console.log('Title clicked');
         playRandomAudio();
+		title.classList.add('clicked');
+    
+    setTimeout(() => {
+        title.classList.remove('clicked');
+    }, 200);  // durée animation (0.2s)
     });
     
     musicPopup.style.display = 'block';
@@ -51,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         music.play().then(() => {
             isMusicPlaying = true;
             toggleIcon.src = '../ressource/speaker_on.png';
-            console.log('Background music is playing'); // Log successful play
+            console.log('Background music is playing');
         }).catch(error => {
             console.error('Error playing music:', error);
         });
