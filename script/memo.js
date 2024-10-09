@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     displayJoke();
 });
 
-const userScore = 846; // a modifié pour connecter au score
-
+// Fonction pour afficher les mémos
 function displayMemos() {
     const memoData = JSON.parse(localStorage.getItem('memos'));
     const memoContainer = document.getElementById('memo-content');
@@ -36,11 +35,16 @@ function displayMemos() {
     }
 }
 
+// Fonction pour afficher le score
 function displayScore() {
-    document.getElementById('user-score').innerText = userScore; // Use the single score variable
+    const userScore = localStorage.getItem('score') || 0; 
+    document.getElementById('user-score').innerText = userScore; 
+    return userScore; 
 }
 
+// Fonction pour afficher des blagues
 function displayJoke() {
+    const userScore = localStorage.getItem('score') || 0; 
     const jokes = [
         `c'est deux fois plus que : ${Math.floor(userScore / 2)}`,
         `c'est presque autant que : ${userScore + 1}`,

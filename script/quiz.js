@@ -149,12 +149,14 @@ function calculateScore() {
         memoData.push({ questions: questionsMemo });
     });
 
-    // Sauvegarder les mémos dans localStorage
+    // Sauvegarder le score et les mémos dans localStorage
+    localStorage.setItem('score', totalScore); // Sauvegarder le score
     localStorage.setItem('memos', JSON.stringify(memoData));
 
     // Rediriger vers la page des mémos
     window.location.href = '/memo.html';
 }
+
 
 
 // Fonction pour afficher les alertes dans une modale
