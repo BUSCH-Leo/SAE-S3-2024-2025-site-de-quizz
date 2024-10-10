@@ -6,6 +6,8 @@ const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const User = require('./models/user'); 
 
+
+
 // Importation des routes
 const authRoutes = require('./routes/auth');
 const Category = require('./models/category');
@@ -19,9 +21,11 @@ mongoose.connect('mongodb://localhost:27017/quizDB')
     .then(() => console.log('Connecté à MongoDB'))
     .catch((error) => console.error('Erreur de connexion à MongoDB:', error));
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 // Middleware pour les sessions
 app.use(session({
-    secret: 'votre_secret', // Secret pour l'environnement de production
+    secret: 'quizzine', // Secret pour l'environnement de production
     resave: false,
     saveUninitialized: true
 }));
@@ -41,7 +45,7 @@ passport.use(new LocalStrategy({
             return done(null, false, { message: 'Utilisateur non trouvé' });
         }
 
-        const isMatch = await user.matchPassword(password); // Assurez-vous d'avoir une méthode `matchPassword` dans votre modèle User
+        const isMatch = await user.matchPassword(password);
         if (!isMatch) {
             return done(null, false, { message: 'Mot de passe incorrect' });
         }
@@ -85,8 +89,9 @@ app.get('/', (req, res) => {
 
 // Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'test.html'));
+    res.render('test', { user: req.user }); 
 });
+
 
 // Route pour récupérer toutes les catégories
 app.get('/api/categories', async (req, res) => {
