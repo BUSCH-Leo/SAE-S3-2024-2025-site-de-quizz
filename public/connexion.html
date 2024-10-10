@@ -17,14 +17,14 @@
 
     <div class="content-box">
         <h2 class="page-title">Connexion</h2>
-        <form class="login-form">
+        <form class="login-form" action="/auth/login" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">Adresse email</label>
-                <input type="email" class="form-control" id="email" placeholder="Entrez votre email">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe">
                 <a href="#" id="mdp_oublie">
                     <p>Mot de passe oublié</p>
                 </a>

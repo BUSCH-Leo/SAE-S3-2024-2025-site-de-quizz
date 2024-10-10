@@ -17,30 +17,30 @@
 
     <div class="content-box">
         <h2 class="page-title">Inscription</h2>
-        <form class="registration-form">
+        <form class="registration-form" action="/auth/register" method="POST">
             <div class="mb-3">
                 <label for="first-name" class="form-label">Prénom</label>
-                <input type="text" class="form-control" id="first-name" placeholder="Entrez votre prénom">
+                <input type="text" class="form-control" id="first-name" name="firstName" placeholder="Entrez votre prénom" required>
             </div>
             <div class="mb-3">
                 <label for="last-name" class="form-label">Nom</label>
-                <input type="text" class="form-control" id="last-name" placeholder="Entrez votre nom">
+                <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Entrez votre nom" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Adresse email <span style="color: red;">*</span></label>
-                <input type="email" class="form-control" id="email" placeholder="Entrez votre email" required>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email" required>
             </div>
             <div class="mb-3">
                 <label for="address" class="form-label">Adresse <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="address" placeholder="Entrez votre adresse" required>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Entrez votre adresse" required>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe <span style="color: red;">*</span></label>
-                <input type="password" class="form-control" id="password" placeholder="Entrez votre mot de passe" required>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe" required>
             </div>
             <div class="mb-3">
                 <label for="confirm-password" class="form-label">Confirmation du mot de passe <span style="color: red;">*</span></label>
-                <input type="password" class="form-control" id="confirm-password" placeholder="Confirmez votre mot de passe" required>
+                <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Confirmez votre mot de passe" required>
             </div>
             <p id="champ_obligatoire"><span style="color: red;">*</span>Champs obligatoires</p>
             <div class="button-container">
