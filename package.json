@@ -1,0 +1,13 @@
+{
+  "name": "sae-s3-2024-2025-site-de-quizz",
+  "version": "1.0.0",
+  "description": "Bienvenue sur le projet **SAE-S3-2024-2025 Site de Quizz** ! Ce projet vise à développer un site de quiz moderne et interactif.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
