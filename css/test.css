@@ -10,6 +10,10 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+#modal-message {
+    margin-bottom: 0px;
+}
+
 .modal-content {
     background-color: #fefefe;
     margin: 10% auto;
@@ -23,7 +27,7 @@
 }
 
 .close {
-    color: #ff0000;
+    color: #ff9900;
     font-size: 30px;
     font-weight: bold;
     position: absolute;
@@ -34,7 +38,7 @@
 
 .close:hover,
 .close:focus {
-    color: #d9534f; 
+    color: #b86d03; 
     cursor: pointer;
 }
 
@@ -54,8 +58,8 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrer les éléments verticalement */
-    align-items: center; /* Centrer horizontalement */
+    justify-content: center;
+    align-items: center;
 }
 
 header {

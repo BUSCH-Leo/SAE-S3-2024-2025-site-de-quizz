@@ -19,20 +19,16 @@
         <h2 class="page-title">Inscription</h2>
         <form class="registration-form" action="/auth/register" method="POST">
             <div class="mb-3">
-                <label for="first-name" class="form-label">Prénom</label>
-                <input type="text" class="form-control" id="first-name" name="firstName" placeholder="Entrez votre prénom" required>
-            </div>
-            <div class="mb-3">
-                <label for="last-name" class="form-label">Nom</label>
-                <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Entrez votre nom" required>
+                <label for="first-name" class="form-label">Nom d'utilisateur <span style="color: red;">*</span></label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Entrez votre nom d'utilisateur" required>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Adresse email <span style="color: red;">*</span></label>
                 <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email" required>
             </div>
             <div class="mb-3">
-                <label for="address" class="form-label">Adresse <span style="color: red;">*</span></label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="Entrez votre adresse" required>
+                <label for="address" class="form-label">Adresse</label>
+                <input type="text" class="form-control" id="address" name="address" placeholder="Entrez votre adresse">
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Mot de passe <span style="color: red;">*</span></label>
