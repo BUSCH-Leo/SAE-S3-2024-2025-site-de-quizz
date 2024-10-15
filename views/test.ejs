@@ -14,15 +14,17 @@
             <img src="../ressource/logo_quizzine_réduis.png" alt="Logo" class="img-fluid">
         </div>
         <div class="profile d-flex align-items-center">
-            <img src="../ressource/profile-image-exemple.png" alt="Profile" class="profile-img">
+            <img src="<% if (user) { %> <%= user.avatar %> <% } else { %> https://api.dicebear.com/9.x/big-ears/svg?seed=<%= Math.random().toString(36).substring(7) %> <% } %>" alt="Profile" class="profile-img">
             <span class="status ms-2">
                 <% if (user) { %>
-                    <%= user.username %>
+                    <%= user.userName %>
                 <% } else { %>
                     Invité
                 <% } %>
             </span>
         </div>
+        
+        
     </header>
        
 
