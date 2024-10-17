@@ -74,11 +74,11 @@ passport.deserializeUser(async (id, done) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ressource', express.static(path.join(__dirname, 'ressource')));
 app.use('/script', express.static(path.join(__dirname, 'script')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
+app.use('/views', express.static(path.join(__dirname, 'views')));
 
 
 app.use('/auth', authRoutes);
@@ -89,8 +89,13 @@ app.get('/', (req, res) => {
 
 // Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
-    res.render('test', { user: req.user }); 
+    res.render('Test', { user: req.user }); 
 });
+// Route pour parametre
+app.get('/parametres', (req, res) => {
+    res.render('parametres', { user: req.user }); 
+});
+
 
 
 // Route pour récupérer toutes les catégories
