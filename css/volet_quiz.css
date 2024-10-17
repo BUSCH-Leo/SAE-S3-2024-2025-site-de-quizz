@@ -1,0 +1,133 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+}
+
+.titre-quiz, .option, .theme {
+    background: #BEBEBE;
+    color: #DE6E6E;
+    padding: 10px 0; /* Ajout d'un peu d'espace autour du texte */
+}
+
+.titre-quiz .sous-quiz, .option .sous-option, .theme .sous-theme {
+    display: none;
+    height: auto;
+    padding: 10px;
+    text-align: center;
+}
+
+.sous-quiz {
+    background: #D18080;
+}
+
+.sous-option {
+    background: #80D192;
+}
+
+.sous-theme {
+    background: #D18080;
+}
+
+.derouler {
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 10px; /* Réduit l'espace pour une meilleure esthétique */
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+}
+
+.derouler.rotated {
+    transform: rotate(90deg);
+}
+
+.button.button2 {
+    background-color: #D9D9D9;
+    border: none;
+    color: #383737;
+    padding: 10px 5px;
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 16px;
+    width: 180px;
+    transition-duration: 0.4s;
+}
+
+.button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+#volet {
+    width: 280px; /* Largeur fixe pour le volet */
+    background: #a9a9a9; 
+    color: #fff;
+    position: fixed; /* Changer à fixed pour le rendre visible en scrollant */
+    right: -280px; /* Commence hors de l'écran */
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.5s ease-in;
+    height: 70%;
+    border-radius: 25px;
+}
+
+/* Style des liens pour ouvrir/fermer */
+#volet a.ouvrir, #volet a.fermer {
+    width: 40px;
+    height: 40px;
+    background-size: cover;
+    background-position: center;
+    text-indent: -9999px;
+    position: fixed;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 8px 0px 0px 8px;
+    background-color: #DE6E6E;
+}
+
+#volet a.ouvrir {
+    display: block;
+}
+
+#volet a.fermer {
+    background-image: url('../ressource/page_creation_quiz/ouvrir.png');
+    display: none; 
+}
+
+#volet.open {
+    right: 0;
+}
+
+.sous-quiz, .sous-option, .sous-theme {
+    display: none;
+    overflow: hidden;
+    transition: height 0.3s ease;
+}
+
+.sous-quiz.open, .sous-option.open, .sous-theme.open {
+    display: block;
+    height: auto; 
+}
+
+/* Styles pour les thèmes */
+.theme1 {
+    background: #D9D9D9;
+    color: #383737;
+}
+
+.theme2 {
+    background: #C0C0C0;
+    color: #2E2E2E;
+}
+
+.theme3 {
+    background: #A0A0A0;
+    color: #1A1A1A;
+}

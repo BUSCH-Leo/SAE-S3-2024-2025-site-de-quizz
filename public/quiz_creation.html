@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzine - Créer un quiz</title>
+    <link rel="stylesheet" href="../css/creation_quiz.css">
+    <link rel="stylesheet" href="../css/burger.css">
+    <link rel="stylesheet" type="text/css" href="../css/volet_quiz.css">
+    <link rel="stylesheet" type="text/css" href="">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="header">
+        <div class="burger-menu">
+            <img src="../ressource/burger_menu/burger.png" alt="Menu Burger" class="burger-icon" id="burger-icon">
+        </div>
+        <img src="../ressource/page_creation_quiz/logo_quizzine_réduis.png" alt="Logo Quizzine" class="logo">
+        <img src="../ressource/page_creation_quiz/profile-image-exemple.png" alt="Profile" class="profile-img">
+    </div>
+
+    <div class="quiz-container">
+        <div class="quiz-creation-form">
+            <input type="text" placeholder="TITRE" class="quiz-title">
+            <div class="image-upload">
+                <img src="../ressource/page_creation_quiz/png.png" class="png" id="imageDisplay">
+                <label for="imageUpload" class="image-label">Choose image</label>
+                <input type="file" id="imageUpload" class="image-input" accept="image/*">
+                <div id="imagePreview"></div>
+            </div>
+            <div class="question-section">
+                <input type="text" class="question-input" placeholder="Saisir une question">
+                <div align="center" class="timer">
+                    <label class="labelSelect" for="timeSelect">Choisissez le temps pour chaque question</label>
+                    <div class="slider-container">
+                        <input type="range" id="timeSelect" min="5" max="60" step="1" value="30">
+                        <span id="timeDisplay">30s</span>
+                    </div>
+                </div>
+                    <div class="answers">
+                        <div class="answer-input-container">
+                            <input type="text" placeholder="Saisir une réponse" class="answer-input" required maxlength="24">
+                            <span class="answer-letter">A</span>
+                        </div>
+                        <div class="answer-input-container">
+                            <input type="text" placeholder="Saisir une réponse" class="answer-input" required maxlength="24">
+                            <span class="answer-letter">B</span>
+                        </div>
+                        <div class="answer-input-container">
+                            <input type="text" placeholder="Saisir une réponse" class="answer-input" required maxlength="24">
+                            <span class="answer-letter">C</span>
+                        </div>
+                        <div class="answer-input-container">
+                            <input type="text" placeholder="Saisir une réponse" class="answer-input" required maxlength="24">
+                            <span class="answer-letter">D</span>
+                        </div>
+                    </div>
+
+                <button class="submit-btn">Valider</button>
+            </div>
+        </div>
+    </div>
+
+        <!-- Volet coulissant avec le bouton ouvrir/fermer -->
+<div id="volet">
+    <header class="titre-quiz">
+        <h1>QUIZ <img class="derouler" src="../ressource/page_creation_quiz/arrow.png" alt="Flèche"></h1>
+        <nav class="sous-quiz">
+            <button class="button button2">Quiz Standard</button>
+            <button class="button button2">Vrai ou Faux</button>
+            <button class="button button2">Juste Prix</button>
+        </nav>
+    </header>
+    <section class="option">
+        <h1>Option <img class="derouler" src="../ressource/page_creation_quiz/arrow.png" alt="Flèche"></h1>
+        <nav class="sous-option">
+            <button class="button button2">Paramètres</button>
+            <button class="button button2">Partager</button>
+            <button class="button button2">Inviter</button>
+        </nav>
+    </section>
+    <section class="theme">
+        <h1>Thème <img class="derouler" src="../ressource/page_creation_quiz/arrow.png" alt="Flèche"></h1>
+        <nav class="sous-theme">
+            <button class="button button2" onclick="changeTheme('theme1')">Thème 1</button>
+            <button class="button button2" onclick="changeTheme('theme2')">Thème 2</button>
+            <button class="button button2" onclick="changeTheme('theme3')">Thème 3</button>
+        </nav>
+    </section>
+    <a href="#" class="ouvrir">Ouvrir</a>
+    <a href="#" class="fermer">Fermer</a>
+</div>
+
+
+    <nav id="slide-menu" class="menu">
+        <ul>
+            <li><a href="../public/Menu.html">Accueil</a></li>
+            <li><a href="../public/jouer_page.html">Jouer</a></li>
+            <li><a href="../public/créer_page.html">Créer</a></li>
+            <li><a href="../public/a_propos.html">À propos</a></li>
+        </ul>
+        <div class="menu-logo-container">
+            <img src="./ressource/page_creation_quiz/logo_quizzine_petit.png" alt="Logo Quizzine" class="menu-logo">
+        </div>
+        <div class="menu-footer">
+            <p>2024 Quizzine. Tous droits réservés.</p>
+        </div>
+    </nav>
+
+    <script src="../script/volet_script.js" defer></script>
+    <script src="../script/quiz_standard.js" defer></script>
+    <script src="../script/burger.js" defer></script>
+</body>
+</html>
