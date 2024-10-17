@@ -21,17 +21,22 @@ function displayMemos() {
     const memoContainer = document.getElementById('memo-content');
 
     if (memoData) {
-        memoData.forEach((memo, index) => {
+        let globalQuestionIndex = 0; 
+
+        memoData.forEach((memo, quizIndex) => {
             const memoElement = document.createElement('div');
             memoElement.classList.add('memo-item', 'shadow-sm', 'p-3', 'mb-3', 'bg-light', 'rounded');
 
             memoElement.innerHTML = `
-                <h4>Quiz ${index + 1}:</h4>
-                ${memo.questions.map((q, i) => `
-                    <p><strong>Question ${i + 1}:</strong> ${q.question}</p>
-                    <p class="user-answer"><strong>Votre réponse:</strong> ${q.userAnswer}</p>
-                    <p class="correct-answer"><strong>Bonne réponse:</strong> ${q.correctAnswer}</p>
-                `).join('')}
+                <h4>Quiz ${quizIndex + 1}:</h4>
+                ${memo.questions.map((q, questionIndex) => {
+                    globalQuestionIndex++; 
+                    return `
+                        <p><strong>Question ${globalQuestionIndex}:</strong> ${q.question}</p>
+                        <p class="user-answer"><strong>Votre réponse:</strong> ${q.userAnswer}</p>
+                        <p class="correct-answer"><strong>Bonne réponse:</strong> ${q.correctAnswer}</p>
+                    `;
+                }).join('')}
             `;
 
             memoContainer.appendChild(memoElement);
@@ -39,12 +44,13 @@ function displayMemos() {
             setTimeout(() => {
                 memoElement.style.opacity = '1';
                 memoElement.style.transform = 'translateY(0)';
-            }, index * 150);
+            }, quizIndex * 150);
         });
     } else {
         memoContainer.innerHTML = '<p>Aucune réponse enregistrée.</p>';
     }
 }
+
 
 // Fonction pour afficher le score
 function displayScore() {

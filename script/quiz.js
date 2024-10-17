@@ -53,7 +53,10 @@ function displayCurrentQuestion() {
         const question = currentQuiz.questions[currentQuestionIndex];
         const questionElement = document.createElement('div');
         questionElement.classList.add('question-area', 'p-4');
-        questionElement.innerHTML = `<h3 class="question-text">Question ${currentQuestionIndex + 1} sur ${currentQuiz.questions.length}: ${question.question}</h3>`;
+        const totalQuestions = quizData.reduce((total, quiz) => total + quiz.questions.length, 0);
+        const currentQuestionNumber = userAnswers.reduce((total, quizAnswers) => total + (quizAnswers ? quizAnswers.length : 0), 0) + currentQuestionIndex + 1;
+        questionElement.innerHTML = `<h3 class="question-text">Question ${currentQuestionNumber} sur ${totalQuestions}: ${question.question}</h3>`;
+
         quizContainer.appendChild(questionElement);
 
         const answers = [...question.incorrect_answers, question.correct_answer].sort();
