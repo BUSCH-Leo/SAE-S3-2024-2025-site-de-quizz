@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
         // Créer un nouvel utilisateur
         user = new User({ userName, email, address, password });
         await user.save();
-        res.status(201).json({ message: 'Inscription réussie' });
+        res.status(201).redirect('/parametres');
     } catch (err) {
         console.error(err); 
         res.status(500).json({ message: 'Erreur serveur', error: err.message });
@@ -37,7 +37,7 @@ router.post('/login', (req, res, next) => {
 
         req.logIn(user, (err) => {
             if (err) return next(err);
-            return res.json({ message: 'Connexion réussie', user: req.user });
+            return res.redirect('/parametres');
         });
     })(req, res, next);
 });
