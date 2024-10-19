@@ -17,8 +17,11 @@ const Quiz = require('./models/quizz');
 const app = express();
 
 
-mongoose.connect('mongodb://localhost:27017/quizDB')
-    .then(() => console.log('Connecté à MongoDB'))
+mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('Connecté à MongoDB Atlas'))
     .catch((error) => console.error('Erreur de connexion à MongoDB:', error));
 
 app.set('view engine', 'ejs');

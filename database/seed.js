@@ -4,12 +4,12 @@ const path = require('path');
 const Quiz = require('../models/quizz');
 const Category = require('../models/category');
 
-mongoose.connect('mongodb://localhost:27017/quizDB', {
+mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('Connecté à MongoDB'))
-.catch((error) => console.log('Erreur de connexion à MongoDB', error));
+    .then(() => console.log('Connecté à MongoDB Atlas'))
+    .catch((error) => console.error('Erreur de connexion à MongoDB:', error));
 
 const quizDataPath = path.join(__dirname, '../database/quizzData.json');
 const quizData = JSON.parse(fs.readFileSync(quizDataPath, 'utf8'));
