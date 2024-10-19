@@ -11,7 +11,16 @@ function getCategoryFromURL() {
     return urlParams.get('category');
 }
 
-// Fonction pour récupérer les quizzes
+
+// Fonction pour mélanger aléatoirement un tableau
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; 
+    }
+    return array;
+}
+
 async function fetchQuizzes() {
     const categoryId = getCategoryFromURL();
 
@@ -24,6 +33,13 @@ async function fetchQuizzes() {
             return;
         }
 
+
+        quizData = shuffleArray(quizData);
+
+        quizData.forEach(quiz => {
+            quiz.questions = shuffleArray(quiz.questions);
+        });
+
         currentQuizIndex = 0;
         currentQuestionIndex = 0;
         userAnswers = [];
@@ -33,6 +49,7 @@ async function fetchQuizzes() {
         console.error('Erreur lors de la récupération des quiz', error);
     }
 }
+
 
 // Fonction pour afficher la question actuelle
 function displayCurrentQuestion() {
