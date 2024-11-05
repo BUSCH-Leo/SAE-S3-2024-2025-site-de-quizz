@@ -69,3 +69,40 @@ p {
 .name {
     font-size: 25px;
 }
+
+.infos {
+    text-align: left;
+}
+
+.infos h1 {
+    color:rgb(251, 188, 0);
+    font-size: 30px;
+}
+
+.infos input {
+    border-radius: 5px;
+    width: 50%;
+}
+
+.button-div {
+    margin-top: 25px;
+    text-align: center;
+}
+
+#save-changes {
+    background-color: rgba(255, 255, 255, 0.895);
+    transition: color 0.5s ease;
+    color: #c98210;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+#save-changes:hover {
+    transition: color 0.5s ease;
+    color: #ff9d00;
+}
