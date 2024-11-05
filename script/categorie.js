@@ -1,5 +1,5 @@
 let currentPage = 1;
-const categoriesPerPage = 6;
+const categoriesPerPage = 12;
 let filteredCategories = [];
 
 // Fonction pour créer un avatar 3D avec Three.js

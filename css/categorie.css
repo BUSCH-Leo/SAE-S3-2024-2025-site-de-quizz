@@ -4,17 +4,20 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 100vh;
+    min-height: 100vh;
     margin: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    background-attachment: fixed;
 }
 
 header {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.7);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 h1.lead {
@@ -32,7 +35,7 @@ h1.lead {
 
 .card:hover {
     transform: perspective(1000px) rotateY(10deg) rotateX(10deg);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
 .btn-primary {
@@ -40,12 +43,14 @@ h1.lead {
     color: white;
     border: none;
     transition: background-color 0.3s ease;
+    padding: 12px 24px; /* Ajustez le rembourrage pour plus de taille */
+    font-size: 18px; /* Augmentez la taille de la police */
+    border-radius: 8px; /* Arrondissez les coins pour un effet visuel agréable */
 }
 
 .btn-primary:hover {
     background-color: #9b7f2a;
 }
-
 .card-title {
     color: rgb(251, 188, 0);
     font-weight: bold;
@@ -63,4 +68,67 @@ h1.lead {
     top: 0;
     left: 0;
     z-index: -1;
+}
+.quick-quiz-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 30px;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    margin-top: 5vh;
+    max-width: 600px;
+}
+
+.quick-quiz-title {
+    color: rgb(251, 188, 0);
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.parameter-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 10px;
+    padding: 1vh;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    margin: 0 2vh;
+    flex-grow: 1;
+    flex-basis: 0;
+    white-space: nowrap;
+}
+
+.parameter-container .form-label {
+    display: block;
+    margin-bottom: 0;
+}
+
+.btn-primary {
+    margin-top: 15px;
+}
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(251, 188, 0);
+    border-radius: 10px;
+}
+
+/*Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(251, 188, 0) rgba(255, 255, 255, 0.5);
 }

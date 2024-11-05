@@ -24,6 +24,30 @@
     <!-- Particules en arrière-plan -->
     <div id="particles-js"></div>
 
+    <!-- Quiz rapide -->
+    <div class="quick-quiz-container mb-5 text-center">
+        <h2 class="quick-quiz-title">Quiz Rapide Culture Générale™</h2>
+        <div class="input-group mb-3 justify-content-center">
+            <div class="parameter-container me-3">
+                <label for="question-count" class="form-label">Nombre de questions:</label>
+                <input type="number" id="question-count" class="form-control" placeholder="10">
+            </div>
+            <div class="parameter-container me-3">
+                <label for="difficulty" class="form-label">Difficulté:</label>
+                <select id="difficulty" class="form-select">
+                    <option value="easy">Facile</option>
+                    <option value="medium">Moyen</option>
+                    <option value="hard">Difficile</option>
+                </select>
+            </div>
+            <div class="parameter-container me-3">
+                <label for="question-time" class="form-label">Temps par question:</label>
+                <input type="number" id="question-time" class="form-control" placeholder="30">
+            </div>
+        </div>
+        <button id="start-quick-quiz" class="btn btn-primary">Commencer</button>
+    </div>
+
     <!-- Header Section -->
     <header class="text-center py-5">
         <div class="container">
