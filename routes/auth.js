@@ -7,7 +7,7 @@ const router = express.Router();
 
 // Route d'inscription
 router.post('/register', async (req, res) => {
-    const { userName, email, address, password, confirmPassword } = req.body;
+    const { userName, email, phoneNumber, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
         return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
         }
 
         // Créer un nouvel utilisateur
-        user = new User({ userName, email, address, password });
+        user = new User({ userName, email, phoneNumber, password });
         await user.save();
         res.status(201).redirect('/parametres');
     } catch (err) {
