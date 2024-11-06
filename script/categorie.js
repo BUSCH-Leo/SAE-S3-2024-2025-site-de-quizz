@@ -1,5 +1,5 @@
 let currentPage = 1;
-const categoriesPerPage = 12;
+const categoriesPerPage = 6;
 let filteredCategories = [];
 
 // Fonction pour créer un avatar 3D avec Three.js
@@ -79,11 +79,25 @@ function updatePagination(categoriesToDisplay) {
 }
 
 // Navigation avec les nouveaux boutons
+document.getElementById('first-page').addEventListener('click', function(event) {
+    event.preventDefault();
+    currentPage = 1;
+    displayCategories(currentPage, filteredCategories);
+    updatePagination(filteredCategories);
+});
+
+document.getElementById('last-page').addEventListener('click', function(event) {
+    event.preventDefault();
+    currentPage = Math.ceil(filteredCategories.length / categoriesPerPage);
+    displayCategories(currentPage, filteredCategories);
+    updatePagination(filteredCategories);
+});
+
 document.getElementById('next-page').addEventListener('click', function(event) {
     event.preventDefault();
     if (currentPage < Math.ceil(filteredCategories.length / categoriesPerPage)) {
         currentPage++;
-        animateCategories('next');
+        displayCategories(currentPage, filteredCategories);
         updatePagination(filteredCategories);
     }
 });
@@ -92,10 +106,31 @@ document.getElementById('prev-page').addEventListener('click', function(event) {
     event.preventDefault();
     if (currentPage > 1) {
         currentPage--;
-        animateCategories('prev');
+        displayCategories(currentPage, filteredCategories);
         updatePagination(filteredCategories);
     }
 });
+
+document.getElementById('current-page').addEventListener('change', function(event) {
+    const newPage = parseInt(event.target.value);
+    const totalPages = Math.ceil(filteredCategories.length / categoriesPerPage);
+    if (newPage >= 1 && newPage <= totalPages) {
+        currentPage = newPage;
+        displayCategories(currentPage, filteredCategories);
+        updatePagination(filteredCategories);
+    } else {
+        event.target.value = currentPage; // Rétablir la valeur actuelle si hors limite
+    }
+});
+
+function updatePagination(categoriesToDisplay) {
+    const totalPages = Math.ceil(categoriesToDisplay.length / categoriesPerPage);
+    document.getElementById('prev-page').style.display = currentPage > 1 ? 'block' : 'none';
+    document.getElementById('next-page').style.display = currentPage < totalPages ? 'block' : 'none';
+    document.getElementById('first-page').style.display = currentPage > 1 ? 'block' : 'none';
+    document.getElementById('last-page').style.display = currentPage < totalPages ? 'block' : 'none';
+    document.getElementById('current-page').value = currentPage;
+}
 
 // Fetch categories and initialize
 async function fetchCategories() {
