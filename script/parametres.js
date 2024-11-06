@@ -15,7 +15,7 @@ document.getElementById('save-button').addEventListener('click', async function(
             document.getElementById('success-message').style.display = 'block';
             setTimeout(() => {
                 document.getElementById('success-message').style.display = 'none';
-            }, 3000); // Message de succès visible pendant 3 secondes
+            }, 3000);
         } else {
             alert("Erreur lors de la mise à jour du numéro de téléphone.");
         }

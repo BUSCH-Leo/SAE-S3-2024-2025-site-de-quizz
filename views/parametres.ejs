@@ -30,11 +30,27 @@
     <div class="content-box infos">
         <h1>- Votre numéro de téléphone :</h1>
         <% if (user) { %>
-            <!-- Champ de saisie avec la valeur actuelle (ou vide si non fournie) -->
             <input type="text" id="phone-input" value="<%= user.phone || '' %>" placeholder="Numéro de téléphone non fournis">
         <% } else { %>
             <input type="text" id="phone-input" placeholder="Non connecté">
         <% } %>
+        
+        <h1><br>- Votre nom d'utilisateur :</h1>
+        <% if (user) { %>
+            <input type="text" id="username-input" value="<%= user.userName || '' %>" placeholder="Veuillez écrire un nom d'utilisateur">
+        <% } else { %>
+            <input type="text" id="username-input" placeholder="Non connecté">
+        <% } %>
+
+        <h1><br>- Photo de profile :</h1>
+        
+        <% if (user) { %>
+            <p>Image actuelle : [nom de l'image]</p>
+            <button>Changer d'image de profile</button>
+        <% } else { %>
+            <p>Non connecté</p>
+        <% } %>
+
         <div class="button-div">
             <% if (user) { %>
                 <button id="save-changes">Enregistrer les modifications</button>
