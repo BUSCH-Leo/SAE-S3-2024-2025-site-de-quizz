@@ -36,10 +36,22 @@
             <input type="text" id="phone-input" placeholder="Non connecté">
         <% } %>
         <div class="button-div">
-            <button id="save-changes">Enregistrer les modifications</button>
+            <% if (user) { %>
+                <button id="save-changes">Enregistrer les modifications</button>
+            <% } %>
         </div>
         <p id="success-message" style="display: none; color: rgb(255, 183, 0);">Changement enregistré</p>
     </div>
+    
+    <% if (user) { %>
+        <form class="button-div" action="/auth/logout">
+            <button id="disconnect">Se déconnecter</button>
+        </form>
+    <% } else { %>
+        <div class="button-div">
+            <button id="connect" onclick="window.location.href = 'connexion.html';">Se connecter</button>
+        </div>
+    <% } %>
 
     <a href="./index.html" class="back-button">
         <img src="../ressource/pages_secondaires/back.png" class="back-icon" alt="Retour"> Retour au menu
