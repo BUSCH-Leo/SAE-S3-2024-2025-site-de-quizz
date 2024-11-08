@@ -46,6 +46,10 @@ function animateCategories(direction) {
     }, 1000);
 }
 
+
+
+
+
 // Fonction pour afficher les catégories paginées
 function displayCategories(page, categoriesToDisplay) {
     const start = (page - 1) * categoriesPerPage;

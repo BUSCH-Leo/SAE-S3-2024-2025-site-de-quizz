@@ -50,14 +50,71 @@ async function fetchQuizzes() {
     }
 }
 
+async function fetchQuickQuizzes(count, difficulty) {
+    try {
+        const response = await fetch(`/api/quiz/quick?count=${count}&difficulty=${difficulty}`);
+        const quizzes = await response.json();
+
+        if (response.ok && quizzes.length > 0) {
+            console.log('Quiz Rapide:', quizzes);
+
+            quizData = quizzes.map(quiz => ({
+                questions: quiz.questions
+            }));
+
+            currentQuizIndex = 0;
+            currentQuestionIndex = 0;
+            userAnswers = [];
+            displayCurrentQuestion();
+            startTimer();
+        } else {
+            console.error('Erreur: Quiz data format invalide ou questions manquantes');
+        }
+    } catch (error) {
+        console.error('Erreur de réseau:', error);
+    }
+}
+
+
+
+function startQuickQuiz() {
+    const count = document.getElementById('question-count').value || 10; 
+    const difficulty = document.getElementById('difficulty').value;
+    fetchQuickQuizzes(count, difficulty);
+}
+
+const startQuickQuizButton = document.getElementById('start-quick-quiz');
+if (startQuickQuizButton) {
+    startQuickQuizButton.addEventListener('click', startQuickQuiz);
+} else {
+    console.error("L'élément 'start-quick-quiz' est introuvable.");
+}
+
 
 // Fonction pour afficher la question actuelle
 function displayCurrentQuestion() {
     const quizContainer = document.getElementById('quiz-container');
+    if (!quizContainer) {
+        console.error("L'élément 'quiz-container' est introuvable.");
+        return;
+    }
+
+    if (!quizData || quizData.length === 0 || !quizData[currentQuizIndex]) {
+        console.error("Les données du quiz sont invalides ou non disponibles.");
+        quizContainer.innerHTML = '<p>Aucune donnée de quiz disponible.</p>';
+        return;
+    }
+
+    const currentQuiz = quizData[currentQuizIndex];
+    if (!currentQuiz.questions || currentQuiz.questions.length === 0) {
+        quizContainer.innerHTML = '<p>Aucune question disponible pour ce quiz.</p>';
+        return;
+    }
+
+    // Reste du code pour afficher la question
     quizContainer.classList.remove('fade-in');
     quizContainer.classList.add('fade-out');
-
-    setTimeout(() => {
+    setTimeout(() =>  {
         quizContainer.innerHTML = '';
 
         const currentQuiz = quizData[currentQuizIndex];

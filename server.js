@@ -127,6 +127,27 @@ app.get('/api/quiz/category/:categoryId', async (req, res) => {
         res.status(500).json({ message: 'Erreur serveur' });
     }
 });
+// Route pour le quiz rapide avec paramètres personnalisés
+app.get('/api/quiz/quick', async (req, res) => {
+    const { count, difficulty } = req.query;
+
+    try {
+        // Récupère les quizzes avec la difficulté demandée, et limite les résultats au nombre spécifié
+        const quizzes = await Quiz.find({ 'questions.difficulty': difficulty })
+            .limit(parseInt(count, 10));
+
+        if (!quizzes || quizzes.length === 0) {
+            return res.status(404).json({ message: 'Aucun quiz disponible pour cette sélection' });
+        }
+
+        res.json(quizzes);
+    } catch (error) {
+        res.status(500).json({ message: 'Erreur lors de la récupération des quizzes' });
+    }
+});
+
+
+
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
