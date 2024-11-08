@@ -1,25 +1,44 @@
-document.getElementById('save-button').addEventListener('click', async function() {
-    const phone = document.getElementById('phone-input').value;
+document.getElementById('toggle-password').addEventListener('click', function () {
+    const passwordInput = document.getElementById('password');
+    const icon = this.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
 
-    try {
-        // Envoi d'une requête POST pour enregistrer le numéro de téléphone
-        const response = await fetch('/update-phone', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ phone })
-        });
+document.getElementById('toggle-new-password-confirm').addEventListener('click', function () {
+    const passwordInput = document.getElementById('new-password-confirm');
+    const icon = this.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+});
 
-        if (response.ok) {
-            document.getElementById('success-message').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('success-message').style.display = 'none';
-            }, 3000);
-        } else {
-            alert("Erreur lors de la mise à jour du numéro de téléphone.");
-        }
-    } catch (error) {
-        console.error('Erreur réseau:', error);
+document.getElementById('toggle-new-password').addEventListener('click', function () {
+    const passwordInput = document.getElementById('new-password');
+    const icon = this.querySelector('i');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
     }
 });
