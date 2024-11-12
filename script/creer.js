@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const selectQuizButton = document.getElementById('select-quiz-btn');
-    const modalContainer = document.querySelector('.modal'); // Sélection de la div contenant les modales
+    const modalContainer = document.querySelector('.modal');
     const uploadModal = document.getElementById('upload-modal');
     const projectsModal = document.getElementById('projects-modal');
     const dropZone = document.getElementById('drop-zone');
@@ -10,16 +10,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ouvrir les deux modales en même temps
     selectQuizButton.addEventListener('click', function() {
-        modalContainer.style.display = 'flex'; // Afficher le conteneur des modales
-        uploadModal.style.display = 'flex'; // Afficher la modale d'importation
-        projectsModal.style.display = 'flex'; // Afficher la modale des projets
+        modalContainer.style.display = 'flex';
+        uploadModal.style.display = 'flex';
+        projectsModal.style.display = 'flex';
     });
 
     // Fermer les deux modales lorsque l'on clique à l'extérieur
     window.addEventListener('click', function(event) {
         if (event.target === modalContainer) {
             modalContainer.style.display = 'none';
-            uploadModal.style.display = 'none'; // Masquer la modale d'importation
+            uploadModal.style.display = 'none';
         }
     });
 
