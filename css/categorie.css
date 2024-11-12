@@ -43,9 +43,9 @@ h1.lead {
     color: white;
     border: none;
     transition: background-color 0.3s ease;
-    padding: 12px 24px; /* Ajustez le rembourrage pour plus de taille */
-    font-size: 18px; /* Augmentez la taille de la police */
-    border-radius: 8px; /* Arrondissez les coins pour un effet visuel agréable */
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 8px;
 }
 
 .btn-primary:hover {
