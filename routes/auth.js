@@ -22,7 +22,7 @@ router.post('/register', async (req, res) => {
         // Créer un nouvel utilisateur
         user = new User({ userName, email, phoneNumber, password });
         await user.save();
-        res.status(201).redirect('/parametres');
+        res.status(201).redirect('/connexion.html');
     } catch (err) {
         console.error(err); 
         res.status(500).json({ message: 'Erreur serveur', error: err.message });

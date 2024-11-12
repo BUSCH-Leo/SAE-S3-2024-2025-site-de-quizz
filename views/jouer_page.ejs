@@ -45,17 +45,26 @@
                 </div>                                     
             </div>        
         </div>
-    
+        
         <div id="projects-modal" style="display: flex;">
             <div class="modal-content">
                 <h2>Vos projets</h2>
-                <ul id="projects-list">
-                    <li class="project-item">Projet 1</li>
-                    <li class="project-item">Projet 2</li>
-                    <li class="project-item">Projet 3</li>
-                    <li class="project-item">Projet 4</li>
-                    <li class="project-item">Projet 5</li>
-                </ul>
+                <% if (user) { %>
+                    <ul id="projects-list">
+                        <li class="project-item">Projet 1</li>
+                        <li class="project-item">Projet 2</li>
+                        <li class="project-item">Projet 3</li>
+                        <li class="project-item">Projet 4</li>
+                        <li class="project-item">Projet 5</li>
+                    </ul>
+                <% } else { %>
+                    <div class="button-connect">
+                        <p class="page-text">Vous n'êtes pas connecté.</p>
+                        <div class="button-container">
+                            <button class="quiz-button" onclick="window.location.href = 'connexion.html';">Se connecter</button>
+                        </div>
+                    </div>
+                <% } %>
             </div>        
         </div>        
     </div>    
