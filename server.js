@@ -110,6 +110,10 @@ app.get('/creer_page', (req, res) => {
 app.get('/connexion', (req, res) => {
     res.render('connexion', { user: req.user }); 
 });
+// Route pour inscription
+app.get('/inscription', (req, res) => {
+    res.render('inscription', { user: req.user }); 
+});
 
 // Route pour récupérer toutes les catégories
 app.get('/api/categories', async (req, res) => {
