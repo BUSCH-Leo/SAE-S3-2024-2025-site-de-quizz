@@ -10,22 +10,22 @@ router.post('/register', async (req, res) => {
     const { userName, email, phoneNumber, password, confirmPassword } = req.body;
 
     if (password !== confirmPassword) {
-        return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
+        return res.status(400).render('inscription', { errorMessage: 'Les mots de passe ne correspondent pas' });
     }
 
     try {
         let user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({ message: 'Cet email est déjà utilisé' });
+            return res.status(400).render('inscription', { errorMessage: 'Cet email est déjà utilisé' });
         }
 
         // Créer un nouvel utilisateur
         user = new User({ userName, email, phoneNumber, password });
         await user.save();
-        res.status(201).redirect('/connexion.html');
+        res.status(201).redirect('/connexion');
     } catch (err) {
-        console.error(err); 
-        res.status(500).json({ message: 'Erreur serveur', error: err.message });
+        console.error(err);
+        res.status(500).render('inscription', { errorMessage: 'Erreur serveur. Veuillez réessayer plus tard.' });
     }
 });
 
@@ -34,8 +34,8 @@ router.post('/login', (req, res, next) => {
     passport.authenticate('local', (err, user, info) => {
         if (err) return next(err);
         if (!user) {
-            return res.render('connexion', { errorMessage: 'Email ou mot de passe incorrect' });
-        }
+            return res.status(400).json({ message: 'Email ou mot de passe incorrect' });
+        }        
         
         req.logIn(user, (err) => {
             if (err) return next(err);

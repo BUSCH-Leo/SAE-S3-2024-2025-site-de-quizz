@@ -46,6 +46,13 @@
                 </span>
                 <input type="password" class="form-control" id="confirm-password" name="confirmPassword" placeholder="Confirmez votre mot de passe" required>
             </div>
+            
+            <div id="error-message" class="text-danger">
+                <% if (typeof errorMessage !== 'undefined') { %>
+                    <p><%= errorMessage %></p>
+                <% } %>
+            </div>            
+
             <p id="champ_obligatoire"><span style="color: red;">*</span>Champs obligatoires</p>
             <div class="button-container">
                 <button type="submit" class="quiz-button">S'inscrire</button>

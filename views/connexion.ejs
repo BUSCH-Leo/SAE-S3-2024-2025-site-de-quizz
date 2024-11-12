@@ -25,12 +25,6 @@
                 <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email">
             </div>
             
-            <div id="error-message" class="text-danger">
-                <% if (typeof errorMessage !== 'undefined') { %>
-                    <p><%= errorMessage %></p>
-                <% } %>
-            </div>
-            
             <div class="mb-3 position-relative">
                 <label for="password" class="form-label">Mot de passe</label>
                 <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe">
@@ -40,12 +34,15 @@
                 <a href="#" id="mdp_oublie">
                     <p>Mot de passe oublié</p>
                 </a>
-            </div>            
+            </div>
+            
+            <div id="error-message" class="text-danger" style="display: none;"></div>
+
             <div class="button-container">
                 <button type="submit" class="quiz-button">Se connecter</button>
             </div>
             <p>Vous n'avez pas de compte ?</p>
-            <a href="./inscription.html" id="inscription">
+            <a href="./inscription" id="inscription">
                 <p>Inscrivez-vous</p>
             </a>
         </form>
