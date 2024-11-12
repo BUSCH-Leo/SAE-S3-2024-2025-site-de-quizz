@@ -22,12 +22,18 @@
         Retour
     </a>
 
+    
     <div class="content-box">
-        <h1 class="page-title">Créer</h1>
-        <div class="button-container">
-            <button class="quiz-button" id="new-quiz-btn">Créer un nouveau quiz</button>
-            <button class="quiz-button" id="select-quiz-btn">Continuer à créer un quiz</button>
-        </div>
+        <% if (user) { %>
+            <h1 class="page-title">Créer</h1>
+            <div class="button-container">
+                <button class="quiz-button" id="new-quiz-btn">Créer un nouveau quiz</button>
+                <button class="quiz-button" id="select-quiz-btn">Continuer à créer un quiz</button>
+            </div>
+        <% } else { %>
+            <p>Vous n'êtes pas connecté.</p>
+            <button class="quiz-button" onclick="window.location.href = 'connexion.html';">Se connecter</button>
+        <% } %>
     </div>
 
     <!-- Modale pour entrer le nom du projet -->
