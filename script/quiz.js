@@ -63,17 +63,24 @@ async function fetchQuizzes() {
     }
 }
 
-async function fetchQuickQuizzes(count, difficulty) {
+async function fetchQuickQuizzes(count, difficulty) { 
     try {
         const response = await fetch(`/api/quiz/quick?count=${count}&difficulty=${difficulty}`);
         const quizzes = await response.json();
 
         if (response.ok && quizzes.length > 0) {
             console.log('Quiz Rapide:', quizzes);
+            
+            quizzes.forEach(quiz => {
+                quiz.questions = shuffleArray(quiz.questions);  
+            });
 
-            quizData = quizzes.map(quiz => ({
-                questions: quiz.questions
-            }));
+            const allQuestions = quizzes.flatMap(quiz => quiz.questions);
+            const shuffledQuestions = shuffleArray(allQuestions);
+
+            quizData = [{
+                questions: shuffledQuestions
+            }];
 
             currentQuizIndex = 0;
             currentQuestionIndex = 0;
@@ -87,7 +94,6 @@ async function fetchQuickQuizzes(count, difficulty) {
         console.error('Erreur de réseau:', error);
     }
 }
-
 
 
 function startQuickQuiz() {
