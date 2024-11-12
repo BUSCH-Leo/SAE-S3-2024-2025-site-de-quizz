@@ -11,6 +11,19 @@ function getCategoryFromURL() {
     return urlParams.get('category');
 }
 
+function getQuickQuizParams() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const count = urlParams.get('count');
+    const difficulty = urlParams.get('difficulty');
+    return { count, difficulty };
+}
+
+const { count, difficulty } = getQuickQuizParams();
+if (count && difficulty) {
+    fetchQuickQuizzes(count, difficulty);
+}
+
+
 
 // Fonction pour mélanger aléatoirement un tableau
 function shuffleArray(array) {
@@ -78,10 +91,13 @@ async function fetchQuickQuizzes(count, difficulty) {
 
 
 function startQuickQuiz() {
-    const count = document.getElementById('question-count').value || 10; 
+    const count = document.getElementById('question-count').value || 10;
     const difficulty = document.getElementById('difficulty').value;
-    fetchQuickQuizzes(count, difficulty);
+    const urlParams = new URLSearchParams({ count, difficulty });
+
+    window.location.href = `/quiz?${urlParams.toString()}`;
 }
+
 
 const startQuickQuizButton = document.getElementById('start-quick-quiz');
 if (startQuickQuizButton) {
