@@ -46,7 +46,7 @@
 
         <h3>- Numéro de téléphone :</h3>
         <% if (user) { %>
-            <input type="text" id="phone-input" value="<%= user.phoneNumber|| '' %>" placeholder="Numéro de téléphone non fournis">
+            <input type="text" id="phone-input" value="<%= user.phoneNumber|| '' %>" placeholder="Numéro de téléphone non fourni">
         <% } else { %>
             <input type="text" id="phone-input" placeholder="Non connecté">
         <% } %>
@@ -58,17 +58,26 @@
             <input type="text" id="username-input" placeholder="Non connecté">
         <% } %>
 
-        <h3><br>- Photo de profile :</h3>
+        <h3><br>- Photo de profil :</h3>
+    <div>
+    <img id="profile-preview" src="<%= user && user.profilePicture ? user.profilePicture : '../ressource/default_avatar.png' %>" alt="Photo de profil" class="img-thumbnail" width="150" height="150">
+    </div>
         <% if (user) { %>
-            <p>Image actuelle : [nom de l'image]</p>
-            <button>Changer d'image de profile</button>
+        <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#avatarModal">
+        Choisir un avatar
+        </button>
+        <button type="button" class="btn btn-outline-secondary mt-2" onclick="document.getElementById('upload-input').click()">
+        Télécharger une image
+        </button>
+    <input type="file" id="upload-input" style="display: none;" accept="image/*" onchange="previewImage(event)">
         <% } else { %>
-            <p>Non connecté</p>
-        <% } %>
+    <p>Non connecté</p>
+    <% } %>
+
 
         <div class="button-div">
             <% if (user) { %>
-                <button id="save-changes">Enregistrer les modifications</button>
+                <button id="save-changes" class="btn btn-outline-primary">Enregistrer les modifications</button>
             <% } %>
         </div>
         <p id="success-message" style="display: none; color: rgb(255, 183, 0);">Changement enregistré</p>
@@ -120,23 +129,46 @@
         </div>        
     </div>
 
+    <!-- Modal pour la sélection d'avatar -->
+    <div class="modal fade" id="avatarModal" tabindex="-1" aria-labelledby="avatarModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="avatarModalLabel">Choisissez un avatar</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="avatar-options d-flex flex-wrap justify-content-center gap-2">
+                        <% for (let i = 0; i < 36; i++) { %>
+                            <img src="https://api.dicebear.com/9.x/big-ears/svg?seed=<%= Math.random().toString(36).substring(7) %>" class="avatar-option img-thumbnail" alt="Avatar option">
+                        <% } %>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="confirm-avatar" data-bs-dismiss="modal">Confirmer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal pour la suppression de compte -->
     <div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="deleteAccountModalLabel">Êtes-vous sûr de supprimer votre compte ?</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="deleteAccountModalLabel">Êtes-vous sûr de supprimer votre compte ?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Cette action est irréversible.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger">Je confirme</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Cette action est irréversible.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger">Je confirme</button>
-            </div>
-          </div>
         </div>
-      </div>
-    
+    </div>
+
     <% if (user) { %>
         <form class="button-div" action="/auth/logout">
             <button id="disconnect">Se déconnecter</button>
