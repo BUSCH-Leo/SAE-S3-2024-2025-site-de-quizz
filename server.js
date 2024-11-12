@@ -98,6 +98,17 @@ app.get('/quiz', (req, res) => {
 app.get('/parametres', (req, res) => {
     res.render('parametres', { user: req.user });
 });
+<<<<<<< HEAD
+=======
+// Route pour jouer_page
+app.get('/jouer_page', (req, res) => {
+    res.render('jouer_page', { user: req.user }); 
+});
+// Route pour créer_page
+app.get('/creer_page', (req, res) => {
+    res.render('creer_page', { user: req.user }); 
+});
+>>>>>>> bd2f2bf24e8aaaf0115abe8dc5bdc2d044bf6430
 
 // Route pour récupérer toutes les catégories
 app.get('/api/categories', async (req, res) => {
