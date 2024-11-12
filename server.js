@@ -4,18 +4,15 @@ const path = require('path');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
-const User = require('./models/user'); 
-
-
+const User = require('./models/user');
 
 // Importation des routes
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile'); // Importation de la route pour la photo de profil
 const Category = require('./models/category');
 const Quiz = require('./models/quizz');
 
-
 const app = express();
-
 
 mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/', {
     useNewUrlParser: true,
@@ -26,6 +23,7 @@ mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q90
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+
 // Middleware pour les sessions
 app.use(session({
     secret: 'quizzine', // Secret pour l'environnement de production
@@ -40,7 +38,7 @@ app.use(passport.session());
 // Configuration de la stratégie locale pour Passport
 passport.use(new LocalStrategy({
     usernameField: 'email',
-    passwordField: 'password' 
+    passwordField: 'password'
 }, async (email, password, done) => {
     try {
         const user = await User.findOne({ email });
@@ -58,7 +56,6 @@ passport.use(new LocalStrategy({
         return done(err);
     }
 }));
-
 
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -82,9 +79,11 @@ app.use('/ressource', express.static(path.join(__dirname, 'ressource')));
 app.use('/script', express.static(path.join(__dirname, 'script')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/views', express.static(path.join(__dirname, 'views')));
+app.use('/uploads', express.static('uploads'));
 
-
+// Utilisation des routes
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes); // Route pour la gestion du profil
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -92,14 +91,13 @@ app.get('/', (req, res) => {
 
 // Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
-    res.render('Test', { user: req.user }); 
+    res.render('Test', { user: req.user });
 });
+
 // Route pour parametre
 app.get('/parametres', (req, res) => {
-    res.render('parametres', { user: req.user }); 
+    res.render('parametres', { user: req.user });
 });
-
-
 
 // Route pour récupérer toutes les catégories
 app.get('/api/categories', async (req, res) => {
@@ -127,12 +125,12 @@ app.get('/api/quiz/category/:categoryId', async (req, res) => {
         res.status(500).json({ message: 'Erreur serveur' });
     }
 });
+
 // Route pour le quiz rapide avec paramètres personnalisés
 app.get('/api/quiz/quick', async (req, res) => {
     const { count, difficulty } = req.query;
 
     try {
-        // Récupère les quizzes avec la difficulté demandée, et limite les résultats au nombre spécifié
         const quizzes = await Quiz.find({ 'questions.difficulty': difficulty })
             .limit(parseInt(count, 10));
 
@@ -145,9 +143,6 @@ app.get('/api/quiz/quick', async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la récupération des quizzes' });
     }
 });
-
-
-
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {

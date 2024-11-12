@@ -46,7 +46,7 @@
 
         <h3>- Numéro de téléphone :</h3>
         <% if (user) { %>
-            <input type="text" id="phone-input" value="<%= user.phone || '' %>" placeholder="Numéro de téléphone non fournis">
+            <input type="text" id="phone-input" value="<%= user.phoneNumber|| '' %>" placeholder="Numéro de téléphone non fournis">
         <% } else { %>
             <input type="text" id="phone-input" placeholder="Non connecté">
         <% } %>

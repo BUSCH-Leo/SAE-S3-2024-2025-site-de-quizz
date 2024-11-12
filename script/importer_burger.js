@@ -14,3 +14,7 @@ function loadBurgerJS() {
     script.defer = true;
     document.body.appendChild(script);
 }
+document.getElementById('change-profile-photo-btn').addEventListener('click', function() {
+    document.getElementById('profilePhotoInput').style.display = 'block';
+    document.getElementById('submit-photo-btn').style.display = 'inline-block';
+});
