@@ -173,3 +173,22 @@ h3 {
 #button-delete {
     text-align: left;
 }
+
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(251, 188, 0);
+    border-radius: 10px;
+}
+
+/*Firefox */
+* {
+    scrollbar-width: inherit;
+    scrollbar-color: rgb(251, 188, 0) rgba(255, 255, 255, 0.2);
+}
