@@ -106,6 +106,10 @@ app.get('/jouer_page', (req, res) => {
 app.get('/creer_page', (req, res) => {
     res.render('creer_page', { user: req.user }); 
 });
+// Route pour connexion
+app.get('/connexion', (req, res) => {
+    res.render('connexion', { user: req.user }); 
+});
 
 // Route pour récupérer toutes les catégories
 app.get('/api/categories', async (req, res) => {
