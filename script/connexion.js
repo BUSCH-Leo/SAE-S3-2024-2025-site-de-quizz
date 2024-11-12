@@ -42,3 +42,19 @@ document.querySelector('.login-form').addEventListener('submit', async function(
         console.error('Erreur lors de la tentative de connexion :', error);
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('registrationSuccess')) {
+        const modal = document.getElementById('success-modal');
+        modal.style.display = 'block';
+
+        document.getElementById('close-success-modal').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        document.getElementById('modal-ok-button').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
+});

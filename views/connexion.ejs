@@ -17,6 +17,23 @@
         }
     </style>
 
+    <div id="success-modal" class="modal" tabindex="-1" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Inscription réussie</h5>
+                    <button type="button" class="btn-close" id="close-success-modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Votre inscription a été réalisée avec succès. Vous pouvez maintenant vous connecter.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="modal-ok-button">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="content-box">
         <h2 class="page-title">Connexion</h2>
         <form class="login-form" action="/auth/login" method="POST">
