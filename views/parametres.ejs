@@ -60,7 +60,7 @@
 
         <h3><br>- Photo de profil :</h3>
     <div>
-    <img id="profile-preview" src="<%= user && user.profilePicture ? user.profilePicture : '../ressource/default_avatar.png' %>" alt="Photo de profil" class="img-thumbnail" width="150" height="150">
+    <img id="profile-preview" src="<%= user && user.profilePhoto ? user.profilePhoto : '../ressource/default_avatar.png' %>" alt="Photo de profil" class="img-thumbnail" width="150" height="150">
     </div>
         <% if (user) { %>
         <button type="button" class="btn btn-outline-primary mt-2" data-bs-toggle="modal" data-bs-target="#avatarModal">

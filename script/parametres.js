@@ -87,3 +87,37 @@ function previewImage(event) {
         reader.readAsDataURL(file);
     }
 }
+document.getElementById('save-changes').addEventListener('click', async () => {
+    const username = document.getElementById('username-input').value;
+    const phoneNumber = document.getElementById('phone-input').value;
+    const profilePreview = document.getElementById('profile-preview').getAttribute('src');
+
+    const formData = new FormData();
+    formData.append('userName', username);
+    formData.append('phoneNumber', phoneNumber);
+
+    if (profilePreview) {
+        formData.append('profilePhoto', profilePreview);
+    }
+    
+
+    try {
+        const response = await fetch('/profile/update-profile', {
+            method: 'POST',
+            body: formData
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            document.getElementById('success-message').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('success-message').style.display = 'none';
+            }, 3000);
+            console.log('Profil mis à jour:', data);
+        } else {
+            console.error('Erreur lors de la mise à jour du profil');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la requête :', error);
+    }
+});

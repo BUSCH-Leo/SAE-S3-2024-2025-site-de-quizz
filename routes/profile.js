@@ -5,33 +5,38 @@ const User = require('../models/user');
 
 const router = express.Router();
 
+// Configuration de multer pour le stockage des fichiers
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
+    destination: (req, file, cb) => {
         cb(null, 'uploads/'); 
     },
-    filename: function (req, file, cb) {
+    filename: (req, file, cb) => {
         const ext = path.extname(file.originalname); 
         cb(null, Date.now() + ext); 
     }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
+
+// Middleware d'authentification
+const isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.status(401).json({ message: 'Non authentifié' });
+};
 
 // Route pour mettre à jour la photo de profil
-router.post('/update-profile-photo', upload.single('profilePhoto'), async (req, res) => {
+router.post('/update-profile', isAuthenticated, upload.single('profilePhoto'), async (req, res) => {
     try {
-        if (!req.file) {
-            return res.status(400).send('Aucune image téléchargée');
-        }
+        const profilePhotoPath = req.file ? `/uploads/${req.file.filename}` : req.body.profilePhoto;
 
-        const profilePhotoPath = `/uploads/${req.file.filename}`; 
-
+   
         const user = await User.findByIdAndUpdate(
-            req.user._id, 
+            req.user._id,
             { profilePhoto: profilePhotoPath },
             { new: true }
         );
-
 
         res.json({ message: 'Photo de profil mise à jour', profilePhoto: profilePhotoPath });
     } catch (err) {
@@ -40,4 +45,4 @@ router.post('/update-profile-photo', upload.single('profilePhoto'), async (req, 
     }
 });
 
-module.exports = router;
+module.exports = router; 

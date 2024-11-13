@@ -79,11 +79,11 @@ app.use('/ressource', express.static(path.join(__dirname, 'ressource')));
 app.use('/script', express.static(path.join(__dirname, 'script')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/views', express.static(path.join(__dirname, 'views')));
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Utilisation des routes
 app.use('/auth', authRoutes);
-app.use('/profile', profileRoutes); // Route pour la gestion du profil
+app.use('/profile', profileRoutes); 
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
