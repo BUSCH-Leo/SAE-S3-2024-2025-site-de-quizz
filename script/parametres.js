@@ -91,7 +91,8 @@ document.getElementById('save-changes').addEventListener('click', async () => {
     const username = document.getElementById('username-input').value;
     const phoneNumber = document.getElementById('phone-input').value;
     const profilePreview = document.getElementById('profile-preview').getAttribute('src');
-
+    
+    // Préparation du formulaire de données
     const formData = new FormData();
     formData.append('userName', username);
     formData.append('phoneNumber', phoneNumber);
@@ -99,8 +100,8 @@ document.getElementById('save-changes').addEventListener('click', async () => {
     if (profilePreview) {
         formData.append('profilePhoto', profilePreview);
     }
-    
 
+    // Envoi de la mise à jour de la photo de profil
     try {
         const response = await fetch('/profile/update-profile', {
             method: 'POST',
@@ -120,4 +121,50 @@ document.getElementById('save-changes').addEventListener('click', async () => {
     } catch (error) {
         console.error('Erreur lors de la requête :', error);
     }
+
+    // Envoi de la mise à jour du nom d'utilisateur
+    if (username) {
+        try {
+            const response = await fetch('/profile/update-username', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ userName: username })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Nom d\'utilisateur mis à jour:', data.userName);
+            } else {
+                const errorData = await response.json();
+                alert(errorData.message || 'Erreur lors de la mise à jour du nom d\'utilisateur');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du nom d\'utilisateur :', error);
+        }
+    }
+
+    // Envoi de la mise à jour du numéro de téléphone
+    if (phoneNumber) {
+        try {
+            const response = await fetch('/profile/update-phone', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ phoneNumber: phoneNumber })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log('Numéro de téléphone mis à jour:', data.phoneNumber);
+            } else {
+                console.error('Erreur lors de la mise à jour du numéro de téléphone');
+            }
+        } catch (error) {
+            console.error('Erreur lors de la requête de mise à jour du téléphone :', error);
+        }
+    }
 });
+

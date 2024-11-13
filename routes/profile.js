@@ -31,7 +31,6 @@ router.post('/update-profile', isAuthenticated, upload.single('profilePhoto'), a
     try {
         const profilePhotoPath = req.file ? `/uploads/${req.file.filename}` : req.body.profilePhoto;
 
-   
         const user = await User.findByIdAndUpdate(
             req.user._id,
             { profilePhoto: profilePhotoPath },
@@ -45,4 +44,45 @@ router.post('/update-profile', isAuthenticated, upload.single('profilePhoto'), a
     }
 });
 
-module.exports = router; 
+// Route pour changer le nom d'utilisateur
+router.post('/update-username', isAuthenticated, async (req, res) => {
+    const { userName } = req.body;
+
+    try {
+        const existingUser = await User.findOne({ userName });
+        if (existingUser) {
+            return res.status(400).json({ message: 'Nom d\'utilisateur déjà pris' });
+        }
+
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { userName },
+            { new: true }
+        );
+
+        res.json({ message: 'Nom d\'utilisateur mis à jour', userName: user.userName });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erreur lors de la mise à jour du nom d\'utilisateur');
+    }
+});
+
+// Route pour changer le numéro de téléphone
+router.post('/update-phone', isAuthenticated, async (req, res) => {
+    const { phoneNumber } = req.body;
+
+    try {
+        const user = await User.findByIdAndUpdate(
+            req.user._id,
+            { phoneNumber },
+            { new: true }
+        );
+
+        res.json({ message: 'Numéro de téléphone mis à jour', phoneNumber: user.phoneNumber });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erreur lors de la mise à jour du numéro de téléphone');
+    }
+});
+
+module.exports = router;

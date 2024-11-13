@@ -55,6 +55,7 @@
         <% if (user) { %>
             <input type="text" id="username-input" value="<%= user.userName || '' %>" placeholder="Veuillez écrire un nom d'utilisateur">
         <% } else { %>
+            <small id="username-error" class="text-danger" style="display: none;"></small>
             <input type="text" id="username-input" placeholder="Non connecté">
         <% } %>
 
