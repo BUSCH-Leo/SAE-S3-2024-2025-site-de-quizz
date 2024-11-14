@@ -3,7 +3,7 @@ let currentQuizIndex = 0;
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let timer;
-const timePerQuestion = 10;
+let timePerQuestion = 10;
 
 // Récupération de la catégorie depuis l'URL
 function getCategoryFromURL() {
@@ -15,11 +15,13 @@ function getQuickQuizParams() {
     const urlParams = new URLSearchParams(window.location.search);
     const count = urlParams.get('count');
     const difficulty = urlParams.get('difficulty');
-    return { count, difficulty };
+    const questionTime = urlParams.get('questionTime');
+    return { count, difficulty, questionTime };
 }
 
-const { count, difficulty } = getQuickQuizParams();
+const { count, difficulty, questionTime } = getQuickQuizParams();
 if (count && difficulty) {
+    timePerQuestion = questionTime ? parseInt(questionTime) : 30;
     fetchQuickQuizzes(count, difficulty);
 }
 
@@ -98,8 +100,9 @@ async function fetchQuickQuizzes(count, difficulty) {
 
 function startQuickQuiz() {
     const count = document.getElementById('question-count').value || 10;
+    const questionTime = document.getElementById('question-time').value || 30;
     const difficulty = document.getElementById('difficulty').value;
-    const urlParams = new URLSearchParams({ count, difficulty });
+    const urlParams = new URLSearchParams({ count, difficulty, questionTime });
 
     window.location.href = `/quiz?${urlParams.toString()}`;
 }
