@@ -4396,7 +4396,7 @@
     {
         "type": "multiple",
         "difficulty": "hard",
-        "name": "History",
+        "category": "History",
         "question": "Which round does a WW2 M1 Garand fire?",
         "correct_answer": ".30-06",
         "incorrect_answers": [
