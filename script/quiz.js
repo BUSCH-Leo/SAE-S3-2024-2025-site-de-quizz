@@ -3,7 +3,7 @@ let currentQuizIndex = 0;
 let currentQuestionIndex = 0;
 let userAnswers = [];
 let timer;
-let timePerQuestion = 10;
+let timePerQuestion = 30;
 
 // Récupération de la catégorie depuis l'URL
 function getCategoryFromURL() {
