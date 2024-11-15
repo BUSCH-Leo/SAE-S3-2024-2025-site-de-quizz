@@ -18,6 +18,30 @@
         }
     </style>
 
+    <div class="modal fade" id="loginSuccessModal" tabindex="-1" aria-labelledby="loginSuccessModalLabel" aria-hidden="true" <% if (loginSuccess) { %>style="display:block;"<% } else { %>style="display:none;"<% } %>>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginSuccessModalLabel">Connexion réussie</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Vous êtes connecté avec succès. Bienvenue dans votre espace de gestion de compte.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <% if (loginSuccess) { %>
+        <script>
+            var loginModal = new bootstrap.Modal(document.getElementById('loginSuccessModal'));
+            loginModal.show();
+        </script>
+    <% } %>
+
     <div class="content-box">
         <h1 class="page-title">Vous êtes connecté en tant que :</h1>
         <h2 class="name">
