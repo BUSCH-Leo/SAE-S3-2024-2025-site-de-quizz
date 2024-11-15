@@ -390,7 +390,7 @@
     {
         "type": "multiple",
         "difficulty": "easy",
-        "category": "Science: Gadgets",
+        "category": "Science: Computers",
         "question": "When was the iPhone released?",
         "correct_answer": "2007",
         "incorrect_answers": [
@@ -3842,7 +3842,7 @@
     {
         "type": "multiple",
         "difficulty": "hard",
-        "category": "Science: Gadgets",
+        "category": "Science &amp; Nature",
         "question": "Which of the following is used to measure blood pressure?",
         "correct_answer": "Sphygmomanometer",
         "incorrect_answers": [
@@ -3910,7 +3910,7 @@
     {
         "type": "multiple",
         "difficulty": "easy",
-        "category": "Science: Gadgets",
+        "category": "Science: Computers",
         "question": "What does GPS stand for?",
         "correct_answer": "Global Positioning System",
         "incorrect_answers": [
@@ -4396,7 +4396,7 @@
     {
         "type": "multiple",
         "difficulty": "hard",
-        "category": "Science: Gadgets",
+        "name": "History",
         "question": "Which round does a WW2 M1 Garand fire?",
         "correct_answer": ".30-06",
         "incorrect_answers": [
