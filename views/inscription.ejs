@@ -17,6 +17,33 @@
         }
     </style>
 
+    <!-- Modal -->
+    <div class="modal fade" id="inscriptionModal" tabindex="-1" aria-labelledby="inscriptionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="inscriptionModalLabel">Inscription réussie</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            Votre inscription a été réussie ! Vous pouvez maintenant vous connecter.
+            </div>
+            <div class="modal-footer">
+            <a href="/connexion" class="btn btn-primary">Aller à la connexion</a>
+            </div>
+        </div>
+        </div>
+    </div>
+    <script>
+        // Vérifie si l'inscription a réussi
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+          // Affiche la modale si le paramètre est présent
+          var myModal = new bootstrap.Modal(document.getElementById('inscriptionModal'));
+          myModal.show();
+        }
+    </script>         
+
     <div class="content-box">
         <h2 class="page-title">Inscription</h2>
         <form class="registration-form" action="/auth/register" method="POST">
