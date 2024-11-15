@@ -307,13 +307,13 @@ const categoryBackgrounds = {
     "6713a757f012fc38a3f260d5": "../ressource/categorie/geography1.jpg", // Geography
     "6713a757f012fc38a3f260e7": "../ressource/categorie/books1.jpg", // Entertainment: Books
     "6713a757f012fc38a3f260ed": "../ressource/categorie/history1.jpg", // History
-    "6713a758f012fc38a3f260fb": "../ressource/background_mythology.jpg", // Mythology
+    "6713a758f012fc38a3f260fb": "../ressource/cateogrie/mythology1.jpg", // Mythology
     "6713a758f012fc38a3f26111": "../ressource/categorie/cartoon1.jpg", // Entertainment: Cartoon & Animations
     "6713a758f012fc38a3f2611b": "../ressource/categorie/comics1.jpg", // Entertainment: Comics
     "6713a759f012fc38a3f26135": "../ressource/background_gadgets.jpg", // Science: Gadgets
-    "6713a75ef012fc38a3f261f7": "../ressource/background_animals.jpg", // Animals
-    "6713a75ef012fc38a3f26209": "../ressource/background_anime.jpg", // Entertainment: Japanese Anime & Manga
-    "6713a75ef012fc38a3f2621f": "../ressource/background_sports.jpg", // Sports
+    "6713a75ef012fc38a3f261f7": "../ressource/categorie/animals1.jpg", // Animals
+    "6713a75ef012fc38a3f26209": "../ressource/categorie/animemanga1.jpg", // Entertainment: Japanese Anime & Manga
+    "6713a75ef012fc38a3f2621f": "../ressource/categori/sports1.jpg", // Sports
     "6713a75ff012fc38a3f26245": "../ressource/categorie/videogame2.jpg", // Entertainment: Board Games
     "6713a760f012fc38a3f26267": "../ressource/background_art.jpg", // Art
     "6713a763f012fc38a3f262d5": "../ressource/background_celebrities.jpg", // Celebrities
