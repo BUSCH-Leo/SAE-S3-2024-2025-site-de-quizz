@@ -94,10 +94,26 @@ app.get('/quiz', (req, res) => {
     res.render('Test', { user: req.user });
 });
 
-// Route pour parametre
-app.get('/parametres', (req, res) => {
-    res.render('parametres', { user: req.user });
+app.post('/auth/login', passport.authenticate('local', {
+    successRedirect: '/parametres', // Redirection après une connexion réussie
+    failureRedirect: '/connexion',  // Redirection en cas d'échec
+    failureFlash: true,
+    successFlash: true  // Vous pouvez également utiliser flash messages si nécessaire
+}), (req, res) => {
+    // Assurez-vous que loginSuccess est défini après une connexion réussie
+    req.session.loginSuccess = true; // Ajoutez ceci pour garantir que la modale se déclenche
 });
+
+app.get('/parametres', (req, res) => {
+    const loginSuccess = req.session.loginSuccess;
+
+    if (loginSuccess) {
+        delete req.session.loginSuccess; // Supprimer après utilisation
+    }
+
+    res.render('parametres', { user: req.user, loginSuccess: loginSuccess });
+});
+
 // Route pour jouer_page
 app.get('/jouer_page', (req, res) => {
     res.render('jouer_page', { user: req.user }); 
