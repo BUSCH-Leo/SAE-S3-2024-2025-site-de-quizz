@@ -21,7 +21,9 @@ router.post('/register', async (req, res) => {
 
         user = new User({ userName, email, phoneNumber, password });
         await user.save();
-        res.status(201).redirect('/connexion?registrationSuccess=true');
+
+        // Renvoyer l'utilisateur sur la même page avec le paramètre de succès
+        res.redirect('/inscription?success=true');
     } catch (err) {
         res.status(500).json({ message: 'Erreur serveur. Veuillez réessayer plus tard.' });
     }
