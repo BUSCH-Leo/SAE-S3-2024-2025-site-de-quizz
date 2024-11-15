@@ -14,7 +14,7 @@ mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q90
 const quizDataPath = path.join(__dirname, '../database/quizzData.json');
 const quizData = JSON.parse(fs.readFileSync(quizDataPath, 'utf8'));
 
-// Fonction pour obtenir ou créer une catégorie
+// Fonction pour obtenir et créer une catégorie
 const getCategoryByName = async (categoryName) => {
     let category = await Category.findOne({ name: categoryName });
 
@@ -34,7 +34,7 @@ const importData = async () => {
             const quiz = new Quiz({
                 title: "Quiz Importé",
                 description: "Quiz importé depuis un fichier JSON",
-                category: categoryId,  // Utilise l'ID de la catégorie
+                category: categoryId,  
                 questions: [{
                     type: quizItem.type,
                     difficulty: quizItem.difficulty,

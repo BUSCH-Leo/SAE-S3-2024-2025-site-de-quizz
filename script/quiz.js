@@ -294,6 +294,54 @@ document.getElementById('submit').addEventListener('click', () => {
         showAlert('Veuillez sélectionner une réponse avant de continuer.');
     }
 });
+const categoryBackgrounds = {
+    "6713a755f012fc38a3f26092": "../ressource/categorie/music1.jpg", // Entertainment: Music
+    "6713a755f012fc38a3f26098": "../ressource/categorie/film1.jpg", // Entertainment: Film
+    "6713a755f012fc38a3f2609f": "../ressource/categorie/theatre1.jpg", // Entertainment: Musicals & Theatres
+    "6713a756f012fc38a3f260a5": "../ressource/categorie/videogame1.jpg", // Entertainment: Video Games
+    "6713a756f012fc38a3f260ab": "../ressource/categorie/computer1.jpg", // Science: Computers
+    "6713a756f012fc38a3f260b1": "../ressource/categorie/cateogrie/nature1.jpg", // Science & Nature
+    "6713a756f012fc38a3f260b7": "../ressource/categoire/television1.jpg", // Entertainment: Television
+    "6713a756f012fc38a3f260c1": "../ressource/categorie/generalknownledge1.jpg", // General Knowledge
+    "6713a756f012fc38a3f260c7": "../ressource/categorie/vehicles1.jpg", // Vehicles
+    "6713a757f012fc38a3f260d5": "../ressource/categorie/geography1.jpg", // Geography
+    "6713a757f012fc38a3f260e7": "../ressource/categorie/books1.jpg", // Entertainment: Books
+    "6713a757f012fc38a3f260ed": "../ressource/categorie/history1.jpg", // History
+    "6713a758f012fc38a3f260fb": "../ressource/background_mythology.jpg", // Mythology
+    "6713a758f012fc38a3f26111": "../ressource/categorie/cartoon1.jpg", // Entertainment: Cartoon & Animations
+    "6713a758f012fc38a3f2611b": "../ressource/categorie/comics1.jpg", // Entertainment: Comics
+    "6713a759f012fc38a3f26135": "../ressource/background_gadgets.jpg", // Science: Gadgets
+    "6713a75ef012fc38a3f261f7": "../ressource/background_animals.jpg", // Animals
+    "6713a75ef012fc38a3f26209": "../ressource/background_anime.jpg", // Entertainment: Japanese Anime & Manga
+    "6713a75ef012fc38a3f2621f": "../ressource/background_sports.jpg", // Sports
+    "6713a75ff012fc38a3f26245": "../ressource/categorie/videogame2.jpg", // Entertainment: Board Games
+    "6713a760f012fc38a3f26267": "../ressource/background_art.jpg", // Art
+    "6713a763f012fc38a3f262d5": "../ressource/background_celebrities.jpg", // Celebrities
+    "6713a768f012fc38a3f263c7": "../ressource/background_politics.jpg", // Politics
+    "6713a76bf012fc38a3f26439": "../ressource/background_mathematics.jpg" // Science: Mathematics
+};
+
+
+function applyBackgroundForCategory(categoryId) {
+    const backgroundUrl = categoryBackgrounds[categoryId]; // Récupère l'image associée
+    if (backgroundUrl) {
+        document.body.style.background = `url('${backgroundUrl}') no-repeat center center fixed`;
+        document.body.style.backgroundSize = "cover";
+    } else {
+        console.warn(`Aucun fond défini pour l'ID de catégorie : ${categoryId}`);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const categoryId = getCategoryFromURL();
+    if (categoryId) {
+        applyBackgroundForCategory(categoryId);
+    } else {
+        console.warn("Aucune catégorie spécifiée dans l'URL.");
+    }
+});
+
+
 
 // Démarrer le quiz
 fetchQuizzes();
