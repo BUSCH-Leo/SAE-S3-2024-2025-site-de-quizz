@@ -313,11 +313,11 @@ const categoryBackgrounds = {
     "6713a759f012fc38a3f26135": "../ressource/background_gadgets.jpg", // Science: Gadgets
     "6713a75ef012fc38a3f261f7": "../ressource/categorie/animals1.jpg", // Animals
     "6713a75ef012fc38a3f26209": "../ressource/categorie/animemanga1.jpg", // Entertainment: Japanese Anime & Manga
-    "6713a75ef012fc38a3f2621f": "../ressource/categori/sports1.jpg", // Sports
+    "6713a75ef012fc38a3f2621f": "../ressource/categorie/sports1.jpg", // Sports
     "6713a75ff012fc38a3f26245": "../ressource/categorie/videogame2.jpg", // Entertainment: Board Games
-    "6713a760f012fc38a3f26267": "../ressource/background_art.jpg", // Art
-    "6713a763f012fc38a3f262d5": "../ressource/background_celebrities.jpg", // Celebrities
-    "6713a768f012fc38a3f263c7": "../ressource/background_politics.jpg", // Politics
+    "6713a760f012fc38a3f26267": "../ressource/categorie/art1.jpg", // Art
+    "6713a763f012fc38a3f262d5": "../ressource/categorie/celebrity1.jpg", // Celebrities
+    "6713a768f012fc38a3f263c7": "../ressource/categorie/politics1.jpg", // Politics
     "6713a76bf012fc38a3f26439": "../ressource/background_mathematics.jpg" // Science: Mathematics
 };
 
