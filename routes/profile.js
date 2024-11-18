@@ -85,4 +85,41 @@ router.post('/update-phone', isAuthenticated, async (req, res) => {
     }
 });
 
+// Route pour changer le mot de passe
+router.post('/change-password', isAuthenticated, async (req, res) => {
+    const { password, newPassword, newPasswordConfirm } = req.body;
+
+    if (newPassword !== newPasswordConfirm) {
+        return res.status(400).json({ message: 'Les nouveaux mots de passe ne correspondent pas.' });
+    }
+
+    try {
+        const user = await User.findById(req.user._id);
+        const isMatch = await user.matchPassword(password);  
+        if (!isMatch) {
+            return res.status(400).json({ message: 'Le mot de passe actuel est incorrect.' });
+        }
+
+        user.password = newPassword;
+        await user.save();
+
+        res.json({ message: 'Mot de passe modifié avec succès.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erreur lors du changement de mot de passe.');
+    }
+});
+
+// Route pour supprimer le compte
+router.post('/delete-account', isAuthenticated, async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.user._id);
+        res.json({ message: 'Votre compte a été supprimé.' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Erreur lors de la suppression du compte.');
+    }
+});
+
+
 module.exports = router;

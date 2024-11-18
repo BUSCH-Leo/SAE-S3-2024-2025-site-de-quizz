@@ -167,4 +167,89 @@ document.getElementById('save-changes').addEventListener('click', async () => {
         }
     }
 });
+ // Envoi de la mise à jour du mot de passe
+ document.querySelector('#change-password-btn').addEventListener('click', async () => {
+    const oldPassword = document.getElementById('password').value;
+    const newPassword = document.getElementById('new-password').value;
+    const newPasswordConfirm = document.getElementById('new-password-confirm').value;
+    
+
+    const passwordErrorMessage = document.getElementById('password-error');
+    const successMessage = document.getElementById('success-message');
+    let hasError = false;
+
+
+    if (newPassword !== newPasswordConfirm) {
+        if (passwordErrorMessage) {
+            passwordErrorMessage.textContent = "Les mots de passe ne correspondent pas.";
+            passwordErrorMessage.style.display = 'block';
+        }
+        hasError = true;
+    } else {
+        try {
+
+            const response = await fetch('/profile/change-password', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    password: oldPassword, 
+                    newPassword,   
+                    newPasswordConfirm 
+                })
+                
+            });
+
+
+            if (response.ok) {
+                const data = await response.json();
+                if (successMessage) {
+                    successMessage.style.display = 'block';
+                    setTimeout(() => {
+                        successMessage.style.display = 'none';
+                    }, 3000);
+                }
+            } else {
+                const errorData = await response.json();
+                if (passwordErrorMessage) {
+                    passwordErrorMessage.textContent = errorData.message || 'Erreur lors de la mise à jour du mot de passe';
+                    passwordErrorMessage.style.display = 'block';
+                }
+                hasError = true;
+            }
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du mot de passe :', error);
+            if (passwordErrorMessage) {
+                passwordErrorMessage.textContent = "Une erreur est survenue lors de la mise à jour du mot de passe.";
+                passwordErrorMessage.style.display = 'block';
+            }
+            hasError = true;
+        }
+    }
+
+    if (hasError && successMessage) {
+        successMessage.style.display = 'none';
+    }
+});
+
+
+// Envoi de la suppression du compte
+document.querySelector('#confirm-delete-btn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/profile/delete-account', {
+            method: 'POST',
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(data.message || "Compte supprimé avec succès.");
+            window.location.href = '/'; 
+        } else {
+            console.error('Erreur lors de la suppression du compte');
+        }
+    } catch (error) {
+        console.error('Erreur lors de la suppression du compte :', error);
+    }
+});
 
