@@ -41,19 +41,15 @@ async function fetchQuizzes() {
 
     try {
         const response = await fetch(`/api/quiz/category/${categoryId}`);
-        quizData = await response.json();
+        const quizzes = await response.json();
 
-        if (quizData.length === 0) {
+        if (quizzes.length === 0) {
             showAlert('Aucun quiz disponible pour cette catégorie.');
             return;
         }
 
-
-        quizData = shuffleArray(quizData);
-
-        quizData.forEach(quiz => {
-            quiz.questions = shuffleArray(quiz.questions);
-        });
+        const allQuestions = quizzes.flatMap(quiz => quiz.questions);
+        quizData = [{ questions: shuffleArray(allQuestions) }];
 
         currentQuizIndex = 0;
         currentQuestionIndex = 0;
@@ -64,6 +60,7 @@ async function fetchQuizzes() {
         console.error('Erreur lors de la récupération des quiz', error);
     }
 }
+
 
 async function fetchQuickQuizzes(count, difficulty) { 
     try {
@@ -152,8 +149,8 @@ function displayCurrentQuestion() {
         const question = currentQuiz.questions[currentQuestionIndex];
         const questionElement = document.createElement('div');
         questionElement.classList.add('question-area', 'p-4');
-        const totalQuestions = quizData.reduce((total, quiz) => total + quiz.questions.length, 0);
-        const currentQuestionNumber = userAnswers.reduce((total, quizAnswers) => total + (quizAnswers ? quizAnswers.length : 0), 0) + currentQuestionIndex + 1;
+        const totalQuestions = currentQuiz.questions.length;
+        const currentQuestionNumber = currentQuestionIndex + 1;
         questionElement.innerHTML = `<h3 class="question-text">Question ${currentQuestionNumber} sur ${totalQuestions}: ${question.question}</h3>`;
 
         quizContainer.appendChild(questionElement);
@@ -213,17 +210,15 @@ function nextQuestion() {
         currentQuestionIndex++;
         displayCurrentQuestion();
         startTimer();
+    } else if (currentQuizIndex < quizData.length - 1) {
+        currentQuizIndex++;
+        currentQuestionIndex = 0;
+        displayCurrentQuestion();
+        startTimer();
     } else {
-        clearInterval(timer);
-        if (currentQuizIndex < quizData.length - 1) {
-            currentQuizIndex++;
-            currentQuestionIndex = 0;
-            displayCurrentQuestion();
-            startTimer();
-        } else {
-            calculateScore();
-        }
+        calculateScore();
     }
+    
 }
 
 // Fonction pour calculer le score
@@ -252,7 +247,7 @@ function calculateScore() {
     });
 
     // Sauvegarder le score et les mémos dans localStorage
-    localStorage.setItem('score', totalScore); // Sauvegarder le score
+    localStorage.setItem('score', totalScore); 
     localStorage.setItem('memos', JSON.stringify(memoData));
 
     // Rediriger vers la page des mémos
@@ -274,10 +269,10 @@ function closeModal() {
     document.getElementById('alert-modal').style.display = 'none';
 }
 
-// Événement pour la croix de fermeture de la modale
+
 document.querySelector('.close').addEventListener('click', closeModal);
 
-// (Optionnel) Fermer la modale en cliquant en dehors du contenu
+// Fermer la modale en cliquant en dehors du contenu
 window.addEventListener('click', function(event) {
     const modal = document.getElementById('alert-modal');
     if (event.target === modal) {
