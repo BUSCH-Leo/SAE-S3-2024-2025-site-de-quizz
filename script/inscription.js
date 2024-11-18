@@ -47,8 +47,8 @@ document.querySelector('.registration-form').addEventListener('submit', async fu
         });
 
         if (response.ok) {
-            // Si l'inscription est réussie, redirige l'utilisateur
-            window.location.href = '/connexion';
+          var myModal = new bootstrap.Modal(document.getElementById('inscriptionModal'));
+          myModal.show();
         } else {
             // Si l'inscription échoue, affiche le message d'erreur
             const data = await response.json();
