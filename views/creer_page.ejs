@@ -27,7 +27,7 @@
         <h1 class="page-title">Créer</h1>
         <% if (user) { %>
             <div class="button-container">
-                <button class="quiz-button" id="new-quiz-btn">Créer un nouveau quiz</button>
+                <button class="quiz-button" id="new-quiz-btn" >Créer un nouveau quiz</button>
                 <button class="quiz-button" id="select-quiz-btn">Continuer à créer un quiz</button>
             </div>
         <% } else { %>
@@ -44,7 +44,7 @@
             <h2>Nom du projet</h2>
             <input type="text" id="project-name-input" placeholder="Entrez le nom de votre projet" />
             <div class="button-container-fenetre">
-                <button>Continuer</button>
+                <button onclick="location.href='quiz_creation';">Continuer</button>
             </div>
         </div>
     </div>

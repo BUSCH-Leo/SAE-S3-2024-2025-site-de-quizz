@@ -114,6 +114,10 @@ app.get('/connexion', (req, res) => {
 app.get('/inscription', (req, res) => {
     res.render('inscription', { user: req.user }); 
 });
+// Route vers les pages de creation de quiz
+app.get('/quiz_creation', (req, res) => {
+    res.render('quiz_creation', { user: req.user });
+});
 
 // Route pour récupérer toutes les catégories
 app.get('/api/categories', async (req, res) => {
