@@ -1,133 +1,262 @@
 body {
+    font-family: 'Arial', sans-serif;
     margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-h1 {
-    text-align: center;
-}
-
-.titre-quiz, .option, .theme {
-    background: #BEBEBE;
-    color: #DE6E6E;
-    padding: 10px 0; /* Ajout d'un peu d'espace autour du texte */
-}
-
-.titre-quiz .sous-quiz, .option .sous-option, .theme .sous-theme {
-    display: none;
-    height: auto;
-    padding: 10px;
-    text-align: center;
-}
-
-.sous-quiz {
-    background: #D18080;
-}
-
-.sous-option {
-    background: #80D192;
-}
-
-.sous-theme {
-    background: #D18080;
-}
-
-.derouler {
-    cursor: pointer;
-    display: inline-block;
-    margin-left: 10px; /* Réduit l'espace pour une meilleure esthétique */
-    width: 24px;
-    height: 24px;
-    transition: transform 0.3s ease;
-}
-
-.derouler.rotated {
-    transform: rotate(90deg);
-}
-
-.button.button2 {
-    background-color: #D9D9D9;
-    border: none;
-    color: #383737;
-    padding: 10px 5px;
-    text-align: center;
-    display: inline-block;
-    font-size: 20px;
-    margin: 10px 0;
-    cursor: pointer;
-    border-radius: 16px;
-    width: 180px;
-    transition-duration: 0.4s;
-}
-
-.button2:hover {
-    box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-}
-
-#volet {
-    width: 280px; /* Largeur fixe pour le volet */
-    background: #a9a9a9; 
-    color: #fff;
-    position: fixed; /* Changer à fixed pour le rendre visible en scrollant */
-    right: -280px; /* Commence hors de l'écran */
-    top: 50%;
-    transform: translateY(-50%);
-    transition: all 0.5s ease-in;
-    height: 70%;
-    border-radius: 25px;
-}
-
-/* Style des liens pour ouvrir/fermer */
-#volet a.ouvrir, #volet a.fermer {
-    width: 40px;
-    height: 40px;
+    padding: 0;
+    overflow-x: hidden;
+    transition: background 0.5s ease;
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    text-indent: -9999px;
-    position: fixed;
-    left: -40px;
+    height: 100vh;
+}
+#toggleButtonImage{
+    border-top-left-radius:15px ;
+    border-bottom-left-radius: 15px;
+    height:70px ;
+    width: 44px;
+}
+.volet-coulissant h3{
+    font-size: 20px;
+    padding: 15px;
+}
+.volet-coulissant label{
+    padding: 0px 0px 6px 0px;
+}
+
+.toggle-button {
+    position: absolute;
     top: 50%;
+    right: 0px;
+    height:70px ;
+    width: 39px;
     transform: translateY(-50%);
-    border-radius: 8px 0px 0px 8px;
-    background-color: #DE6E6E;
+    background-color: #61acfd;
+    border-top-left-radius:15px ;
+    border-bottom-left-radius: 15px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 15;
+    transition: right 0.5s ease;
 }
 
-#volet a.ouvrir {
-    display: block;
+.side-panel {
+    position: fixed;
+    right: -390px;
+    top: 0;
+    width: 350px;
+    height: 100%;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: -4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    z-index: 10;
+    overflow-y: auto;
 }
 
-#volet a.fermer {
-    background-image: url('../ressource/page_creation_quiz/ouvrir.png');
-    display: none; 
-}
-
-#volet.open {
+.side-panel.open {
     right: 0;
 }
 
-.sous-quiz, .sous-option, .sous-theme {
+
+.volet-coulissant input, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    display: ;
+}
+
+.tabs {
+    display: flex;
+    padding: 12px;
+    cursor: pointer;
+    margin-bottom: -28px;
+    border-bottom: 2px solid #007bff;
+}
+
+.tab {
+    padding: 10px;
+    flex: 1; 
+    text-align: center;
+    background-color: #f9f9f9;
+    color:#4b4848 ;
+    border: 1px solid #ddd;
+    border-bottom: none;
+    transition: background 0.3s;
+    border-radius: 4px 4px 0 0;
+    margin-right: 5px;
+}
+
+.tab.active {
+    background-color: #ffffff; 
+    border-color: #007bff; 
+    font-weight: bold;
+}
+
+.volet-coulissant .color-button {
+    width: 100%;
+    height: 50px;
+    border: none;
+    border-radius: 4px; 
+    cursor: pointer;
+    margin: 5px; 
+    display: inline-block; 
+    border: 1px solid transparent; 
+    transition: border 0.3s;
+}
+
+.volet-coulissant .color-button:hover {
+    border: 1px solid #007bff;
+}
+
+.volet-coulissant .image-button {
+    width: 100%; 
+    height: 100px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer;
+    margin: 5px 0; 
+    display: inline-block; 
+    background-size: cover; 
+    background-position: center; 
+    transition: border 0.3s;
+}
+
+.volet-coulissant .image-button:hover {
+    border: 2px solid #007bff;
+}
+
+.volet-coulissant button.submit-button {
+    background-color: #007bff; 
+    border: none; 
+    color: white; 
+    padding: 10px;
+    border-radius: 4px; 
+    cursor: pointer;
+    width: 100%; 
+    margin-bottom: 10px; 
+    transition: background 0.3s;
+}
+
+.volet-coulissant button.submit-button:hover {
+    background-color: #0056b3;
+}
+
+.volet-coulissant #color-scheme-dark,#color-scheme-light{
     display: none;
-    overflow: hidden;
-    transition: height 0.3s ease;
 }
 
-.sous-quiz.open, .sous-option.open, .sous-theme.open {
-    display: block;
-    height: auto; 
+.volet-coulissant .theme-section {
+    margin-top: 20px;
+}
+.volet-coulissant .submit-button {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 10px;
+    transition: background 0.3s;
 }
 
-/* Styles pour les thèmes */
-.theme1 {
-    background: #D9D9D9;
-    color: #383737;
+.volet-coulissant .submit-button:hover {
+    background-color: #0056b3;
 }
 
-.theme2 {
-    background: #C0C0C0;
-    color: #2E2E2E;
+.volet-coulissant .color-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
-.theme3 {
-    background: #A0A0A0;
-    color: #1A1A1A;
+.volet-coulissant .image-buttons {
+    padding-bottom: 15px;
+    display: grid;
+    gap: 10px;
+}
+
+:where(html) {
+  --darkmode: 0;
+  container-name: root;
+  container-type: normal;
+}
+
+.volet-coulissant body, .side-panel {
+  --background-color: #FFF;
+  --text-color: #222;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  html { --darkmode: 1; }
+}
+
+@media (prefers-color-scheme: light) {
+  html { --darkmode: 0; }
+}
+
+html:has(#color-scheme-light:checked) { --darkmode: 0; }
+html:has(#color-scheme-dark:checked) { --darkmode: 1; }
+
+@container root style(--darkmode: 1) {
+  body, .side-panel {
+    --background-color: hsl(0deg 0.39% 35.44%);
+    --text-color: hsl(0deg 0% 100%);
+  }
+}
+
+/* Style du groupe de bascule dans le volet */
+.volet-coulissant .toggle-group {
+  border: 2px solid #CCC;
+  border-radius: 24px;
+  inline-size: fit-content;
+  padding: 3px;
+  display: flex;
+  justify-content: center;
+}
+
+.volet-coulissant .toggle-group label {
+  border-radius: 21px;
+  cursor: pointer;
+  display: inline-flex;
+  padding: 0.5em 1em;
+  text-align: center;
+  user-select: none;
+}
+
+.volet-coulissant .toggle-group label:has(input:checked) {
+  background-color: #CCC;
+  color: #333;
+}
+
+[data-sr] {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+@media (max-width: 600px) {
+    .volet-coulissant .side-panel {  
+        right: -389px;
+    }
+
+    .volet-coulissant.side-panel.open {
+        right: 0;
+    }
 }

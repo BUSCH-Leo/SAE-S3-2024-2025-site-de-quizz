@@ -8,7 +8,7 @@
 body {
 	margin:0;
     background-color: gray;
-    background-image: url("../ressource/page_creation_quiz/fond_quiz.avif");
+    
 }
 #imageDisplay{
     height: 300px ;
@@ -88,7 +88,6 @@ body, html {
     margin: 20px auto; 
     max-width:60%;
 }
-
 
 .png {
     width: 40%;
@@ -210,12 +209,21 @@ body, html {
 
 .answer-letter {
     position: absolute;
-    left: 20px;
+    left: 7%;
     top: 50%;
     transform: translateY(-50%);
     color: white; 
     font-weight: initial;
-    font-size: 18px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.answer-letter.clicked {
+    color: #7bd634;
+}
+.answer-letter.disabled {
+    cursor: not-allowed;
+    color: #ddd;
 }
 
 .answer-input {
@@ -227,7 +235,7 @@ body, html {
     font-size: 1.2rem;
     background-color: #6F6C6C;
     color: white;
-    width: 100%;
+    width: 96%;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
 }
 
@@ -244,7 +252,7 @@ body, html {
 }
 @media (max-width: 768px) {
     #imageDisplay {
-        width: 100%; /* Ajustement automatique pour les petits écrans */
+        width: 100%;
         height: auto;
     }
     .quiz-title {
