@@ -4,142 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzine - Créer un quiz</title>
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="../css/creation_quiz.css">
     <link rel="stylesheet" href="../css/volet_quiz.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-</head>
-<body>
-    <!-- Header Section -->
-    <header class="header">
-        <img src="../ressource/page_creation_quiz/logo_quizzine_réduis.png" alt="Logo Quizzine" class="logo">
-        <img src="<% if (user && user.profilePhoto) { %> <%= user.profilePhoto %> <% } else { %> https://api.dicebear.com/9.x/big-ears/svg?seed=<%= Math.random().toString(36).substring(7) %> <% } %>" alt="Profile" class="profile-img">
-    </header>
-
-    <!-- Main Content: Quiz Creation Form -->
-    <div class="quiz-container">
-        <div class="quiz-creation-form">
-            <input type="text" placeholder="TITRE" class="quiz-title">
-            
-            <!-- Image Upload Section -->
-            <div class="image-upload">
-                <div id="mediaContainer" class="d-flex justify-content-center align-items-center p-5 border border-2 rounded">
-                    <i class="bi bi-plus-lg text-primary fs-3"></i>
-                    <span class="ms-2 text-muted">Insérer un contenu multimédia</span>
-                </div>
-                <input type="file" id="imageUpload" class="d-none" accept="image/*">
-            </div>
-
-            <!-- Question Section -->
-            <div class="question-section">
-                <input type="text" class="question-input" placeholder="Saisir une question">
-
-                <div class="timer">
-                    <label for="timeSelect">Temps imparti</label>
-                    <div class="slider-container">
-                        <input type="range" id="timeSelect" min="5" max="60" step="10" value="30">
-                        <span id="timeDisplay"></span>
-                    </div>
-                </div>
-
-                <div class="answers">
-                    <!-- Default Answers for standard quizzes -->
-                    <div class="answer-input-container">
-                        <input type="text" placeholder="Réponse A" class="answer-input" required maxlength="24">
-                        <span class="answer-letter">A</span>
-                    </div>
-                    <div class="answer-input-container">
-                        <input type="text" placeholder="Réponse B" class="answer-input" required maxlength="24">
-                        <span class="answer-letter">B</span>
-                    </div>
-                    <div class="answer-input-container">
-                        <input type="text" placeholder="Réponse C" class="answer-input" required maxlength="24">
-                        <span class="answer-letter">C</span>
-                    </div>
-                    <div class="answer-input-container">
-                        <input type="text" placeholder="Réponse D" class="answer-input" required maxlength="24">
-                        <span class="answer-letter">D</span>
-                    </div>
-                </div>
-
-                <button class="add-more-btn">Ajouter plus de réponses</button>
-            </div>
-        </div>
-
-        <!-- Sliding Panel -->
-        <div class="volet-coulissant">
-            <button id="toggleButton" class="toggle-button" onclick="togglePanel()">
-                <img id="toggleButtonImage" src="..\ressource\page_creation_quiz/ouvrir.png" alt="Ouvrir">
-            </button>
-            <div id="sidePanel" class="side-panel">
-                <h2>Paramètres du Quiz</h2>
-
-                <!-- Quiz Type Selector -->
-                <label for="quizType">Type de Quiz :</label>
-                <select id="quizType" onchange="updateQuizMode()">
-                    <option value="juste_prix">Juste Prix</option>
-                    <option value="standard" selected>Quiz Standard</option>
-                    <option value="vrai_ou_faux">Vrai ou Faux</option>
-                    <option value="multiple_choice">Choix Multiple</option>
-                </select>
-
-                <div class="tabs">
-                    <div class="tab active" onclick="showTab('colors')">Couleurs</div>
-                    <div class="tab" onclick="showTab('images')">Images</div>
-                </div>
-
-                <!-- Color Theme Section -->
-                <div id="colorTab" class="theme-section">
-                    <h3>Choisissez le Thème (Couleur de Fond) :</h3>
-                    <div class="color-buttons">
-                        <button class="color-button" style="background-color: #ffccbc;" onclick="setBackgroundColor('#ffccbc')"></button>
-                        <button class="color-button" style="background-color: #bbdefb;" onclick="setBackgroundColor('#bbdefb')"></button>
-                        <button class="color-button" style="background-color: #c8e6c9;" onclick="setBackgroundColor('#c8e6c9')"></button>
-                        <button class="color-button" style="background-color: #ffe082;" onclick="setBackgroundColor('#ffe082')"></button>
-                        <button class="color-button" style="background-color: #d1c4e9;" onclick="setBackgroundColor('#d1c4e9')"></button>
-                    </div>
-                </div>
-
-                <!-- Image Theme Section -->
-                <div id="imageTab" class="theme-section" style="display: none;">
-                    <h3>Choisissez une Image de Fond :</h3>
-                    <div class="image-buttons">
-                        <button class="image-button" style="background-image: url('../ressource/fond1.jpg');" onclick="setBackgroundImage('../ressource/fond1.jpg')"></button>
-                        <button class="image-button" style="background-image: url('../ressource/fond2.jpg');" onclick="setBackgroundImage('../ressource/fond2.jpg')"></button>
-                        <button class="image-button" style="background-image: url('../ressource/fond3.jpg');" onclick="setBackgroundImage('../ressource/fond3.jpg')"></button>
-                        <button class="image-button" style="background-image: url('../ressource/fond4.jpg');" onclick="setBackgroundImage('../ressource/fond4.jpg')"></button>
-                    </div>
-                </div>
-
-                <!-- Theme Switch -->
-                <div class="theme-toggle">
-                    <fieldset class="toggle-group" id="colorScheme">
-                        <label><input type="radio" name="color-scheme" onclick="updateTheme(false)"> Light</label>
-                        <label><input type="radio" name="color-scheme" onclick="updateTheme(true)"> Dark</label>
-                    </fieldset>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="theme-section">
-                    <button class="submit-button" onclick="saveQuiz()">Enregistrer le Quiz</button>
-                    <button class="submit-button" onclick="shareQuiz()">Partager le Quiz</button>
-                    <button class="submit-button" onclick="inviteCollaborator()">Inviter un Collaborateur</button>
-                </div>
-
-                <!-- Language Selector -->
-                <select id="languageSelector" onchange="changeLanguage()">
-                    <option value="fr">Français</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
-        </div>
-    </div>
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" rel="stylesheet">
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.0/Sortable.min.js"></script>
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../script/img_upload.js" defer></script>
     <script src="../script/quiz_standard.js" defer></script>
     <script src="../script/volet_script.js" defer></script>
-    <div id="burger-menu"></div>
-    <script src="../script/importer_burger.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body class="bg-light">
+    <div class="container-fluid p-0">
+        <!-- Header -->
+        <header class="d-flex justify-content-between align-items-center bg-white shadow-sm p-3">
+            <img src="../ressource/page_creation_quiz/logo_quizzine_réduis.png" alt="Logo Quizzine" class="logo" style="height: 50px;">
+            <div class="profile-section d-flex align-items-center">
+                <img src="<%= user && user.profilePhoto ? user.profilePhoto : 'https://api.dicebear.com/9.x/big-ears/svg?seed=' + Math.random().toString(36).substring(7) %>" 
+                     alt="Profile" 
+                     class="profile-img rounded-circle me-2" 
+                     style="width: 45px; height: 45px; object-fit: cover;">
+                <span class="user-name text-muted">Mon Compte</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="main-content d-flex">
+            <!-- Sidebar Gauche -->
+            <aside class="slide-sidebar bg-white border-end p-3">
+                <div class="slides-list">
+                    <div class="slide-item active" data-slide="1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <p class="slide-number me-2">1️⃣</p>
+                                <p class="slide-title">💡 Question</p>
+                            </div>
+                            <button class="btn btn-sm btn-outline-danger btn-delete-slide" title="Supprimer">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                        <img src="../ressource/default-thumbnail.jpg" alt="Miniature" class="thumbnail-image mt-2 rounded">
+                    </div>
+                </div>
+
+                <!-- Boutons d'action -->
+                <div class="buttons-group mt-3 d-grid gap-2">
+                    <button class="btn btn-primary add-question-btn">
+                        <i class="bi bi-plus-circle me-2"></i>Ajouter une question
+                    </button>
+                    <button class="btn btn-outline-secondary add-slide-btn">
+                        <i class="bi bi-paint-brush me-2"></i>Ajouter une diapositive
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Zone de création de quiz -->
+            <main id="quiz-container" class="quiz-container flex-grow-1 p-4">
+                <div class="quiz-creation-form card shadow-sm">
+                    <div class="card-body">
+                        <input type="text" placeholder="TITRE DU QUIZ" class="form-control form-control-lg mb-4 quiz-title">
+
+                        <!-- Upload d'image -->
+                        <div class="image-upload mb-4">
+                            <div id="mediaContainer" class="d-flex flex-column align-items-center justify-content-center border-dashed p-5 rounded text-center">
+                                <i class="bi bi-plus-lg text-primary fs-1 mb-2"></i>
+                                <span class="text-muted">Insérer un contenu multimédia</span>
+                                <input type="file" id="imageUpload" class="d-none" accept="image/*">
+                            </div>
+                        </div>
+
+                        <!-- Section Question -->
+                        <div class="question-section">
+                            <input type="text" class="form-control mb-3 question-input" placeholder="Saisir une question">
+                            
+                            <div class="timer mb-4 d-flex align-items-center">
+                                <label for="timeSelect" class="me-3">⏱️ Temps imparti</label>
+                                <input type="range" id="timeSelect" class="form-range flex-grow-1 me-3" min="5" max="60" step="10" value="30">
+                                <span id="timeDisplay" class="badge bg-primary">30s</span>
+                            </div>
+
+                            <!-- Réponses -->
+                            <div class="answers">
+                                <div class="answer-input-container mb-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light">A</span>
+                                        <input type="text" placeholder="Réponse A" class="form-control answer-input">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="answer-input-container mb-2">
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light">B</span>
+                                        <input type="text" placeholder="Réponse B" class="form-control answer-input">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <i class="bi bi-check-circle text-success"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <button class="btn btn-outline-primary add-more-btn mt-2">
+                                    <i class="bi bi-plus me-2"></i>Ajouter plus de réponses
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Volet Droit -->
+            <aside class="volet-coulissant bg-white border-start p-3" style="width: 300px;">
+                <div class="card h-100">
+                    <div class="card-header bg-light">
+                        <h5 class="card-title mb-0">🛠️ Paramètres du Quiz</h5>
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <div class="mb-3">
+                            <label for="quizType" class="form-label">Type de Quiz</label>
+                            <select id="quizType" class="form-select">
+                                <option value="standard" selected>Quiz Standard</option>
+                                <option value="juste_prix">Juste Prix</option>
+                                <option value="vrai_ou_faux">Vrai ou Faux</option>
+                            </select>
+                        </div>
+
+                        <!-- Personnalisation -->
+                        <div class="mb-3">
+                            <label class="form-label">Personnalisation</label>
+                            <div class="btn-group w-100" role="group">
+                                <button onclick="showModal('colorsModal')" class="btn btn-outline-secondary">🎨 Couleurs</button>
+                                <button onclick="showModal('imagesModal')" class="btn btn-outline-secondary">🖼️ Images</button>
+                            </div>
+                        </div>
+                        <!-- Modal pour les Couleurs -->
+                <div id="colorsModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">×</span>
+                        <h5>Choisissez une couleur</h5>
+                        <div class="color-options">
+                            <button onclick="applyBackground('red')" class="btn" style="background-color: red;">Rouge</button>
+                            <button onclick="applyBackground('blue')" class="btn" style="background-color: blue;">Bleu</button>
+                            <button onclick="applyBackground('green')" class="btn" style="background-color: green;">Vert</button>
+                            <button onclick="applyBackground('yellow')" class="btn" style="background-color: yellow;">Jaune</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal pour les Images -->
+                <div id="imagesModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeModal()">×</span>
+                        <h5>Choisissez une image</h5>
+                        <div class="image-options">
+                            <button onclick="applyBackground('url(https://via.placeholder.com/300)')" class="btn">
+                                <img src="https://via.placeholder.com/50" alt="Image 1" class="thumbnail">
+                            </button>
+                            <button onclick="applyBackground('url(https://via.placeholder.com/400)')" class="btn">
+                                <img src="https://via.placeholder.com/50" alt="Image 2" class="thumbnail">
+                            </button>
+                            <button onclick="applyBackground('url(https://via.placeholder.com/500)')" class="btn">
+                                <img src="https://via.placeholder.com/50" alt="Image 3" class="thumbnail">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                        <!-- Actions -->
+                        <div class="mt-auto">
+                            <button onclick="saveQuiz()" class="btn btn-primary w-100">
+                                <i class="bi bi-save me-2"></i>Enregistrer le Quiz
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
 </body>
 </html>
