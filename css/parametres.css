@@ -95,7 +95,7 @@ input {
     text-align: center;
 }
 
-button{
+button, .btn-outline-primary, .mt-2, #confirm-avatar{
     background-color: rgba(255, 255, 255, 0.895);
     transition: color 0.5s ease;
     color: #c98210;
@@ -108,10 +108,31 @@ button{
 
 }
 
-button:hover{
+button:hover, .btn-outline-primary:hover, .my-2:hover, #confirm-avatar:hover{
     transition: color 0.5s ease;
-    color: #ff9d00;
+    color: #fdb94c;
     background-color: rgba(255, 255, 255, 0.895);
+}
+
+button:active, .btn-outline-primary:active, .my-2:active{
+    color: #fdb94c !important;
+    background-color: rgba(255, 255, 255, 0.895) !important;
+}
+
+.btn-outline-secondary {
+    background-color: rgba(235, 173, 29, 0.895);
+    transition: background-color 0.5s ease;
+    color: #ffffff;
+}
+
+.btn-outline-secondary:hover {
+    background-color: rgba(190, 136, 9, 0.895);
+    transition: background-color 0.5s ease;
+}
+
+.btn-outline-secondary:active {
+    background-color: rgba(190, 136, 9, 0.895) !important;
+    color: #ffffff !important;
 }
 
 .btn.btn-warning {
@@ -235,4 +256,22 @@ h3 {
     border: 2px solid rgb(251, 188, 0);
     background-color: rgb(251, 188, 0, 0.3); 
     border-radius: 8px;
+}
+
+.btn-danger {
+    background-color: rgba(168, 23, 23, 0.895);
+    transition: background-color 0.5s ease;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+
+}
+
+.btn-danger:hover{
+    transition: background-color 0.5s ease;
+    background-color: rgba(255, 0, 0, 0.895);
 }

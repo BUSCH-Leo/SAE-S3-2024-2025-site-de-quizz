@@ -1,3 +1,23 @@
+function showToast(message, isSuccess = true) {
+    const toastElement = document.getElementById('confirmationToast');
+    const toastBody = toastElement.querySelector('.toast-body');
+
+    toastBody.textContent = message;
+    toastElement.classList.remove('bg-success', 'bg-danger');
+    toastElement.classList.add(isSuccess ? 'bg-success' : 'bg-danger');
+
+    const toast = bootstrap.Toast.getInstance(toastElement) || new bootstrap.Toast(toastElement, {
+        autohide: true,
+        delay: 3000
+    });
+
+    if (toast._isShown) {
+        return;
+    } else {
+        toast.show();
+    }
+}
+
 document.getElementById('toggle-password').addEventListener('click', function () {
     const passwordInput = document.getElementById('password');
     const icon = this.querySelector('i');
@@ -109,14 +129,10 @@ document.getElementById('save-changes').addEventListener('click', async () => {
         });
 
         if (response.ok) {
-            const data = await response.json();
-            document.getElementById('success-message').style.display = 'block';
-            setTimeout(() => {
-                document.getElementById('success-message').style.display = 'none';
-            }, 3000);
-            console.log('Profil mis à jour:', data);
+            showToast('Changements enregistrés avec succès !');
         } else {
             console.error('Erreur lors de la mise à jour du profil');
+            showToast('Erreur lors de la mise à jour du profil.', false);
         }
     } catch (error) {
         console.error('Erreur lors de la requête :', error);
@@ -134,11 +150,13 @@ document.getElementById('save-changes').addEventListener('click', async () => {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log('Nom d\'utilisateur mis à jour:', data.userName);
+                showToast('Changements enregistrés avec succès !');
             } else {
-                const errorData = await response.json();
-                alert(errorData.message || 'Erreur lors de la mise à jour du nom d\'utilisateur');
+                // Si l'inscription échoue, affiche le message d'erreur
+                const data = await response.json();
+                const errorMessageElement = document.getElementById('error-message-user');
+                errorMessageElement.textContent = data.message;
+                errorMessageElement.style.display = 'block';
             }
         } catch (error) {
             console.error('Erreur lors de la mise à jour du nom d\'utilisateur :', error);
@@ -157,79 +175,47 @@ document.getElementById('save-changes').addEventListener('click', async () => {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                console.log('Numéro de téléphone mis à jour:', data.phoneNumber);
+                showToast('Changements enregistrés avec succès !');
             } else {
-                console.error('Erreur lors de la mise à jour du numéro de téléphone');
+                console.error('Erreur lors de la mise à jour du profil');
+                showToast('Erreur lors de la mise à jour du numéro de téléphone.', false);
             }
         } catch (error) {
             console.error('Erreur lors de la requête de mise à jour du téléphone :', error);
         }
     }
 });
- // Envoi de la mise à jour du mot de passe
- document.querySelector('#change-password-btn').addEventListener('click', async () => {
+// Envoi de la mise à jour du mot de passe
+document.querySelector('#change-password-btn').addEventListener('click', async () => {
     const oldPassword = document.getElementById('password').value;
     const newPassword = document.getElementById('new-password').value;
     const newPasswordConfirm = document.getElementById('new-password-confirm').value;
-    
-
     const passwordErrorMessage = document.getElementById('password-error');
-    const successMessage = document.getElementById('success-message');
-    let hasError = false;
-
 
     if (newPassword !== newPasswordConfirm) {
-        if (passwordErrorMessage) {
-            passwordErrorMessage.textContent = "Les mots de passe ne correspondent pas.";
-            passwordErrorMessage.style.display = 'block';
-        }
-        hasError = true;
-    } else {
-        try {
-
-            const response = await fetch('/profile/change-password', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    password: oldPassword, 
-                    newPassword,   
-                    newPasswordConfirm 
-                })
-                
-            });
-
-
-            if (response.ok) {
-                const data = await response.json();
-                if (successMessage) {
-                    successMessage.style.display = 'block';
-                    setTimeout(() => {
-                        successMessage.style.display = 'none';
-                    }, 3000);
-                }
-            } else {
-                const errorData = await response.json();
-                if (passwordErrorMessage) {
-                    passwordErrorMessage.textContent = errorData.message || 'Erreur lors de la mise à jour du mot de passe';
-                    passwordErrorMessage.style.display = 'block';
-                }
-                hasError = true;
-            }
-        } catch (error) {
-            console.error('Erreur lors de la mise à jour du mot de passe :', error);
-            if (passwordErrorMessage) {
-                passwordErrorMessage.textContent = "Une erreur est survenue lors de la mise à jour du mot de passe.";
-                passwordErrorMessage.style.display = 'block';
-            }
-            hasError = true;
-        }
+        passwordErrorMessage.textContent = "Les mots de passe ne correspondent pas.";
+        passwordErrorMessage.style.display = 'block';
+        return; // Arrête l'exécution en cas d'erreur
     }
 
-    if (hasError && successMessage) {
-        successMessage.style.display = 'none';
+    try {
+        const response = await fetch('/profile/change-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: oldPassword, newPassword, newPasswordConfirm }),
+        });
+
+        if (response.ok) {
+            showToast('Changements enregistrés avec succès !');
+        } else {
+            const errorData = await response.json();
+            passwordErrorMessage.textContent = errorData.message || 'Erreur lors de la mise à jour.';
+            passwordErrorMessage.style.display = 'block';
+        }
+    } catch (error) {
+        console.error('Erreur réseau ou serveur :', error);
+        passwordErrorMessage.textContent = "Erreur réseau ou serveur.";
+        passwordErrorMessage.style.display = 'block';
     }
 });
 
@@ -243,8 +229,7 @@ document.querySelector('#confirm-delete-btn').addEventListener('click', async ()
 
         if (response.ok) {
             const data = await response.json();
-            alert(data.message || "Compte supprimé avec succès.");
-            window.location.href = '/'; 
+            window.location.href = 'index.html'; 
         } else {
             console.error('Erreur lors de la suppression du compte');
         }

@@ -18,6 +18,17 @@
         }
     </style>
 
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+        <div id="confirmationToast" class="toast align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="3000">
+            <div class="d-flex">
+                <div class="toast-body">
+                    Changements enregistrés avec succès !
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Fermer"></button>
+            </div>
+        </div>
+    </div>
+
     <div class="content-box">
         <h1 class="page-title">Vous êtes connecté en tant que :</h1>
         <h2 class="name">
@@ -58,6 +69,7 @@
             <small id="username-error" class="text-danger" style="display: none;"></small>
             <input type="text" id="username-input" placeholder="Non connecté">
         <% } %>
+        <div id="error-message-user" class="text-danger" style="display: none;"></div>
 
         <h3><br>- Photo de profil :</h3>
     <div>
@@ -81,7 +93,6 @@
                 <button id="save-changes" class="btn btn-outline-primary">Enregistrer les modifications</button>
             <% } %>
         </div>
-        <p id="success-message" style="display: none; color: rgb(255, 183, 0);">Changement enregistré</p>
     </div>
 
     <div class="content-box">
