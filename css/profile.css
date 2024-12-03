@@ -1,6 +1,8 @@
 .profile-menu {
     position: fixed;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     top: 20px;
     right: 20px;
     z-index: 1001;
@@ -10,4 +12,32 @@
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #e3ad0a;
+}
+
+.profile-menu button {
+    background-color: white;
+    color: #525252;
+    font-size: 12px;
+    border-radius: 5px;
+    border-color: #e3ad0a;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 3px;
+    font-weight: bold;
+    border-width: 1px;
+    margin: 3px;
+}
+
+.profile-menu .button-div {
+    margin-bottom: 5px;
+    visibility: hidden; /* Masque l'élément */
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.profile-menu .button-div.show {
+    visibility: visible; /* Rend visible */
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }
