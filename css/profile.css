@@ -1,0 +1,13 @@
+.profile-menu {
+    position: fixed;
+    display: flex;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+}
+
+.profile-menu img {
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e3ad0a;
+}

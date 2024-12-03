@@ -98,6 +98,10 @@ app.get('/quiz', (req, res) => {
 app.get('/parametres', (req, res) => {
     res.render('parametres', { user: req.user });
 });
+// Route pour profile
+app.get('/profile', (req, res) => {
+    res.render('profile', { user: req.user });
+});
 // Route pour jouer_page
 app.get('/jouer_page', (req, res) => {
     res.render('jouer_page', { user: req.user }); 
