@@ -1,19 +1,22 @@
 <link rel="stylesheet" href="../css/profile.css">
 <div class="profile-menu">
     <img id="profile-preview" src="<%= user && user.profilePhoto ? user.profilePhoto : 'https://api.dicebear.com/6.x/big-ears/svg?seed=' + Math.random().toString(36).substring(2) %>" alt="Photo de profil" class="img-thumbnail" width="70" height="70">
-    <% if (user) { %>
-        <form class="button-div" action="/auth/logout">
-            <button id="disconnect">Se déconnecter</button>
-        </form>
-    <% } else { %>
-        <div class="button-div">
-            <button id="connect" onclick="window.location.href = 'connexion';">Se connecter</button>
-        </div>
-    <% } %>
-
-    <% if (user) { %>
-        <form class="button-div">
-            <button id="parametres">Paramètres du compte</button>
-        </form>
-    <% } %>
+    <div class="buttons-profile">
+        <% if (user) { %>
+            <div class="button-div">
+                <form action="/auth/logout">
+                    <button id="disconnect">Se déconnecter</button>
+                </form>
+            </div>
+            <div class="button-div">
+                <form>
+                    <button id="parametres">Paramètres du compte</button>
+                </form>
+            </div>
+        <% } else { %>
+            <div class="button-div">
+                <button id="connect" onclick="window.location.href = 'connexion';">Se connecter</button>
+            </div>
+        <% } %>
+    </div>
 </div>

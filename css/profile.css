@@ -1,43 +1,52 @@
 .profile-menu {
     position: fixed;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row-reverse; /* Place l'image à droite et les boutons à gauche */
+    align-items: center; /* Aligne verticalement l'image et les boutons au centre */
     top: 20px;
-    right: 20px;
-    z-index: 1001;
+    right: 20px; /* Positionne l'ensemble du menu à droite de la page */
+    z-index: 1000;
 }
 
 .profile-menu img {
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid #e3ad0a;
+    cursor: pointer;
+    z-index: 1000;
+    margin-left: 10px; /* Espace entre l'image et les boutons */
 }
+
+.profile-menu .button-div {
+    display: flex;
+    flex-direction: column; /* Empile les boutons verticalement */
+    margin-bottom: 5px;
+    align-items: flex-start; /* Aligne les boutons à gauche */
+    visibility: hidden; /* Cache les boutons au départ */
+    opacity: 0; /* Rendre invisible */
+    transform: rotateY(-90deg); /* Initialement tourné sur le côté */
+    transition: transform 0.2s ease-out, visibility 0s 0.2s, opacity 0.2s ease-out; /* Animation fluide */
+}
+
+.profile-menu .button-div.visible {
+    transform: rotateY(0); /* Restaure la position d'origine */
+    visibility: visible; /* Les boutons deviennent visibles */
+    opacity: 1; /* Les boutons deviennent visibles */
+    transition: transform 0.2s ease-in, opacity 0.3s ease; /* Transition fluide pour l'apparition */
+}
+
 
 .profile-menu button {
     background-color: white;
     color: #525252;
     font-size: 12px;
     border-radius: 5px;
-    border-color: #e3ad0a;
+    border: 1px solid #e3ad0a;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 3px;
+    padding: 5px 10px;
     font-weight: bold;
-    border-width: 1px;
-    margin: 3px;
-}
-
-.profile-menu .button-div {
-    margin-bottom: 5px;
-    visibility: hidden; /* Masque l'élément */
-    opacity: 0;
-    transition: opacity 0.3s ease, visibility 0s 0.3s;
-}
-
-.profile-menu .button-div.show {
-    visibility: visible; /* Rend visible */
-    opacity: 1;
-    transition: opacity 0.3s ease;
+    width: 170px; /* Largeur uniforme des boutons */
+    text-align: left;
 }
