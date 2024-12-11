@@ -290,35 +290,139 @@ document.getElementById('submit').addEventListener('click', () => {
     }
 });
 const categoryBackgrounds = {
-    "6713a755f012fc38a3f26092": "../ressource/categorie/music1.jpg", // Entertainment: Music
-    "6713a755f012fc38a3f26098": "../ressource/categorie/film1.jpg", // Entertainment: Film
-    "6713a755f012fc38a3f2609f": "../ressource/categorie/theatre1.jpg", // Entertainment: Musicals & Theatres
-    "6713a756f012fc38a3f260a5": "../ressource/categorie/videogame1.jpg", // Entertainment: Video Games
-    "6713a756f012fc38a3f260ab": "../ressource/categorie/computer1.jpg", // Science: Computers
-    "6713a756f012fc38a3f260b1": "../ressource/categorie/cateogrie/nature1.jpg", // Science & Nature
-    "6713a756f012fc38a3f260b7": "../ressource/categoire/television1.jpg", // Entertainment: Television
-    "6713a756f012fc38a3f260c1": "../ressource/categorie/generalknownledge1.jpg", // General Knowledge
-    "6713a756f012fc38a3f260c7": "../ressource/categorie/vehicles1.jpg", // Vehicles
-    "6713a757f012fc38a3f260d5": "../ressource/categorie/geography1.jpg", // Geography
-    "6713a757f012fc38a3f260e7": "../ressource/categorie/books1.jpg", // Entertainment: Books
-    "6713a757f012fc38a3f260ed": "../ressource/categorie/history1.jpg", // History
-    "6713a758f012fc38a3f260fb": "../ressource/cateogrie/mythology1.jpg", // Mythology
-    "6713a758f012fc38a3f26111": "../ressource/categorie/cartoon1.jpg", // Entertainment: Cartoon & Animations
-    "6713a758f012fc38a3f2611b": "../ressource/categorie/comics1.jpg", // Entertainment: Comics
-    "6713a759f012fc38a3f26135": "../ressource/background_gadgets.jpg", // Science: Gadgets
-    "6713a75ef012fc38a3f261f7": "../ressource/categorie/animals1.jpg", // Animals
-    "6713a75ef012fc38a3f26209": "../ressource/categorie/animemanga1.jpg", // Entertainment: Japanese Anime & Manga
-    "6713a75ef012fc38a3f2621f": "../ressource/categorie/sports1.jpg", // Sports
-    "6713a75ff012fc38a3f26245": "../ressource/categorie/videogame2.jpg", // Entertainment: Board Games
-    "6713a760f012fc38a3f26267": "../ressource/categorie/art1.jpg", // Art
-    "6713a763f012fc38a3f262d5": "../ressource/categorie/celebrity1.jpg", // Celebrities
-    "6713a768f012fc38a3f263c7": "../ressource/categorie/politics1.jpg", // Politics
-    "6713a76bf012fc38a3f26439": "../ressource/background_mathematics.jpg" // Science: Mathematics
+    "6713a755f012fc38a3f26092": [
+        "../ressource/categorie/music1.jpg",
+        "../ressource/categorie/music2.jpg",
+        "../ressource/categorie/music3.jpg"
+    ],
+    "6713a755f012fc38a3f26098": [
+        "../ressource/categorie/film1.jpg",
+        "../ressource/categorie/film2.jpg",
+        "../ressource/categorie/film3.jpg"
+    ],
+    "6713a755f012fc38a3f2609f": [
+        "../ressource/categorie/theatre1.jpg",
+        "../ressource/categorie/theatre2.jpg",
+        "../ressource/categorie/theatre3.jpg"
+    ],
+    "6713a756f012fc38a3f260a5": [
+        "../ressource/categorie/videogame1.jpg",
+        "../ressource/categorie/videogame2.jpg",
+        "../ressource/categorie/videogame3.jpg"
+    ],
+    "6713a756f012fc38a3f260ab": [
+        "../ressource/categorie/computer1.jpg",
+        "../ressource/categorie/computer2.jpg",
+        "../ressource/categorie/computer3.jpg"
+    ],
+    "6713a756f012fc38a3f260b1": [
+        "../ressource/categorie/nature1.jpg",
+        "../ressource/categorie/nature2.jpg",
+        "../ressource/categorie/nature3.jpg"
+    ],
+    "6713a756f012fc38a3f260b7": [
+        "../ressource/categorie/television1.jpg",
+        "../ressource/categorie/television2.jpg",
+        "../ressource/categorie/television3.jpg"
+    ],
+    "6713a756f012fc38a3f260c1": [
+        "../ressource/categorie/generalknownledge1.jpg",
+        "../ressource/categorie/generalknownledge2.jpg",
+        "../ressource/categorie/generalknownledge3.jpg"
+    ],
+    "6713a756f012fc38a3f260c7": [
+        "../ressource/categorie/vehicles1.jpg",
+        "../ressource/categorie/vehicles2.jpg",
+        "../ressource/categorie/vehicles3.jpg"
+    ],
+    "6713a757f012fc38a3f260d5": [
+        "../ressource/categorie/geography1.jpg",
+        "../ressource/categorie/geography2.jpg",
+        "../ressource/categorie/geography3.jpg"
+    ],
+    "6713a757f012fc38a3f260e7": [
+        "../ressource/categorie/books1.jpg",
+        "../ressource/categorie/books2.jpg",
+        "../ressource/categorie/books3.jpg"
+    ],
+    "6713a757f012fc38a3f260ed": [
+        "../ressource/categorie/history1.jpg",
+        "../ressource/categorie/history2.jpg",
+        "../ressource/categorie/history3.jpg"
+    ],
+    "6713a758f012fc38a3f260fb": [
+        "../ressource/categorie/mythology1.jpg",
+        "../ressource/categorie/mythology2.jpg",
+        "../ressource/categorie/mythology3.jpg"
+    ],
+    "6713a758f012fc38a3f26111": [
+        "../ressource/categorie/cartoon1.jpg",
+        "../ressource/categorie/cartoon2.jpg",
+        "../ressource/categorie/cartoon3.jpg"
+    ],
+    "6713a758f012fc38a3f2611b": [
+        "../ressource/categorie/comics1.jpg",
+        "../ressource/categorie/comics2.jpg",
+        "../ressource/categorie/comics3.jpg"
+    ],
+    "6713a759f012fc38a3f26135": [
+        "../ressource/categorie/gadgets1.jpg",
+        "../ressource/categorie/gadgets2.jpg",
+        "../ressource/categorie/gadgets3.jpg"
+    ],
+    "6713a75ef012fc38a3f261f7": [
+        "../ressource/categorie/animals1.jpg",
+        "../ressource/categorie/animals2.jpg",
+        "../ressource/categorie/animals3.jpg"
+    ],
+    "6713a75ef012fc38a3f26209": [
+        "../ressource/categorie/animemanga1.jpg",
+        "../ressource/categorie/animemanga2.jpg",
+        "../ressource/categorie/animemanga3.jpg"
+    ],
+    "6713a75ef012fc38a3f2621f": [
+        "../ressource/categorie/sports1.jpg",
+        "../ressource/categorie/sports2.jpg",
+        "../ressource/categorie/sports3.jpg"
+    ],
+    "6713a75ff012fc38a3f26245": [
+        "../ressource/categorie/boardgames1.jpg",
+        "../ressource/categorie/boardgames2.jpg",
+        "../ressource/categorie/boardgames3.jpg"
+    ],
+    "6713a760f012fc38a3f26267": [
+        "../ressource/categorie/art1.jpg",
+        "../ressource/categorie/art2.jpg",
+        "../ressource/categorie/art3.jpg"
+    ],
+    "6713a763f012fc38a3f262d5": [
+        "../ressource/categorie/celebrity1.jpg",
+        "../ressource/categorie/celebrity2.jpg",
+        "../ressource/categorie/celebrity3.jpg"
+    ],
+    "6713a768f012fc38a3f263c7": [
+        "../ressource/categorie/politics1.jpg",
+        "../ressource/categorie/politics2.jpg",
+        "../ressource/categorie/politics3.jpg"
+    ],
+    "6713a76bf012fc38a3f26439": [
+        "../ressource/categorie/maths1.jpg",
+        "../ressource/categorie/maths2.jpg",
+        "../ressource/categorie/maths3.jpg"
+    ]
 };
 
+function getRandomBackground(categoryId) {
+    const backgrounds = categoryBackgrounds[categoryId];
+    if (backgrounds && backgrounds.length > 0) {
+        const randomIndex = Math.floor(Math.random() * backgrounds.length);
+        return backgrounds[randomIndex];
+    }
+    return null;
+}
 
 function applyBackgroundForCategory(categoryId) {
-    const backgroundUrl = categoryBackgrounds[categoryId]; // Récupère l'image associée
+    const backgroundUrl = getRandomBackground(categoryId);
     if (backgroundUrl) {
         document.body.style.background = `url('${backgroundUrl}') no-repeat center center fixed`;
         document.body.style.backgroundSize = "cover";
@@ -335,8 +439,6 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Aucune catégorie spécifiée dans l'URL.");
     }
 });
-
-
 
 // Démarrer le quiz
 fetchQuizzes();
