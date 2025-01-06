@@ -31,12 +31,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     jouerButton.addEventListener('click', function() {
         console.log('Jouer button clicked');
-        playRandomAudio();
     });
 
     creerButton.addEventListener('click', function() {
         console.log('Créer button clicked');
-        playRandomAudio();
     });
     
     title.addEventListener('click', function() {
@@ -81,5 +79,39 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         isMusicPlaying = !isMusicPlaying;
+    });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const jouerMenu = document.querySelector("#jouer-menu");
+    const creerMenu = document.querySelector("#creer-menu");
+    const jouerButton = document.querySelector("#zone_jouer");
+    const creerButton = document.querySelector("#zone_créer");
+
+    function closeAllMenus() {
+        jouerMenu.classList.remove("active");
+        creerMenu.classList.remove("active");
+    }
+
+    function closeOnClickOutside(event) {
+        if (!event.target.closest(".slide-menu") && !event.target.closest(".button_zone")) {
+            closeAllMenus();
+        }
+    }
+
+    jouerButton.addEventListener("click", () => {
+        closeAllMenus();
+        jouerMenu.classList.add("active");
+        document.addEventListener("click", closeOnClickOutside);
+    });
+
+    creerButton.addEventListener("click", () => {
+        closeAllMenus();
+        creerMenu.classList.add("active");
+        document.addEventListener("click", closeOnClickOutside);
+    });
+
+    document.querySelectorAll(".slide-menu").forEach(menu => {
+        menu.addEventListener("click", (e) => e.stopPropagation());
     });
 });
