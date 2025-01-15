@@ -1,71 +1,46 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const quizTypeSelector = document.getElementById('quizType');
-    const questionSection = document.querySelector('.question-section');
-    const timeSelect = document.getElementById('timeSelect');
-    const timeDisplay = document.getElementById('timeDisplay');
+// quiz_standard.js
 
-    function updateTimerDisplay() {
-        timeDisplay.textContent = `${timeSelect.value}s`;
+(function() {
+    let defaultImage = '../ressource/fond1.jpg';
+
+    function initQuizStandard() {
+        const imageUpload = document.getElementById('imageUpload');
+        const imagePreview = document.getElementById('imagePreview');
+        const quizTypeSelector = document.getElementById('quizType');
+        const questionSection = document.querySelector('.question-section');
+
+        setBackgroundImage(defaultImage);
+
+        quizTypeSelector.addEventListener('change', updateQuiz);
+
     }
 
-    timeSelect.addEventListener('input', updateTimerDisplay);
-
-    function generateAnswerTemplate(answerLetter) {
-        return `
-            <div class="answer-input-container mb-2">
-                <div class="input-group">
-                    <span class="input-group-text bg-light">${answerLetter}</span>
-                    <input type="text" placeholder="Réponse ${answerLetter}" class="form-control answer-input">
-                    <button class="btn btn-outline-secondary" type="button">
-                        <i class="bi bi-check-circle text-success"></i>
-                    </button>
-                </div>
-            </div>`;
+    // Fonction pour appliquer une image en fond
+    function setBackgroundImage(imageUrl) {
+        document.body.style.backgroundImage = `url('${imageUrl}')`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundAttachment = 'fixed';
     }
 
-    function addMoreAnswers() {
-        const answersContainer = document.querySelector('.answers');
-        const letters = 'CDEFGHIJKLMNOP'.split('');
-        const currentAnswers = answersContainer.querySelectorAll('.answer-input-container');
-        const nextLetter = letters[currentAnswers.length - 2];
-
-        if (nextLetter) {
-            const newAnswerHTML = generateAnswerTemplate(nextLetter);
-            answersContainer.insertAdjacentHTML('beforeend', newAnswerHTML);
-        } else {
-            alert('Nombre maximum de réponses atteint.');
+    function updateSliderBackground() {
+        const timeSelect = document.getElementById('timeSelect');
+        if (timeSelect) {
+            const value = (timeSelect.value - timeSelect.min) / (timeSelect.max - timeSelect.min) * 100;
+            timeSelect.style.background = `linear-gradient(to right, #7BD634 ${value}%, #ddd ${value}%)`;
         }
     }
 
-    function setupAddMoreAnswersButton() {
-        const addMoreButton = document.querySelector('.add-more-btn');
-        if (addMoreButton) {
-            addMoreButton.addEventListener('click', addMoreAnswers);
-        }
+    function updateQuiz() {
+        
     }
 
-    quizTypeSelector.addEventListener('change', () => {
-        const quizType = quizTypeSelector.value;
+    window.quizStandard = {
+        init: initQuizStandard,
+        setBackgroundImage: setBackgroundImage,
+        updateSliderBackground: updateSliderBackground,
+        updateQuiz: updateQuiz
+    };
+})();
 
-        if (quizType === 'vrai_ou_faux') {
-            questionSection.innerHTML = `
-                <div class="answers">
-                    ${generateAnswerTemplate('A')}
-                    ${generateAnswerTemplate('B')}
-                </div>`;
-        } else {
-            questionSection.innerHTML = `
-                <div class="answers">
-                    ${generateAnswerTemplate('A')}
-                    ${generateAnswerTemplate('B')}
-                    <button class="btn btn-outline-primary add-more-btn mt-2">
-                        <i class="bi bi-plus me-2"></i>Ajouter plus de réponses
-                    </button>
-                </div>`;
-            setupAddMoreAnswersButton();
-        }
-    });
-
-    setupAddMoreAnswersButton();
-    updateTimerDisplay();
-});
+document.addEventListener('DOMContentLoaded', window.quizStandard.init);
