@@ -4,6 +4,7 @@ let currentQuestionIndex = 0;
 let userAnswers = [];
 let timer;
 let timePerQuestion = 30;
+let timeLeft = timePerQuestion;
 
 // Récupération de la catégorie depuis l'URL
 function getCategoryFromURL() {
@@ -176,7 +177,7 @@ function displayCurrentQuestion() {
 
 // Fonction pour démarrer le timer
 function startTimer() {
-    let timeLeft = timePerQuestion;
+    timeLeft = timePerQuestion;
     const timerElement = document.getElementById('timer');
     const progressBar = document.getElementById('progress-bar');
     timerElement.innerText = `Temps restant : ${timePerQuestion}s`;
@@ -234,7 +235,7 @@ function calculateScore() {
             const userAnswer = userAnswers[quizIndex] && userAnswers[quizIndex][questionIndex];
             const correctAnswer = question.correct_answer;
             if (userAnswer === correctAnswer) {
-                totalScore++;
+                totalScore += Math.round(50 + (timeLeft / timePerQuestion * 50)) + 1;
             }
 
             questionsMemo.push({
