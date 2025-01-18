@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzine - Editeur</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../css/editor.css">
+    <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
+</head>
+<body>
+    <!-- <header class="d-flex justify-content-between align-items-center mb-4">
+        <div class="logo">
+            <img src="./logo_quizzine_réduis.png" alt="Logo" class="img-fluid">
+        </div>
+        <div class="profile d-flex align-items-center">
+            <img src="<% if (user && user.profilePhoto) { %> <%= user.profilePhoto %> <% } else { %> https://api.dicebear.com/9.x/big-ears/svg?seed=<%= Math.random().toString(36).substring(7) %> <% } %>" alt="Profile" class="profile-img">
+            <span class="status ms-2">
+               
+            </span>
+        </div>
+        
+        
+    </header>
+    --->
+
+    <!-- Left Panel - Questions List -->
+    <div class="panel left-panel shadow-lg">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-bold">Questions</h2>
+                <button id="addQuestionBtn" class="text-gray-500 hover:text-blue-600">  
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            
+            <div id="questionsList" class="space-y-4 mb-6">
+                <!-- Template de question -->
+                <div class="question-card p-4 cursor-pointer border hover:border-blue-500 relative" data-question-id="1">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-medium">Question 1</span>
+                        <div class="flex gap-2">
+                            <button class="delete-question text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <p class="text-sm text-gray-600 truncate">Nouvelle question</p>
+                   
+                </div>
+            </div>
+        </div>
+        <button class="toggle-button">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <a href="./index.html" class="back-button">
+            <img src="../ressource/pages_secondaires/back.png" alt="Retour" class="back-icon">
+            Retour au menu
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content p-8">
+        <div id="profile-menu"></div>
+	    <script src="../script/importer_profile.js" defer></script>
+
+        <div class="max-w-4xl mx-auto">
+            <!-- Question Editor -->
+            <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                <input type="text" placeholder="Écris ta question" class="text-2xl font-bold w-full mb-4 focus:outline-none">
+               
+
+                <!-- Media Upload -->
+                <div class="media-upload p-6 mb-6 text-center border rounded-lg bg-gray-100">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                    <p class="text-gray-600">Déposez les fichiers média ici ou</p>
+                    <button class="text-blue-500 hover:text-blue-700">Parcourir les fichiers</button>
+                </div>
+                 <!--Slider Section -->
+                 <div class="slider-section mb-6">
+                    <label for="timeSlider" class="block text-sm font-medium text-gray-700 mb-2">
+                        Temps limite pour répondre (en secondes) :
+                    </label>
+                    <!-- Affichage de la valeur sélectionnée -->
+                    <span id="timeDisplay" class="text-blue-600 font-semibold">30s</span>
+                    
+                    <input 
+                        type="range" 
+                        id="timeSlider" 
+                        min="10" 
+                        max="120" 
+                        value="30" 
+                        step="2" 
+                        class="w-full appearance-none bg-gray-200 rounded-lg h-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 slider-thumb">
+                </div>
+                <!-- Option de réponses -->
+                <div id="answerOptionsContainer" class="grid grid-cols-2 gap-4 mb-6">
+                    <!-- Default 4 multiple choice options -->
+                    <div class="answer-option flex items-center gap-4">
+                        <div class="flex-1">
+                            <input type="text" placeholder="Réponse 1" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <button class="p-2 text-gray-400 hover:bg-green-50 rounded correct-toggle">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="p-2 text-red-500 hover:bg-red-50 rounded delete-option">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="answer-option flex items-center gap-4">
+                        <div class="flex-1">
+                            <input type="text" placeholder="Réponse 2" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <button class="p-2 text-gray-400 hover:bg-green-50 rounded correct-toggle">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="p-2 text-red-500 hover:bg-red-50 rounded delete-option">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="answer-option flex items-center gap-4">
+                        <div class="flex-1">
+                            <input type="text" placeholder="Réponse 3" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <button class="p-2 text-gray-400 hover:bg-green-50 rounded correct-toggle">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="p-2 text-red-500 hover:bg-red-50 rounded delete-option">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                    <div class="answer-option flex items-center gap-4">
+                        <div class="flex-1">
+                            <input type="text" placeholder="Réponse 4" class="w-full p-3 border rounded-lg">
+                        </div>
+                        <button class="p-2 text-gray-400 hover:bg-green-50 rounded correct-toggle">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <button class="p-2 text-red-500 hover:bg-red-50 rounded delete-option">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+    
+                <button id="addOptionBtn" class="text-primary hover:text-primary-dark">
+                    <i class="fas fa-plus mr-2"></i> Ajouter des options de réponses
+                </button>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Right Panel - Customization -->
+    <div class="panel right-panel shadow-lg">
+        <!-- Barre de boutons -->
+        <div class="panel-tabs flex gap-4 p-4 border-b">
+            <button data-tab="theme" class="tab-btn active p-2 rounded-lg hover:bg-gray-50">
+                <i class="fas fa-palette"></i>
+            </button>
+            <button data-tab="settings" class="tab-btn p-2 rounded-lg hover:bg-gray-50">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button data-tab="layout" class="tab-btn p-2 rounded-lg hover:bg-gray-50">
+                <i class="fas fa-table-columns"></i>
+            </button>
+        </div>
+    
+        <!-- Contenus des panneaux -->
+        <div class="panel-contents">
+            <!-- Theme Content -->
+            <div id="theme-content" class="tab-content p-6 active">
+                <div class="mb-6">
+                    <h3 class="font-semibold mb-4">Media Type</h3>
+                    <div class="space-y-2">
+                        <button id="imageBtn" class="w-full p-2 border rounded hover:bg-gray-50">
+                            <i class="fas fa-image mr-2"></i> Add Image
+                        </button>
+                        <button id="videoBtn" class="w-full p-2 border rounded hover:bg-gray-50">
+                            <i class="fas fa-video mr-2"></i> Add Video
+                        </button>
+                    </div>
+                </div>
+            
+                <!-- Theme Selection -->
+                <div class="mb-6">
+                    <h3 class="font-semibold mb-4">Themes</h3>
+                    <div class="grid grid-cols-2 gap-4" id="theme-previews">
+                        <div class="theme-preview">
+                            <img src="../ressource/editor/nature.jpeg" alt="Theme 1" class="w-full h-20 object-cover rounded" data-theme="theme1.jpg">
+                        </div>
+                        <div class="theme-preview">
+                            <img src="../ressource/editor/savane.jpeg" alt="Theme 2" class="w-full h-20 object-cover rounded" data-theme="theme2.jpg">
+                        </div>
+                        <div class="theme-preview">
+                            <img src="../ressource/editor/standart.jpeg" alt="Theme 3" class="w-full h-20 object-cover rounded" data-theme="theme3.jpg">
+                        </div>
+                        <div class="theme-preview">
+                            <img src="../ressource/editor/kitchen.jpeg" alt="Theme 4" class="w-full h-20 object-cover rounded" data-theme="theme4.jpg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Settings Content -->
+            <div id="settings-content" class="tab-content p-6 hidden">
+                <div class="space-y-6">
+                    <!-- Font Settings -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-4">Font Settings</h3>
+                        <select id="fontSelector" class="w-full p-2 border rounded">
+                            <option value="Arial">Arial</option>
+                            <option value="Roboto">Roboto</option>
+                            <option value="Open Sans">Open Sans</option>
+                            <option value="Montserrat">Montserrat</option>
+                        </select>
+                    </div>
+            
+                    <!-- Time Settings -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-4">Time Settings</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm mb-2">Default Time per Question</label>
+                                <div class="flex items-center gap-2">
+                                    <input type="number" id="defaultTime" class="w-20 p-2 border rounded" value="2" min="1">
+                                    <span class="text-gray-500">minutes</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="enableTimer" class="rounded">
+                                <label>Enable Timer for All Questions</label>
+                            </div>
+                        </div>
+                    </div>
+            
+                    <!-- Points Settings -->
+                    <div class="mb-6">
+                        <h3 class="font-semibold mb-4">Points Settings</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm mb-2">Default Points per Question</label>
+                                <input type="number" id="defaultPoints" class="w-20 p-2 border rounded" value="10" min="0">
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <input type="checkbox" id="enableBonus" class="rounded">
+                                <label>Enable Time Bonus Points</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Layout Content -->
+            <div id="layout-content" class="tab-content p-6 hidden">
+                <div class="mb-6">
+                    <label class="block text-sm font-medium mb-2">Question Type</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button 
+                            id="multipleChoiceBtn" 
+                            class="flex items-center gap-2 p-3 border rounded-lg hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-300"
+                            onclick="selectQuestionType('multiple')">
+                            <span class="material-icons">check_box</span>
+                            Multiple réponses
+                        </button>
+                        <button 
+                            id="truefalseBtn" 
+                            class="flex items-center gap-2 p-3 border rounded-lg hover:bg-green-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-green-300"
+                            onclick="selectQuestionType('truefalse')">
+                            <span class="material-icons">toggle_on</span>
+                            Vrai ou faux
+                        </button>
+                        <button 
+                            id="priceBtn" 
+                            class="flex items-center gap-2 p-3 border rounded-lg hover:bg-yellow-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-yellow-300"
+                            onclick="selectQuestionType('price')">
+                            <span class="material-icons">attach_money</span>
+                            Juste Prix
+                        </button>
+                        <button 
+                            id="standartBtn" 
+                            class="flex items-center gap-2 p-3 border rounded-lg hover:bg-gray-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-gray-300"
+                            onclick="selectQuestionType('standart')">
+                            <span class="material-icons">description</span>
+                            Standard
+                        </button>
+                    </div>
+                </div>
+            </div>      
+    
+        <button class="toggle-button">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        
+    </div>
+<script src="../script/editor.js"></script>
+<script src="../script/questionManager.js"></script>
+<script src="../script/theme.js"></script>
+<script src="../script/quizTheme.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+   
+
+    const profileImg = document.querySelector(".profile-img");
+    const statusSpan = document.querySelector(".status");
+
+    if (user) {
+        profileImg.src = user.profilePhoto || `https://api.dicebear.com/9.x/big-ears/svg?seed=${Math.random().toString(36).substring(7)}`;
+        statusSpan.textContent = user.userName;
+    } else {
+        profileImg.src = `https://api.dicebear.com/9.x/big-ears/svg?seed=${Math.random().toString(36).substring(7)}`;
+        statusSpan.textContent = "Invité";
+    }
+});
+
+</script>
+</body>
+</html>
