@@ -44,87 +44,130 @@ tabButtons.forEach(button => {
     });
 });
 
-// Theme selection
-document.querySelectorAll('.theme-preview').forEach(theme => {
-    theme.addEventListener('click', () => {
-        document.querySelectorAll('.theme-preview').forEach(t => 
-            t.style.transform = 'scale(1)');
-        theme.style.transform = 'scale(1.1)';
-        const themeUrl = theme.getAttribute('data-theme-url');
-        updateBackground(themeUrl);
-    });
-});
-
-// File upload for custom background
-const fileInput = document.getElementById('backgroundFileInput');
-fileInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            updateBackground(event.target.result);
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
-function updateBackground(url) {
-    mainContent.style.backgroundImage = `url(${url})`;
-    mainContent.style.backgroundSize = 'cover';
-    mainContent.style.backgroundPosition = 'center';
-}
-
-// Drag and drop file upload
+// Récupération des éléments existants pour la zone de dépôt
 const dropZone = document.querySelector('.media-upload');
+const uploadIcon = dropZone.querySelector('i');
+const uploadText = dropZone.querySelector('p');
+const uploadButton = dropZone.querySelector('button');
 
+// Créer l'input file caché
+const fileInput = document.createElement('input');
+fileInput.type = 'file';
+fileInput.accept = 'image/*';
+fileInput.style.display = 'none';
+dropZone.appendChild(fileInput);
+
+// Créer le conteneur de prévisualisation
+const previewContainer = document.createElement('div');
+previewContainer.style.display = 'none';
+previewContainer.style.position = 'absolute';
+previewContainer.style.top = '0';
+previewContainer.style.left = '0';
+previewContainer.style.width = '100%';
+previewContainer.style.height = '100%';
+previewContainer.innerHTML = `
+    <img src="" alt="Prévisualisation" style="width: 100%; height: 100%; object-fit: cover;">
+    <button class="remove-preview" style="position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.5); color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+        <i class="fas fa-times"></i>
+    </button>
+`;
+dropZone.appendChild(previewContainer);
+
+// Style de base pour la zone de dépôt
+dropZone.style.position = 'relative';
+dropZone.style.width = '300px';
+dropZone.style.height = '300px';
+dropZone.style.cursor = 'pointer';
+
+// Gérer le clic sur le bouton Parcourir
+uploadButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    fileInput.click();
+});
+
+// Gérer le drag & drop
 dropZone.addEventListener('dragover', (e) => {
     e.preventDefault();
-    dropZone.style.borderColor = 'var(--primary)';
-    dropZone.style.background = 'rgba(79, 70, 229, 0.05)';
+    dropZone.style.borderColor = 'var(--primary, #4F46E5)';
+    dropZone.style.backgroundColor = 'rgba(79, 70, 229, 0.05)';
 });
 
 dropZone.addEventListener('dragleave', () => {
     dropZone.style.borderColor = '#e5e7eb';
-    dropZone.style.background = 'transparent';
+    dropZone.style.backgroundColor = 'rgb(243 244 246)';
 });
 
 dropZone.addEventListener('drop', (e) => {
     e.preventDefault();
-    dropZone.style.borderColor = '#e5e7eb';
-    dropZone.style.background = 'transparent';
-    const file = e.dataTransfer.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            updateBackground(event.target.result);
-        };
-        reader.readAsDataURL(file);
+    handleFiles(e.dataTransfer.files);
+});
+
+// Gérer la sélection de fichier via l'input
+fileInput.addEventListener('change', (e) => {
+    handleFiles(e.target.files);
+});
+
+// Gérer la suppression de la prévisualisation
+previewContainer.querySelector('.remove-preview').addEventListener('click', (e) => {
+    e.stopPropagation();
+    resetUploadZone();
+});
+
+function handleFiles(files) {
+    if (files.length === 0) return;
+    
+    const file = files[0];
+    if (!file.type.startsWith('image/')) {
+        alert('Veuillez sélectionner une image');
+        return;
     }
-});
+    
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        previewContainer.querySelector('img').src = e.target.result;
+        showPreview();
+    };
+    reader.readAsDataURL(file);
+}
 
-// Font Selection
-const fontSelector = document.getElementById('fontSelector');
-fontSelector.addEventListener('change', (e) => {
-    document.querySelector('.main-content').style.fontFamily = e.target.value;
-});
+function showPreview() {
+    uploadIcon.style.display = 'none';
+    uploadText.style.display = 'none';
+    uploadButton.style.display = 'none';
+    previewContainer.style.display = 'block';
+    dropZone.style.backgroundColor = 'transparent';
+}
 
-
-
+function resetUploadZone() {
+    fileInput.value = '';
+    previewContainer.style.display = 'none';
+    uploadIcon.style.display = 'block';
+    uploadText.style.display = 'block';
+    uploadButton.style.display = 'block';
+    dropZone.style.backgroundColor = 'rgb(243 244 246)';
+    dropZone.style.borderColor = '#e5e7eb';
+}
 
 
 // Gérer les paramètres
-document.getElementById('defaultTime').addEventListener('change', function() {
-    localStorage.setItem('defaultTime', this.value);
-});
+const settings = {
+    font: 'Arial',
+    defaultPoints: 10,
+    enableBonus: false
+  };
 
-document.getElementById('defaultPoints').addEventListener('change', function() {
-    localStorage.setItem('defaultPoints', this.value);
-});
+  const fontSelector = document.getElementById('fontSelector');
+  const defaultPointsInput = document.getElementById('defaultPoints');
+  const enableBonusCheckbox = document.getElementById('enableBonus');
 
-document.getElementById('enableTimer').addEventListener('change', function() {
-    localStorage.setItem('enableTimer', this.checked);
-});
+  fontSelector.addEventListener('change', (e) => {
+    settings.font = e.target.value;
+  });
 
-document.getElementById('enableBonus').addEventListener('change', function() {
-    localStorage.setItem('enableBonus', this.checked);
-});
+  defaultPointsInput.addEventListener('input', (e) => {
+    settings.defaultPoints = parseInt(e.target.value);
+  });
+
+  enableBonusCheckbox.addEventListener('change', (e) => {
+    settings.enableBonus = e.target.checked;
+  });

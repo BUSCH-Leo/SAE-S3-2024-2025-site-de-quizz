@@ -21,7 +21,7 @@ function displayMemos() {
     const memoContainer = document.getElementById('memo-content');
 
     if (memoData) {
-        let globalQuestionIndex = 0; 
+        let globalQuestionIndex = 0;
 
         memoData.forEach((memo, quizIndex) => {
             const memoElement = document.createElement('div');
@@ -30,11 +30,19 @@ function displayMemos() {
             memoElement.innerHTML = `
                 <h4>Quiz ${quizIndex + 1}:</h4>
                 ${memo.questions.map((q, questionIndex) => {
-                    globalQuestionIndex++; 
+                    globalQuestionIndex++;
+
+                    // Ajouter des classes dynamiques pour les réponses
+                    const userAnswerClass = q.userAnswer === q.correctAnswer ? 'text-success' : 'text-danger';
+
                     return `
                         <p><strong>Question ${globalQuestionIndex}:</strong> ${q.question}</p>
-                        <p class="user-answer"><strong>Votre réponse:</strong> ${q.userAnswer}</p>
-                        <p class="correct-answer"><strong>Bonne réponse:</strong> ${q.correctAnswer}</p>
+                        <p class="user-answer ${userAnswerClass}">
+                            <strong>Votre réponse:</strong> ${q.userAnswer}
+                        </p>
+                        <p class="correct-answer text-success">
+                            <strong>Bonne réponse:</strong> ${q.correctAnswer}
+                        </p>
                     `;
                 }).join('')}
             `;
@@ -50,6 +58,7 @@ function displayMemos() {
         memoContainer.innerHTML = '<p>Aucune réponse enregistrée.</p>';
     }
 }
+
 
 
 // Fonction pour afficher le score

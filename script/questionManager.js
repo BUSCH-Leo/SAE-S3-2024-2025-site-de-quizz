@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function () {
             reader.readAsDataURL(file);
         },
         applyPanelStyles() {
-            // Logic for applying additional styling if necessary
+
         }
     };
 
@@ -114,14 +114,18 @@ document.addEventListener('DOMContentLoaded', function () {
     function resetQuestionEditor() {
         questionInput.value = "";
         answerOptionsContainer.innerHTML = "";
-        defaultAnswers.forEach((placeholder, index) => addAnswerOption(placeholder, index));
+        if (window.questionManager) {
+            window.questionManager.updateLayout(); // Utilise la mise en page du type actuel
+        } else {
+            defaultAnswers.forEach((placeholder, index) => addAnswerOption(placeholder, index));
+        }
     }
 
     function addAnswerOption(placeholder, index, isCorrect = false) {
         const answerOptionDiv = document.createElement('div');
         answerOptionDiv.className = 'answer-option flex items-center gap-4';
     
-        answerOptionDiv.innerHTML = `
+        answerOptionDiv.innerHTML = `   
             <div class="flex-1">
                 <input type="text" class="w-full p-3 border rounded-lg" placeholder="${placeholder}">
             </div>
@@ -141,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function () {
         correctToggle.addEventListener('click', () => toggleCorrectOption(correctToggle));
         deleteOption.addEventListener('click', () => answerOptionDiv.remove());
     }
-    
 
     function toggleCorrectOption(button) {
         button.classList.toggle('text-green-500');
@@ -157,8 +160,8 @@ document.addEventListener('DOMContentLoaded', function () {
         const newQuestion = {
             text: "",
             answers: defaultAnswers.map((text, index) => ({ text, index, isCorrect: false })),
-            theme: null,
-            media: null
+            theme: themeManager.currentTheme.url || null, // Associer le thème actuel à la question
+            media: null // Ajouter les images ou vidéos spécifiques à cette question si nécessaire
         };
 
         questionData.push(newQuestion);
@@ -173,11 +176,16 @@ document.addEventListener('DOMContentLoaded', function () {
         if (currentQuestionIndex !== null) {
             const currentQuestion = questionData[currentQuestionIndex];
             currentQuestion.text = questionInput.value;
-            currentQuestion.answers = Array.from(answerOptionsContainer.children).map((optionDiv, index) => ({
-                text: optionDiv.querySelector('input').value,
-                index,
-                isCorrect: optionDiv.querySelector('.correct-toggle').classList.contains('text-green-500')
-            }));
+            currentQuestion.type = window.questionManager ? window.questionManager.currentType : 'multiple';
+            currentQuestion.answers = Array.from(answerOptionsContainer.children).map((optionDiv, index) => {
+                const input = optionDiv.querySelector('input');
+                const correctToggle = optionDiv.querySelector('.correct-toggle');
+                return {
+                    text: input ? input.value : optionDiv.querySelector('.w-full').textContent.trim(),
+                    index,
+                    isCorrect: correctToggle.classList.contains('text-green-500')
+                };
+            });
             renderQuestionsList();
         }
     }
@@ -215,8 +223,25 @@ document.addEventListener('DOMContentLoaded', function () {
     function loadQuestion(index) {
         const question = questionData[index];
         questionInput.value = question.text;
-        answerOptionsContainer.innerHTML = "";
-        question.answers.forEach(answer => addAnswerOption(answer.text, answer.index, answer.isCorrect));
+        
+        if (window.questionManager) {
+            window.questionManager.currentType = question.type || 'multiple';
+            window.questionManager.updateLayout();
+            
+            const correctToggles = answerOptionsContainer.querySelectorAll('.correct-toggle');
+            question.answers.forEach((answer, idx) => {
+                if (correctToggles[idx] && answer.isCorrect) {
+                    const icon = correctToggles[idx].querySelector('i');
+                    icon.classList.replace('fa-times', 'fa-check');
+                    correctToggles[idx].classList.add('text-green-500');
+                    correctToggles[idx].classList.remove('text-gray-400');
+                }
+            });
+        }
+
+        if (question.theme) {
+            themeManager.applyTheme(question.theme); // Appliquer le thème stocké
+        }
     }
 
     function deleteQuestion(index) {

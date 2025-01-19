@@ -107,12 +107,13 @@ function previewImage(event) {
         reader.readAsDataURL(file);
     }
 }
+// Stocker la valeur initiale du nom d'utilisateur
+const initialUsername = document.getElementById('username-input').value;
+
 document.getElementById('save-changes').addEventListener('click', async () => {
     const username = document.getElementById('username-input').value;
     const phoneNumber = document.getElementById('phone-input').value;
     const profilePreview = document.getElementById('profile-preview').getAttribute('src');
-    
-    // Préparation du formulaire de données
     const formData = new FormData();
     formData.append('userName', username);
     formData.append('phoneNumber', phoneNumber);
@@ -138,8 +139,8 @@ document.getElementById('save-changes').addEventListener('click', async () => {
         console.error('Erreur lors de la requête :', error);
     }
 
-    // Envoi de la mise à jour du nom d'utilisateur
-    if (username) {
+    // Envoi de la mise à jour du nom d'utilisateur seulement s'il a changé
+    if (username && username !== initialUsername) {
         try {
             const response = await fetch('/profile/update-username', {
                 method: 'POST',
@@ -151,8 +152,11 @@ document.getElementById('save-changes').addEventListener('click', async () => {
 
             if (response.ok) {
                 showToast('Changements enregistrés avec succès !');
+
+                const errorMessageElement = document.getElementById('error-message-user');
+                errorMessageElement.style.display = 'none';
             } else {
-                // Si l'inscription échoue, affiche le message d'erreur
+
                 const data = await response.json();
                 const errorMessageElement = document.getElementById('error-message-user');
                 errorMessageElement.textContent = data.message;

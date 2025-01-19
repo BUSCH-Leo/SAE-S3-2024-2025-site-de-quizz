@@ -63,19 +63,15 @@ const themeManager = {
         
         const img = new Image();
         img.onload = () => {
-            // Calculer la taille optimale
-            const maxWidth = Math.max(window.innerWidth, 1920); // Minimum 1920px pour HD
-            const maxHeight = Math.max(window.innerHeight, 1080); // Minimum 1080px pour HD
-            
-            // Calculer le ratio pour maintenir les proportions
+
+            const maxWidth = Math.max(window.innerWidth, 1920); 
+            const maxHeight = Math.max(window.innerHeight, 1080); 
             const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
             const width = img.width * ratio;
             const height = img.height * ratio;
-
-            // Appliquer l'image optimisée
             document.body.style.background = `url('${imageUrl}')`;
             document.body.style.backgroundSize = `${width}px ${height}px`;
-            document.body.style.imageRendering = 'auto'; // Améliorer la qualité de rendu
+            document.body.style.imageRendering = 'auto'; 
         };
         img.src = imageUrl;
         
@@ -84,7 +80,7 @@ const themeManager = {
     },
 
     handleImageUpload(file) {
-        // Vérifier la taille et le type de l'image
+
         if (!file.type.startsWith('image/')) {
             console.error('Le fichier doit être une image');
             return;
@@ -94,7 +90,7 @@ const themeManager = {
         reader.onload = (event) => {
             const img = new Image();
             img.onload = () => {
-                // Optimiser l'image si nécessaire
+
                 if (img.width > 1920 || img.height > 1080) {
                     this.optimizeImage(img, event.target.result);
                 } else {
@@ -109,12 +105,10 @@ const themeManager = {
     optimizeImage(img, originalSrc) {
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
-        
-        // Calculer les nouvelles dimensions
+
         let width = img.width;
         let height = img.height;
-        
-        // Maintenir le ratio d'aspect
+
         if (width > 1920) {
             height *= 1920 / width;
             width = 1920;
@@ -124,24 +118,19 @@ const themeManager = {
             height = 1080;
         }
 
-        // Configurer le canvas avec les nouvelles dimensions
         canvas.width = width;
         canvas.height = height;
 
-        // Activer l'interpolation de haute qualité
         ctx.imageSmoothingEnabled = true;
         ctx.imageSmoothingQuality = 'high';
 
-        // Dessiner l'image redimensionnée
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Convertir en URL de données avec haute qualité
-        const optimizedSrc = canvas.toDataURL('image/jpeg', 0.95); // Utiliser une compression moins agressive
+        const optimizedSrc = canvas.toDataURL('image/jpeg', 0.95); 
         this.applyTheme(optimizedSrc);
     }
 };
 
-// Initialiser quand le document est prêt
 document.addEventListener('DOMContentLoaded', () => {
     themeManager.init();
 });
