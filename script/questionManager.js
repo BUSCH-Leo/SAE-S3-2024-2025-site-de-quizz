@@ -1,5 +1,3 @@
-
-// questionManager.js
 document.addEventListener('DOMContentLoaded', function () {
     let questionData = [];
     let currentQuestionIndex = null;
@@ -8,174 +6,163 @@ document.addEventListener('DOMContentLoaded', function () {
     const questionsList = document.getElementById('questionsList');
     const questionInput = document.querySelector('.main-content input[type="text"]');
     const answerOptionsContainer = document.getElementById('answerOptionsContainer');
-    const timeSlider = document.getElementById('timeSlider');
-    const timeDisplay = document.getElementById('timeDisplay');
-    const defaultPoints = document.getElementById('defaultPoints');
-    const enableBonus = document.getElementById('enableBonus');
+    const mediaUpload = document.getElementById('media-upload-question');
+    const fileInput = document.getElementById('file-input');
+    const imagePreview = document.getElementById('imagePreview');
 
-    // État initial par défaut pour une nouvelle question
-    const defaultQuestionState = {
-        text: "",
-        type: 'multiple',
-        timeLimit: 30,
-        points: 10,
-        enableTimeBonus: false,
-        answers: [
-            { text: "", isCorrect: false },
-            { text: "", isCorrect: false },
-            { text: "", isCorrect: false },
-            { text: "", isCorrect: false }
-        ],
-        media: null,
-        theme: null
-    };
+    const defaultAnswers = [
+        "Réponse 1",
+        "Réponse 2",
+        "Réponse 3",
+        "Réponse 4"
+    ];
 
-    function resetQuestionState() {
-        // Réinitialiser le texte de la question
-        questionInput.value = "";
-
-        // Réinitialiser le timer
-        timeSlider.value = 30;
-        timeDisplay.textContent = "30s";
-
-        // Réinitialiser la zone de média
-        const mediaUpload = document.querySelector('.media-upload');
-        if (mediaUpload) {
-            mediaUpload.innerHTML = `
-                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
-                <p class="text-gray-600">Déposez les fichiers média ici ou</p>
-                <button class="text-blue-500 hover:text-blue-700 transition-colors duration-300">Parcourir les fichiers</button>
-            `;
-        }
-
-        // Réinitialiser les points par défaut
-        defaultPoints.value = 10;
-        enableBonus.checked = false;
-
-        // Réinitialiser le type de question à 'multiple'
-        if (window.questionManager) {
-            window.questionManager.setType('multiple');
-        }
-
-        // Réinitialiser les options de réponse
-        answerOptionsContainer.innerHTML = "";
-        defaultQuestionState.answers.forEach((_, index) => {
-            addAnswerOption(`Réponse ${index + 1}`, index);
-        });
+    function resetMediaUpload() {
+        imagePreview.innerHTML = "";
+        fileInput.value = "";
+        mediaUpload.classList.remove('has-file');
     }
 
-    function addAnswerOption(placeholder, index, isCorrect = false) {
+    function resetQuestionEditor() {
+        questionInput.value = "";
+        answerOptionsContainer.innerHTML = "";
+        resetMediaUpload();
+        defaultAnswers.forEach((placeholder, index) => addAnswerOption(placeholder, index));
+    }
+
+    function addAnswerOption(placeholder, index, isCorrect = false, value = "") {
         const answerOptionDiv = document.createElement('div');
-        answerOptionDiv.className = 'answer-option flex items-center gap-4 bg-white p-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg';
-    
-        answerOptionDiv.innerHTML = `   
+        answerOptionDiv.className = 'answer-option flex items-center gap-4';
+
+        answerOptionDiv.innerHTML = `
             <div class="flex-1">
-                <input type="text" placeholder="${placeholder}" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                <input type="text" class="w-full p-3 border rounded-lg" 
+                       placeholder="${placeholder}"
+                       value="${value}">
             </div>
-            <button class="p-2 ${isCorrect ? 'text-green-500' : 'text-gray-400'} hover:text-green-500 rounded correct-toggle transition-colors duration-300">
+            <button class="p-2 ${isCorrect ? 'text-green-500' : 'text-gray-400'} hover:bg-green-50 rounded correct-toggle">
                 <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'}"></i>
             </button>
-            <button class="p-2 text-red-500 hover:text-red-700 rounded delete-option transition-colors duration-300">
+            <button class="p-2 text-red-500 hover:bg-red-50 rounded delete-option">
                 <i class="fas fa-trash"></i>
             </button>
         `;
-    
+
         answerOptionsContainer.appendChild(answerOptionDiv);
-    
+
         const correctToggle = answerOptionDiv.querySelector('.correct-toggle');
         const deleteOption = answerOptionDiv.querySelector('.delete-option');
-    
+
         correctToggle.addEventListener('click', () => toggleCorrectOption(correctToggle));
-        deleteOption.addEventListener('click', () => {
-            answerOptionDiv.remove();
-            if (window.questionManager) {
-                window.questionManager.updateOptionNumbers();
-            }
-        });
+        deleteOption.addEventListener('click', () => answerOptionDiv.remove());
     }
 
     function toggleCorrectOption(button) {
+        button.classList.toggle('text-green-500');
+        button.classList.toggle('text-gray-400');
         const icon = button.querySelector('i');
-        const isNowCorrect = icon.classList.contains('fa-times');
-        
-        if (window.questionManager && 
-            (window.questionManager.currentType === 'truefalse' || 
-             window.questionManager.currentType === 'standart')) {
-            // Désactiver toutes les autres options
-            answerOptionsContainer.querySelectorAll('.correct-toggle').forEach(toggle => {
-                const toggleIcon = toggle.querySelector('i');
-                toggleIcon.classList.replace('fa-check', 'fa-times');
-                toggle.classList.remove('text-green-500');
-                toggle.classList.add('text-gray-400');
-            });
+        icon.classList.toggle('fa-check');
+        icon.classList.toggle('fa-times');
+    }
+
+    addQuestionBtn.addEventListener('click', function () {
+
+        if (currentQuestionIndex !== null) {
+            saveCurrentQuestion();
         }
 
-        if (isNowCorrect) {
-            icon.classList.replace('fa-times', 'fa-check');
-            button.classList.remove('text-gray-400');
-            button.classList.add('text-green-500');
-        } else {
-            icon.classList.replace('fa-check', 'fa-times');
-            button.classList.remove('text-green-500');
-            button.classList.add('text-gray-400');
+        const newQuestion = {
+            text: "",
+            answers: defaultAnswers.map((text, index) => ({ 
+                text, 
+                index, 
+                isCorrect: false 
+            })),
+            media: null
+        };
+
+        questionData.push(newQuestion);
+        currentQuestionIndex = questionData.length - 1;
+
+        resetQuestionEditor();
+        renderQuestionsList();
+        highlightNewQuestion(currentQuestionIndex);
+    });
+
+    // Sauvegarde l'état complet de la question courante
+    function saveCurrentQuestion() {
+        if (currentQuestionIndex !== null) {
+            const currentQuestion = questionData[currentQuestionIndex];
+
+            currentQuestion.text = questionInput.value;
+
+            currentQuestion.answers = Array.from(answerOptionsContainer.children).map((optionDiv, index) => {
+                const input = optionDiv.querySelector('input');
+                const correctToggle = optionDiv.querySelector('.correct-toggle');
+                return {
+                    text: input ? input.value : "",
+                    index,
+                    isCorrect: correctToggle.classList.contains('text-green-500')
+                };
+            });
+
+            if (imagePreview.querySelector('img')) {
+                currentQuestion.media = imagePreview.querySelector('img').src;
+            } else {
+                currentQuestion.media = null;
+            }
+
+            renderQuestionsList();
         }
     }
 
-    function saveCurrentQuestion() {
-        if (currentQuestionIndex === null) return;
-
-        const currentQuestion = questionData[currentQuestionIndex];
-        currentQuestion.text = questionInput.value;
-        currentQuestion.type = window.questionManager ? window.questionManager.currentType : 'multiple';
-        currentQuestion.timeLimit = parseInt(timeSlider.value);
-        currentQuestion.points = parseInt(defaultPoints.value);
-        currentQuestion.enableTimeBonus = enableBonus.checked;
+    function loadQuestion(index) {
+        const question = questionData[index];
         
-        currentQuestion.answers = Array.from(answerOptionsContainer.children).map((optionDiv, index) => {
-            const input = optionDiv.querySelector('input');
-            const correctToggle = optionDiv.querySelector('.correct-toggle');
-            return {
-                text: input ? input.value : optionDiv.querySelector('.w-full').textContent.trim(),
-                index,
-                isCorrect: correctToggle.classList.contains('text-green-500')
-            };
+        questionInput.value = question.text;
+
+        answerOptionsContainer.innerHTML = "";
+        question.answers.forEach((answer, idx) => {
+            addAnswerOption(
+                answer.text || `Réponse ${idx + 1}`, 
+                idx,
+                answer.isCorrect,
+                answer.text
+            );
         });
 
-        if (window.themeManager) {
-            currentQuestion.theme = window.themeManager.currentTheme.url;
+        if (question.media) {
+            imagePreview.innerHTML = `<img src="${question.media}" class="max-w-full h-auto rounded">`;
+            mediaUpload.classList.add('has-file');
+        } else {
+            resetMediaUpload();
         }
-
-        renderQuestionsList();
     }
 
     function renderQuestionsList() {
         questionsList.innerHTML = "";
         questionData.forEach((question, index) => {
             const questionCard = document.createElement('div');
-            questionCard.className = `question-card p-4 cursor-pointer border hover:border-blue-500 relative shadow-md rounded-lg transition-all duration-300 ${index === currentQuestionIndex ? 'border-blue-500' : ''}`;
+            questionCard.className = 'question-card p-4 cursor-pointer border hover:border-blue-500 relative';
             questionCard.dataset.questionId = index;
 
             questionCard.innerHTML = `
-                <div class="flex items-center justify-between mb-2">
-                    <span class="font-medium">Question ${index + 1}</span>
-                    <div class="flex gap-2">
-                        <button class="delete-question text-red-500 hover:text-red-700 transition-colors duration-300">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </div>
+                <span class="font-medium">Question ${index + 1}</span>
                 <p class="text-sm text-gray-600 truncate">${question.text || "Nouvelle question"}</p>
+                <button class="delete-question absolute top-2 right-2 text-red-500 hover:text-red-700">
+                    <i class="fas fa-trash"></i>
+                </button>
             `;
 
-            questionCard.addEventListener('click', (e) => {
-                if (!e.target.closest('.delete-question')) {
-                    saveCurrentQuestion();
-                    currentQuestionIndex = index;
-                    loadQuestion(index);
-                }
+            questionCard.addEventListener('click', function () {
+
+                saveCurrentQuestion();
+                currentQuestionIndex = index;
+
+                loadQuestion(index);
             });
 
-            questionCard.querySelector('.delete-question').addEventListener('click', (e) => {
+            questionCard.querySelector('.delete-question').addEventListener('click', function (e) {
                 e.stopPropagation();
                 deleteQuestion(index);
             });
@@ -184,53 +171,11 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    function loadQuestion(index) {
-        const question = questionData[index];
-        
-        // Charger les données de base
-        questionInput.value = question.text || "";
-        timeSlider.value = question.timeLimit || 30;
-        timeDisplay.textContent = `${timeSlider.value}s`;
-        defaultPoints.value = question.points || 10;
-        enableBonus.checked = question.enableTimeBonus || false;
-
-        // Charger le type de question
-        if (window.questionManager) {
-            window.questionManager.setType(question.type || 'multiple');
-            
-            // Mettre à jour les réponses après que le layout soit mis à jour
-            setTimeout(() => {
-                const inputs = answerOptionsContainer.querySelectorAll('input[type="text"]');
-                const correctToggles = answerOptionsContainer.querySelectorAll('.correct-toggle');
-                
-                question.answers.forEach((answer, idx) => {
-                    if (inputs[idx]) {
-                        inputs[idx].value = answer.text || "";
-                    }
-                    if (correctToggles[idx] && answer.isCorrect) {
-                        toggleCorrectOption(correctToggles[idx]);
-                    }
-                });
-            }, 0);
-        }
-
-        // Charger le thème si présent
-        if (question.theme && window.themeManager) {
-            window.themeManager.applyTheme(question.theme);
-        }
-    }
-
     function deleteQuestion(index) {
         questionData.splice(index, 1);
-        
-        if (currentQuestionIndex === index) {
-            currentQuestionIndex = null;
-            resetQuestionState();
-        } else if (currentQuestionIndex > index) {
-            currentQuestionIndex--;
-        }
-        
+        currentQuestionIndex = null;
         renderQuestionsList();
+        resetQuestionEditor();
     }
 
     function highlightNewQuestion(index) {
@@ -241,23 +186,32 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Event Listeners
-    addQuestionBtn.addEventListener('click', () => {
-        saveCurrentQuestion();
-        
-        const newQuestion = { ...defaultQuestionState };
-        questionData.push(newQuestion);
-        currentQuestionIndex = questionData.length - 1;
-        
-        resetQuestionState();
-        renderQuestionsList();
-        highlightNewQuestion(currentQuestionIndex);
+    // Gestion du média
+    fileInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imagePreview.innerHTML = `<img src="${e.target.result}" class="max-w-full h-auto rounded">`;
+                mediaUpload.classList.add('has-file');
+
+                if (currentQuestionIndex !== null) {
+                    questionData[currentQuestionIndex].media = e.target.result;
+                }
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    
+
+
+    questionInput.addEventListener('input', function() {
+        if (currentQuestionIndex !== null) {
+            questionData[currentQuestionIndex].text = this.value;
+            renderQuestionsList();
+        }
     });
 
-    timeSlider.addEventListener('input', function() {
-        timeDisplay.textContent = `${this.value}s`;
-    });
-
-
-    resetQuestionState();
+    // Initialisation
+    resetQuestionEditor();
 });

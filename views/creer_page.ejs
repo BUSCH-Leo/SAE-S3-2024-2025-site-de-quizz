@@ -70,14 +70,17 @@
             <div class="modal-content">
                 <h2>Vos projets</h2>
                 <ul id="projects-list">
-                    <li class="project-item">Projet 1</li>
-                    <li class="project-item">Projet 2</li>
-                    <li class="project-item">Projet 3</li>
-                    <li class="project-item">Projet 4</li>
-                    <li class="project-item">Projet 5</li>
+                    <% if (projects && projects.length > 0) { %>
+                        <% projects.forEach(project => { %>
+                            <li class="project-item"><%= project.name %></li>
+                        <% }) %>
+                    <% } else { %>
+                        <li class="project-item">Aucun projet trouvé</li>
+                    <% } %>
                 </ul>
-            </div>        
-        </div>        
+            </div>
+        </div>
+               
     </div>
 
     <script src="../script/jouer_creer.js" defer></script>

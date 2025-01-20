@@ -7,13 +7,12 @@ const session = require('express-session');
 const User = require('./models/user');
 const Category = require('./models/category');
 const Quiz = require('./models/quizz');
-const MyQuizSchema = require('./models/project');
+const MyQuiz = require('./models/project');
 
 // Importation des routes
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile'); 
-
-
+const quizRoutes = require('./routes/quiz');
 
 const app = express();
 
@@ -29,12 +28,11 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Middleware pour les sessions
 app.use(session({
-    secret: 'quizzine', // Secret pour l'environnement de production
+    secret: 'quizzine',
     resave: false,
     saveUninitialized: true
 }));
 
-// Initialisation de Passport.js
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -77,6 +75,7 @@ passport.deserializeUser(async (id, done) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Configuration des dossiers statiques
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/ressource', express.static(path.join(__dirname, 'ressource')));
 app.use('/script', express.static(path.join(__dirname, 'script')));
@@ -84,49 +83,83 @@ app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/views', express.static(path.join(__dirname, 'views')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Utilisation des routes
+// Middleware pour vérifier l'authentification
+const isAuthenticated = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect('/connexion');
+};
+
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes); 
+app.use('/quizzes', quizRoutes);
+
+app.get('/creer_page', isAuthenticated, async (req, res) => {
+    try {
+        const projects = await MyQuiz.find({ creator: req.user._id })
+            .select('name createdAt lastModified')
+            .sort({ lastModified: -1 });
+
+        res.render('creer_page', { 
+            user: req.user,
+            projects: projects
+        });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des projets:', error);
+        res.render('creer_page', { 
+            user: req.user,
+            projects: []
+        });
+    }
+});
+
+app.get('/api/projects', isAuthenticated, async (req, res) => {
+    try {
+        const projects = await MyQuiz.find({ creator: req.user._id })
+            .select('name createdAt lastModified')
+            .sort({ lastModified: -1 });
+        res.json(projects);
+    } catch (error) {
+        console.error('Erreur lors de la récupération des projets:', error);
+        res.status(500).json({ message: 'Erreur lors de la récupération des projets' });
+    }
+});
+
 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
     res.render('Test', { user: req.user });
 });
 
-// Route pour parametre
 app.get('/parametres', (req, res) => {
     res.render('parametres', { user: req.user });
 });
-// Route pour profile
+
 app.get('/profile', (req, res) => {
     res.render('profile', { user: req.user });
 });
-// Route pour jouer_page
+
 app.get('/jouer_page', (req, res) => {
     res.render('jouer_page', { user: req.user }); 
 });
-// Route pour créer_page
-app.get('/creer_page', (req, res) => {
-    res.render('creer_page', { user: req.user }); 
-});
-// Route pour connexion
+
 app.get('/connexion', (req, res) => {
     res.render('connexion', { user: req.user }); 
 });
-// Route pour inscription
+
 app.get('/inscription', (req, res) => {
     res.render('inscription', { user: req.user }); 
 });
-// Route vers les pages de creation de quiz
-app.get('/quiz_creation', (req, res) => {
+
+app.get('/quiz_creation', isAuthenticated, (req, res) => {
     res.render('quiz_creation', { user: req.user });
 });
 
-// Route pour récupérer toutes les catégories
+
 app.get('/api/categories', async (req, res) => {
     try {
         const categories = await Category.find();
@@ -136,57 +169,30 @@ app.get('/api/categories', async (req, res) => {
     }
 });
 
-// Route pour récupérer des quiz par ID de catégorie
 app.get('/api/quiz/category/:categoryId', async (req, res) => {
     const { categoryId } = req.params;
-
     try {
         const quizzes = await Quiz.find({ category: categoryId }).limit(10);
-
         if (!quizzes || quizzes.length === 0) {
             return res.status(404).json({ message: 'Aucun quiz disponible pour cette catégorie' });
         }
-
         res.json(quizzes);
     } catch (error) {
         res.status(500).json({ message: 'Erreur serveur' });
     }
 });
 
-// Route pour le quiz rapide avec paramètres personnalisés
 app.get('/api/quiz/quick', async (req, res) => {
     const { count, difficulty } = req.query;
-
     try {
         const quizzes = await Quiz.find({ 'questions.difficulty': difficulty })
             .limit(parseInt(count, 10));
-
         if (!quizzes || quizzes.length === 0) {
             return res.status(404).json({ message: 'Aucun quiz disponible pour cette sélection' });
         }
-
         res.json(quizzes);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération des quizzes' });
-    }
-});
-
-app.post('/api/quizzes', async (req, res) => {
-    try {
-        const quizData = req.body;
-        const quiz = new MyQuizSchema(quizData);
-        const savedQuiz = await quiz.save();
-        res.status(201).json(savedQuiz);
-    } catch (error) {
-        res.status(400).json({ error: error.message });
-    }
-});
-app.get('/api/quizzes', async (req, res) => {
-    try {
-        const quizzes = await MyQuizSchema.find();
-        res.status(200).json(quizzes);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
     }
 });
 
