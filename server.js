@@ -8,12 +8,11 @@ const User = require('./models/user');
 const Category = require('./models/category');
 const Quiz = require('./models/quizz');
 const MyQuiz = require('./models/project');
-
-// Importation des routes
+const projectRoutes = require('./routes/projectRoutes');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile'); 
 const quizRoutes = require('./routes/quiz');
-
+const isAuthenticated = require('./middleware/auth');
 const app = express();
 
 mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/', {
@@ -83,17 +82,10 @@ app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/views', express.static(path.join(__dirname, 'views')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-// Middleware pour vérifier l'authentification
-const isAuthenticated = (req, res, next) => {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect('/connexion');
-};
-
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes); 
 app.use('/quizzes', quizRoutes);
+app.use('/projects', projectRoutes);
 
 app.get('/creer_page', isAuthenticated, async (req, res) => {
     try {
@@ -125,6 +117,7 @@ app.get('/api/projects', isAuthenticated, async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la récupération des projets' });
     }
 });
+
 
 
 app.get('/', (req, res) => {

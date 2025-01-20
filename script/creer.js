@@ -94,3 +94,67 @@ window.addEventListener('click', function(event) {
         projectNameModal.style.display = 'none';
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('project-name-modal');
+    const projectNameInput = document.getElementById('project-name-input');
+    const newQuizBtn = document.getElementById('new-quiz-btn');
+
+    // Afficher la modale
+    if (newQuizBtn) {
+        newQuizBtn.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+    }
+
+    // Fermer la modale en cliquant en dehors
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Gérer la création du projet
+    const handleProjectCreation = async () => {
+        const projectName = projectNameInput.value.trim();
+        
+        if (!projectName) {
+            alert('Veuillez entrer un nom de projet');
+            return;
+        }
+
+        try {
+            const response = await fetch('/projects/create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: projectName })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                // Rediriger vers l'éditeur avec l'ID du projet
+                window.location.href = `/editor.html?projectId=${data.project.id}`;
+            } else {
+                alert(data.message || 'Erreur lors de la création du projet');
+            }
+
+        } catch (error) {
+            console.error('Erreur:', error);
+            alert('Une erreur est survenue lors de la création du projet');
+        }
+    };
+
+    // Modifier le bouton continuer pour utiliser notre fonction
+    const continueButton = modal.querySelector('button');
+    continueButton.onclick = handleProjectCreation;
+
+    // Gérer la soumission avec la touche Entrée
+    projectNameInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            handleProjectCreation();
+        }
+    });
+});
