@@ -1,4 +1,4 @@
-//Slider 
+// Slider
 const timeSlider = document.getElementById('timeSlider');
 const timeDisplay = document.getElementById('timeDisplay');
 
@@ -28,6 +28,7 @@ rightToggle.addEventListener('click', () => {
     rightToggle.querySelector('i').classList.toggle('fa-chevron-right');
 });
 
+// Onglets
 const tabButtons = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 
@@ -44,7 +45,7 @@ tabButtons.forEach(button => {
     });
 });
 
-// Récupération des éléments existants pour la zone de dépôt
+// Zone de dépôt pour l'upload d'image
 const dropZone = document.querySelector('.media-upload');
 const uploadIcon = dropZone.querySelector('i');
 const uploadText = dropZone.querySelector('p');
@@ -79,7 +80,7 @@ dropZone.style.width = '300px';
 dropZone.style.height = '300px';
 dropZone.style.cursor = 'pointer';
 
-// Gérer le clic sur le bouton Parcourir
+// Gérer le clic sur le bouton "Parcourir"
 uploadButton.addEventListener('click', (e) => {
     e.preventDefault();
     fileInput.click();
@@ -113,6 +114,7 @@ previewContainer.querySelector('.remove-preview').addEventListener('click', (e) 
     resetUploadZone();
 });
 
+// Fonction pour gérer les fichiers
 function handleFiles(files) {
     if (files.length === 0) return;
     
@@ -124,12 +126,16 @@ function handleFiles(files) {
     
     const reader = new FileReader();
     reader.onload = (e) => {
+        const question = questionData[currentQuestionIndex];
+        question.media = e.target.result; 
         previewContainer.querySelector('img').src = e.target.result;
         showPreview();
     };
     reader.readAsDataURL(file);
 }
 
+
+// Afficher la prévisualisation
 function showPreview() {
     uploadIcon.style.display = 'none';
     uploadText.style.display = 'none';
@@ -138,6 +144,7 @@ function showPreview() {
     dropZone.style.backgroundColor = 'transparent';
 }
 
+// Réinitialiser la zone d'upload
 function resetUploadZone() {
     fileInput.value = '';
     previewContainer.style.display = 'none';
@@ -148,26 +155,25 @@ function resetUploadZone() {
     dropZone.style.borderColor = '#e5e7eb';
 }
 
-
-// Gérer les paramètres
+// Paramètres
 const settings = {
     font: 'Arial',
     defaultPoints: 10,
     enableBonus: false
-  };
+};
 
-  const fontSelector = document.getElementById('fontSelector');
-  const defaultPointsInput = document.getElementById('defaultPoints');
-  const enableBonusCheckbox = document.getElementById('enableBonus');
+const fontSelector = document.getElementById('fontSelector');
+const defaultPointsInput = document.getElementById('defaultPoints');
+const enableBonusCheckbox = document.getElementById('enableBonus');
 
-  fontSelector.addEventListener('change', (e) => {
+fontSelector.addEventListener('change', (e) => {
     settings.font = e.target.value;
-  });
+});
 
-  defaultPointsInput.addEventListener('input', (e) => {
+defaultPointsInput.addEventListener('input', (e) => {
     settings.defaultPoints = parseInt(e.target.value);
-  });
+});
 
-  enableBonusCheckbox.addEventListener('change', (e) => {
+enableBonusCheckbox.addEventListener('change', (e) => {
     settings.enableBonus = e.target.checked;
-  });
+});

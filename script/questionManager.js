@@ -1,3 +1,5 @@
+
+// questionManager.js
 document.addEventListener('DOMContentLoaded', function () {
     let questionData = [];
     let currentQuestionIndex = null;
@@ -6,133 +8,74 @@ document.addEventListener('DOMContentLoaded', function () {
     const questionsList = document.getElementById('questionsList');
     const questionInput = document.querySelector('.main-content input[type="text"]');
     const answerOptionsContainer = document.getElementById('answerOptionsContainer');
-    const imageBtn = document.getElementById('imageBtn');
-    const videoBtn = document.getElementById('videoBtn');
-    const themePreviews = document.querySelectorAll('.theme-preview img');
-    const themeContent = document.getElementById('theme-content');
-    const questionForm = document.getElementById('questionForm'); 
+    const timeSlider = document.getElementById('timeSlider');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const defaultPoints = document.getElementById('defaultPoints');
+    const enableBonus = document.getElementById('enableBonus');
 
-    const defaultAnswers = [
-        "Réponse 1",
-        "Réponse 2",
-        "Réponse 3",
-        "Réponse 4"
-    ];
-
-    const themeManager = {
-        elements: {
-            mainContent: document.querySelector('.main-content'),
-            themePreviews: document.querySelectorAll('.theme-preview img'),
-            imageBtn: document.getElementById('imageBtn')
-        },
-        currentTheme: {
-            url: null,
-            opacity: 0.4
-        },
-        init() {
-            this.initializeImageHandlers();
-            this.applyPanelStyles();
-        },
-        initializeImageHandlers() {
-            this.elements.themePreviews.forEach(preview => {
-                preview.addEventListener('click', () => {
-                    const imageSrc = preview.getAttribute('src');
-                    if (imageSrc) {
-                        this.applyTheme(imageSrc);
-                        this.updatePreviewSelection(preview);
-                    }
-                });
-            });
-            this.elements.imageBtn.addEventListener('click', this.handleImageButtonClick.bind(this));
-        },
-        handleImageButtonClick() {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = 'image/*';
-            fileInput.style.display = 'none';
-            
-            fileInput.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    this.handleImageUpload(file);
-                }
-                document.body.removeChild(fileInput);
-            });
-
-            document.body.appendChild(fileInput);
-            fileInput.click();
-        },
-        updatePreviewSelection(selectedPreview) {
-            this.elements.themePreviews.forEach(p => 
-                p.parentElement.style.transform = 'scale(1)');
-            selectedPreview.parentElement.style.transform = 'scale(1.1)';
-        },
-        applyTheme(imageUrl) {
-            if (!imageUrl) return;
-            
-            this.currentTheme.url = imageUrl;
-            
-            const img = new Image();
-            img.onload = () => {
-                const maxWidth = Math.max(window.innerWidth, 1920);
-                const maxHeight = Math.max(window.innerHeight, 1080);
-                const ratio = Math.min(maxWidth / img.width, maxHeight / img.height);
-                const width = img.width * ratio;
-                const height = img.height * ratio;
-
-                document.body.style.background = `url('${imageUrl}')`;
-                document.body.style.backgroundSize = `${width}px ${height}px`;
-                document.body.style.imageRendering = 'auto';
-            };
-            img.src = imageUrl;
-            this.elements.mainContent.style.background = 'rgba(255, 255, 255, 0.2)';
-            this.applyPanelStyles();
-        },
-        handleImageUpload(file) {
-            if (!file.type.startsWith('image/')) {
-                console.error('Le fichier doit être une image');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                const img = new Image();
-                img.onload = () => {
-                    this.applyTheme(event.target.result);
-                };
-                img.src = event.target.result;
-            };
-            reader.readAsDataURL(file);
-        },
-        applyPanelStyles() {
-
-        }
+    // État initial par défaut pour une nouvelle question
+    const defaultQuestionState = {
+        text: "",
+        type: 'multiple',
+        timeLimit: 30,
+        points: 10,
+        enableTimeBonus: false,
+        answers: [
+            { text: "", isCorrect: false },
+            { text: "", isCorrect: false },
+            { text: "", isCorrect: false },
+            { text: "", isCorrect: false }
+        ],
+        media: null,
+        theme: null
     };
 
-    themeManager.init();
-
-    function resetQuestionEditor() {
+    function resetQuestionState() {
+        // Réinitialiser le texte de la question
         questionInput.value = "";
-        answerOptionsContainer.innerHTML = "";
-        if (window.questionManager) {
-            window.questionManager.updateLayout(); // Utilise la mise en page du type actuel
-        } else {
-            defaultAnswers.forEach((placeholder, index) => addAnswerOption(placeholder, index));
+
+        // Réinitialiser le timer
+        timeSlider.value = 30;
+        timeDisplay.textContent = "30s";
+
+        // Réinitialiser la zone de média
+        const mediaUpload = document.querySelector('.media-upload');
+        if (mediaUpload) {
+            mediaUpload.innerHTML = `
+                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                <p class="text-gray-600">Déposez les fichiers média ici ou</p>
+                <button class="text-blue-500 hover:text-blue-700 transition-colors duration-300">Parcourir les fichiers</button>
+            `;
         }
+
+        // Réinitialiser les points par défaut
+        defaultPoints.value = 10;
+        enableBonus.checked = false;
+
+        // Réinitialiser le type de question à 'multiple'
+        if (window.questionManager) {
+            window.questionManager.setType('multiple');
+        }
+
+        // Réinitialiser les options de réponse
+        answerOptionsContainer.innerHTML = "";
+        defaultQuestionState.answers.forEach((_, index) => {
+            addAnswerOption(`Réponse ${index + 1}`, index);
+        });
     }
 
     function addAnswerOption(placeholder, index, isCorrect = false) {
         const answerOptionDiv = document.createElement('div');
-        answerOptionDiv.className = 'answer-option flex items-center gap-4';
+        answerOptionDiv.className = 'answer-option flex items-center gap-4 bg-white p-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg';
     
         answerOptionDiv.innerHTML = `   
             <div class="flex-1">
-                <input type="text" class="w-full p-3 border rounded-lg" placeholder="${placeholder}">
+                <input type="text" placeholder="${placeholder}" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
             </div>
-            <button class="p-2 ${isCorrect ? 'text-green-500' : 'text-gray-400'} hover:bg-green-50 rounded correct-toggle">
+            <button class="p-2 ${isCorrect ? 'text-green-500' : 'text-gray-400'} hover:text-green-500 rounded correct-toggle transition-colors duration-300">
                 <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'}"></i>
             </button>
-            <button class="p-2 text-red-500 hover:bg-red-50 rounded delete-option">
+            <button class="p-2 text-red-500 hover:text-red-700 rounded delete-option transition-colors duration-300">
                 <i class="fas fa-trash"></i>
             </button>
         `;
@@ -143,75 +86,96 @@ document.addEventListener('DOMContentLoaded', function () {
         const deleteOption = answerOptionDiv.querySelector('.delete-option');
     
         correctToggle.addEventListener('click', () => toggleCorrectOption(correctToggle));
-        deleteOption.addEventListener('click', () => answerOptionDiv.remove());
+        deleteOption.addEventListener('click', () => {
+            answerOptionDiv.remove();
+            if (window.questionManager) {
+                window.questionManager.updateOptionNumbers();
+            }
+        });
     }
 
     function toggleCorrectOption(button) {
-        button.classList.toggle('text-green-500');
-        button.classList.toggle('text-gray-400');
         const icon = button.querySelector('i');
-        icon.classList.toggle('fa-check');
-        icon.classList.toggle('fa-times');
+        const isNowCorrect = icon.classList.contains('fa-times');
+        
+        if (window.questionManager && 
+            (window.questionManager.currentType === 'truefalse' || 
+             window.questionManager.currentType === 'standart')) {
+            // Désactiver toutes les autres options
+            answerOptionsContainer.querySelectorAll('.correct-toggle').forEach(toggle => {
+                const toggleIcon = toggle.querySelector('i');
+                toggleIcon.classList.replace('fa-check', 'fa-times');
+                toggle.classList.remove('text-green-500');
+                toggle.classList.add('text-gray-400');
+            });
+        }
+
+        if (isNowCorrect) {
+            icon.classList.replace('fa-times', 'fa-check');
+            button.classList.remove('text-gray-400');
+            button.classList.add('text-green-500');
+        } else {
+            icon.classList.replace('fa-check', 'fa-times');
+            button.classList.remove('text-green-500');
+            button.classList.add('text-gray-400');
+        }
     }
 
-    addQuestionBtn.addEventListener('click', function () {
-        if (currentQuestionIndex !== null) saveCurrentQuestion();
-
-        const newQuestion = {
-            text: "",
-            answers: defaultAnswers.map((text, index) => ({ text, index, isCorrect: false })),
-            theme: themeManager.currentTheme.url || null, // Associer le thème actuel à la question
-            media: null // Ajouter les images ou vidéos spécifiques à cette question si nécessaire
-        };
-
-        questionData.push(newQuestion);
-        currentQuestionIndex = questionData.length - 1;
-        renderQuestionsList();
-        resetQuestionEditor();
-        highlightNewQuestion(currentQuestionIndex);
-        scrollToBottom();
-    });
-
     function saveCurrentQuestion() {
-        if (currentQuestionIndex !== null) {
-            const currentQuestion = questionData[currentQuestionIndex];
-            currentQuestion.text = questionInput.value;
-            currentQuestion.type = window.questionManager ? window.questionManager.currentType : 'multiple';
-            currentQuestion.answers = Array.from(answerOptionsContainer.children).map((optionDiv, index) => {
-                const input = optionDiv.querySelector('input');
-                const correctToggle = optionDiv.querySelector('.correct-toggle');
-                return {
-                    text: input ? input.value : optionDiv.querySelector('.w-full').textContent.trim(),
-                    index,
-                    isCorrect: correctToggle.classList.contains('text-green-500')
-                };
-            });
-            renderQuestionsList();
+        if (currentQuestionIndex === null) return;
+
+        const currentQuestion = questionData[currentQuestionIndex];
+        currentQuestion.text = questionInput.value;
+        currentQuestion.type = window.questionManager ? window.questionManager.currentType : 'multiple';
+        currentQuestion.timeLimit = parseInt(timeSlider.value);
+        currentQuestion.points = parseInt(defaultPoints.value);
+        currentQuestion.enableTimeBonus = enableBonus.checked;
+        
+        currentQuestion.answers = Array.from(answerOptionsContainer.children).map((optionDiv, index) => {
+            const input = optionDiv.querySelector('input');
+            const correctToggle = optionDiv.querySelector('.correct-toggle');
+            return {
+                text: input ? input.value : optionDiv.querySelector('.w-full').textContent.trim(),
+                index,
+                isCorrect: correctToggle.classList.contains('text-green-500')
+            };
+        });
+
+        if (window.themeManager) {
+            currentQuestion.theme = window.themeManager.currentTheme.url;
         }
+
+        renderQuestionsList();
     }
 
     function renderQuestionsList() {
         questionsList.innerHTML = "";
         questionData.forEach((question, index) => {
             const questionCard = document.createElement('div');
-            questionCard.className = 'question-card p-4 cursor-pointer border hover:border-blue-500 relative';
+            questionCard.className = `question-card p-4 cursor-pointer border hover:border-blue-500 relative shadow-md rounded-lg transition-all duration-300 ${index === currentQuestionIndex ? 'border-blue-500' : ''}`;
             questionCard.dataset.questionId = index;
 
             questionCard.innerHTML = `
-                <span class="font-medium">Question ${index + 1}</span>
+                <div class="flex items-center justify-between mb-2">
+                    <span class="font-medium">Question ${index + 1}</span>
+                    <div class="flex gap-2">
+                        <button class="delete-question text-red-500 hover:text-red-700 transition-colors duration-300">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
                 <p class="text-sm text-gray-600 truncate">${question.text || "Nouvelle question"}</p>
-                <button class="delete-question absolute top-2 right-2 text-red-500 hover:text-red-700">
-                    <i class="fas fa-trash"></i>
-                </button>
             `;
 
-            questionCard.addEventListener('click', function () {
-                saveCurrentQuestion();
-                currentQuestionIndex = index;
-                loadQuestion(index);
+            questionCard.addEventListener('click', (e) => {
+                if (!e.target.closest('.delete-question')) {
+                    saveCurrentQuestion();
+                    currentQuestionIndex = index;
+                    loadQuestion(index);
+                }
             });
 
-            questionCard.querySelector('.delete-question').addEventListener('click', function (e) {
+            questionCard.querySelector('.delete-question').addEventListener('click', (e) => {
                 e.stopPropagation();
                 deleteQuestion(index);
             });
@@ -222,33 +186,51 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function loadQuestion(index) {
         const question = questionData[index];
-        questionInput.value = question.text;
         
+        // Charger les données de base
+        questionInput.value = question.text || "";
+        timeSlider.value = question.timeLimit || 30;
+        timeDisplay.textContent = `${timeSlider.value}s`;
+        defaultPoints.value = question.points || 10;
+        enableBonus.checked = question.enableTimeBonus || false;
+
+        // Charger le type de question
         if (window.questionManager) {
-            window.questionManager.currentType = question.type || 'multiple';
-            window.questionManager.updateLayout();
+            window.questionManager.setType(question.type || 'multiple');
             
-            const correctToggles = answerOptionsContainer.querySelectorAll('.correct-toggle');
-            question.answers.forEach((answer, idx) => {
-                if (correctToggles[idx] && answer.isCorrect) {
-                    const icon = correctToggles[idx].querySelector('i');
-                    icon.classList.replace('fa-times', 'fa-check');
-                    correctToggles[idx].classList.add('text-green-500');
-                    correctToggles[idx].classList.remove('text-gray-400');
-                }
-            });
+            // Mettre à jour les réponses après que le layout soit mis à jour
+            setTimeout(() => {
+                const inputs = answerOptionsContainer.querySelectorAll('input[type="text"]');
+                const correctToggles = answerOptionsContainer.querySelectorAll('.correct-toggle');
+                
+                question.answers.forEach((answer, idx) => {
+                    if (inputs[idx]) {
+                        inputs[idx].value = answer.text || "";
+                    }
+                    if (correctToggles[idx] && answer.isCorrect) {
+                        toggleCorrectOption(correctToggles[idx]);
+                    }
+                });
+            }, 0);
         }
 
-        if (question.theme) {
-            themeManager.applyTheme(question.theme); // Appliquer le thème stocké
+        // Charger le thème si présent
+        if (question.theme && window.themeManager) {
+            window.themeManager.applyTheme(question.theme);
         }
     }
 
     function deleteQuestion(index) {
         questionData.splice(index, 1);
-        currentQuestionIndex = null;
+        
+        if (currentQuestionIndex === index) {
+            currentQuestionIndex = null;
+            resetQuestionState();
+        } else if (currentQuestionIndex > index) {
+            currentQuestionIndex--;
+        }
+        
         renderQuestionsList();
-        resetQuestionEditor();
     }
 
     function highlightNewQuestion(index) {
@@ -259,16 +241,23 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function scrollToBottom() {
-        questionsList.scrollTop = questionsList.scrollHeight;
-    }
-
-    questionInput.addEventListener('input', function () {
-        if (currentQuestionIndex !== null) {
-            questionData[currentQuestionIndex].text = questionInput.value;
-            renderQuestionsList();
-        }
+    // Event Listeners
+    addQuestionBtn.addEventListener('click', () => {
+        saveCurrentQuestion();
+        
+        const newQuestion = { ...defaultQuestionState };
+        questionData.push(newQuestion);
+        currentQuestionIndex = questionData.length - 1;
+        
+        resetQuestionState();
+        renderQuestionsList();
+        highlightNewQuestion(currentQuestionIndex);
     });
 
-    resetQuestionEditor();
+    timeSlider.addEventListener('input', function() {
+        timeDisplay.textContent = `${this.value}s`;
+    });
+
+
+    resetQuestionState();
 });
