@@ -95,6 +95,12 @@ app.get('/quiz', (req, res) => {
 });
 
 // Route pour parametre
+app.get('/index', (req, res) => {
+    res.render('index', { user: req.user });
+});
+// Ro
+
+// Route pour parametre
 app.get('/parametres', (req, res) => {
     res.render('parametres', { user: req.user });
 });
