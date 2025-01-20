@@ -5,12 +5,15 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const session = require('express-session');
 const User = require('./models/user');
+const Category = require('./models/category');
+const Quiz = require('./models/quizz');
+const MyQuizSchema = require('./models/project');
 
 // Importation des routes
 const authRoutes = require('./routes/auth');
-const profileRoutes = require('./routes/profile'); // Importation de la route pour la photo de profil
-const Category = require('./models/category');
-const Quiz = require('./models/quizz');
+const profileRoutes = require('./routes/profile'); 
+
+
 
 const app = express();
 
@@ -171,6 +174,25 @@ app.get('/api/quiz/quick', async (req, res) => {
         res.json(quizzes);
     } catch (error) {
         res.status(500).json({ message: 'Erreur lors de la récupération des quizzes' });
+    }
+});
+
+app.post('/api/quizzes', async (req, res) => {
+    try {
+        const quizData = req.body;
+        const quiz = new MyQuizSchema(quizData);
+        const savedQuiz = await quiz.save();
+        res.status(201).json(savedQuiz);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
+app.get('/api/quizzes', async (req, res) => {
+    try {
+        const quizzes = await MyQuizSchema.find();
+        res.status(200).json(quizzes);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

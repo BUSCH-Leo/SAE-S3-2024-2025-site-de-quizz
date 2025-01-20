@@ -20,7 +20,6 @@ Ce projet fait partie du programme du troisième semestre à l'IUT de Bourgogne.
 
 - Création, modification et suppression de quiz
 - Participation aux quiz et consultation des résultats
-- Classements et système de points
 - Design responsive pour mobile et desktop
 
 ## Installation
@@ -47,6 +46,18 @@ Pour commencer avec le projet, suivez ces étapes :
 ## Utilisation
 
 Une fois le serveur en cours d'exécution, vous pouvez accéder au site web à l'adresse `http://localhost:3001`. Inscrivez-vous ou connectez-vous pour commencer à créer et à participer aux quiz.
+
+## Utilisateurs de test
+
+**UtilisateurDeTest** -
+> **Adresse Mail** : utilisateur@test.fr
+
+> **Mot de passe** : MotDePasseUtilisateurTest
+
+**TestUtilisateur** -
+> **Adresse Mail** : test.utilisateur@quizzine.fr
+
+> **Mot de passe** : TestMDP2
 
 ## Contribution
 
