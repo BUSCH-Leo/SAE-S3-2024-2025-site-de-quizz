@@ -94,7 +94,7 @@ app.get('/', (req, res) => {
 
 // Route pour servir la page de quiz
 app.get('/quiz', (req, res) => {
-    res.render('Test', { user: req.user });
+    res.render('play_quiz', { user: req.user });
 });
 
 // Route pour parametre
