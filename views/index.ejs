@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzine - Accueil</title>
+    <link rel="stylesheet" href="../css/menu.css">
+	<link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
+    <script src="../script/menu.js" defer></script>
+    <script src="../script/No_Zoomies.js" defer></script>
+	<script src="../script/jouer_creer.js" defer></script>
+	<script src="../script/creer.js" defer></script>
+</head>
+<body>
+    <div id="container">
+        <div id="background">
+            <img id="background_img" src="../ressource/quizine2.jpeg" alt="Background">
+        </div>
+
+
+        <img id="title" src="../ressource/logo_quizzine fond blanc.png" alt="image_title">
+
+			<div id="menu">
+			<div id="zone_jouer" class="button_zone">
+				<img class="plate" src="../ressource/plate.png" alt="Plate Image">
+				<img class="knife" src="../ressource/knife.png" >
+				<img class="fork" src="../ressource/fork.png" >
+				<button id="jouer">JOUER</button>
+			</div>
+
+			<div id="zone_créer" class="button_zone">
+				<button id="créer">CRÉER</button>
+				<img class="pan" src="../ressource/poele.png" alt="Pan Image">
+			</div>
+		</div>
+    </div>
+
+    <div id="jouer-menu" class="slide-menu">
+        <button class="close-slide-menu">&times;</button>
+        <h1>Jouer</h1>
+        <button class="quiz-button" onclick="location.href='category.html';">Essayer des quiz déjà créés</button>
+        <button class="quiz-button">Sélectionner un quiz que vous avez créé</button>
+    </div>
+
+    <div id="creer-menu" class="slide-menu">
+		<button class="close-slide-menu">&times;</button>
+		<h1>Créer</h1>
+		<% if (user) { %>
+			<div class="button-container">
+				<button class="quiz-button" id="new-quiz-btn" >Créer un nouveau quiz</button>
+				<button class="quiz-button" id="select-quiz-btn">Continuer à créer un quiz</button>
+			</div>
+		<% } else { %>
+			<p class="page-text">Connectez-vous pour continuer à créer.</p>
+			<div class="button-container">
+				<button class="quiz-button" onclick="window.location.href = '
+	<audio id="bg-music" loop>connexion';">Se connecter</button>
+			</div>
+		<% } %>
+	</div>
+
+	
+	
+        <source src="../ressource/menu_music.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+
+    <div id="music-popup" class="popup">
+        <p>
+            <img src="../ressource/info.png" alt="Information" class="popup-image">
+            Voulez-vous activer la musique de fond ?
+        </p>
+        <button class="popup_button" id="accept-music">Oui</button>
+        <button class="popup_button" id="decline-music">Non</button>
+    </div>    
+
+    <div id="music-toggle" class="toggle">
+        <img src="../ressource/speaker_off.png" alt="Music Toggle" id="toggle-icon">
+    </div>
+	
+	<div id="burger-menu"></div>
+	<script src="../script/importer_burger.js" defer></script>
+
+    <div id="profile-menu"></div>
+	<script src="../script/importer_profile.js" defer></script>
+	
+	
+	
+	<!-- Modale pour entrer le nom du projet -->
+    <div id="project-name-modal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div class="modal-content" style="width: 300px; text-align: center;">
+            <h2>Nom du projet</h2>
+            <input type="text" id="project-name-input" placeholder="Entrez le nom de votre projet" />
+            <div class="button-container-fenetre">
+                <button onclick="location.href='quiz_creation';">Continuer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modale d'importation et de choix de projet -->
+    <div class="modal" style="display: none;">
+        <div id="upload-modal" style="display: flex;">
+            <div class="modal-content">
+                <h2>Importer un fichier</h2>
+                <div class="drop-zone" id="drop-zone">
+                    <p>Glissez et déposez un fichier ici ou cliquez pour sélectionner un fichier.</p>
+                </div>
+                <input type="file" id="file-input" style="display: none;">
+                
+                <div class="button-container-fenetre">
+                    <button id="validate-button" class="disabled" disabled>Valider</button>
+                    <button id="remove-button" class="disabled" disabled>Retirer</button>
+                </div>                                     
+            </div>        
+        </div>
+    
+        <div id="projects-modal" style="display: flex;">
+            <div class="modal-content">
+                <h2>Vos projets</h2>
+                <ul id="projects-list">
+                    <li class="project-item">Projet 1</li>
+                    <li class="project-item">Projet 2</li>
+                    <li class="project-item">Projet 3</li>
+                    <li class="project-item">Projet 4</li>
+                    <li class="project-item">Projet 5</li>
+                </ul>
+            </div>        
+        </div>        
+    </div>
+	
+</body>
+</html>

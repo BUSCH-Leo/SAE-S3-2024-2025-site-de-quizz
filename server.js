@@ -132,8 +132,14 @@ app.get('/', (req, res) => {
 });
 
 app.get('/quiz', (req, res) => {
-    res.render('Test', { user: req.user });
+    res.render('play_quiz', { user: req.user });
 });
+
+// Route pour parametre
+app.get('/index', (req, res) => {
+    res.render('index', { user: req.user });
+});
+// Ro
 
 app.get('/parametres', (req, res) => {
     res.render('parametres', { user: req.user });
