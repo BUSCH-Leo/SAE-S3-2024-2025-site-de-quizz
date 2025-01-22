@@ -72,7 +72,7 @@
                 <ul id="projects-list">
                     <% if (projects && projects.length > 0) { %>
                         <% projects.forEach(project => { %>
-                            <li class="project-item"><%= project.name %></li>
+                            <li class="project-item" data-project-id="<%= project._id %>"><%= project.name %></li>
                         <% }) %>
                     <% } else { %>
                         <li class="project-item">Aucun projet trouvé</li>

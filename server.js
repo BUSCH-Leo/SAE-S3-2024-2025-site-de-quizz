@@ -14,6 +14,9 @@ const profileRoutes = require('./routes/profile');
 const quizRoutes = require('./routes/quiz');
 const isAuthenticated = require('./middleware/auth');
 const app = express();
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/', {
     useNewUrlParser: true,

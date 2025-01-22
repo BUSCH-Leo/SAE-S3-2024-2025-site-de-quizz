@@ -67,6 +67,23 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+// Mettre à jour un quiz par ID
+router.put('/:id', async (req, res) => {
+    try {
+        const quiz = await MyQuiz.findByIdAndUpdate(req.params.id, {
+            $set: req.body
+        }, {
+            new: true,
+            runValidators: true,
+        });
+        if (!quiz) {
+            return res.status(404).json({ error: 'Quiz non trouvé' });
+        }
+        res.json(quiz);
+    } catch (error) {
+        res.status(400).json({ error: error.message });
+    }
+});
 
 
 

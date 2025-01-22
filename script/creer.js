@@ -158,3 +158,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+document.querySelectorAll('.project-item').forEach(item => {
+    item.addEventListener('click', function() {
+        const projectId = this.dataset.projectId;
+        window.location.href = `/editor.html?projectId=${projectId}`;
+    });
+});
