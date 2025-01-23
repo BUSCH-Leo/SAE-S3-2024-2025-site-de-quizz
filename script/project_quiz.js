@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         textArea.innerHTML = text;
         return textArea.value;
     }
+
     const projectDataScript = document.getElementById('project-data');
     if (projectDataScript) {
         try {
@@ -22,6 +23,14 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const decodedDataText = decodeHTMLEntities(projectDataText);
                 const projectData = JSON.parse(decodedDataText);
                 quizData = projectData.questions;
+
+                // Apply font and theme if available
+                if (projectData.font) {
+                    document.body.style.fontFamily = projectData.font;
+                }
+                if (projectData.theme) {
+                    document.body.style.backgroundImage = `url('${projectData.theme}')`;
+                }
             } catch (jsonError) {
                 console.error('Erreur lors du parsing des données du projet:', jsonError);
                 console.error('Données JSON:', projectDataText);
@@ -66,9 +75,10 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
 
                 container.innerHTML = `
-                    <div class="question-box">
-                        <h3>Question ${currentQuestionIndex + 1}/${quizData.length}</h3>
-                        <h2>${question.questionText}</h2>
+                    <div class="question-box p-4 mb-4">
+                        <h3 class="mb-3">Question ${currentQuestionIndex + 1}/${quizData.length}</h3>
+                        <h2 class="mb-4">${question.questionText}</h2>
+                        ${question.mediaUrl ? `<img src="${question.mediaUrl}" alt="Question Media" class="img-fluid mb-3">` : ''}
                         <div class="answers-grid row g-3">
                             ${answersHTML}
                         </div>
@@ -86,7 +96,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 timer = setInterval(() => {
                     timerDisplay.textContent = `Temps: ${timeLeft}s`;
-                    const progress = ((duration - timeLeft) / duration) * 100;
+                    const progress = (timeLeft / duration) * 100;
                     document.getElementById('progress-bar').style.width = `${progress}%`;
 
                     if (--timeLeft < 0) {
@@ -139,7 +149,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const score = calculateScore();
                 const container = document.getElementById('quiz-container');
                 container.innerHTML = `
-                    <div class="results">
+                    <div class="results p-4">
                         <h2>Quiz Terminé!</h2>
                         <p>Votre score: ${score}/${quizData.reduce((acc, q) => acc + q.points, 0)}</p>
                     </div>

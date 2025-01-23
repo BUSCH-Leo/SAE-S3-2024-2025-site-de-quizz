@@ -138,7 +138,7 @@ app.get('/quiz', async (req, res) => {
                 return res.status(404).send('Projet non trouvé');
             }
 
-            res.render('play_project_quiz', { user: req.user, project: project });
+            res.render('play_project_quiz', { user: req.user, projectData: project });
         } else {
             res.render('play_quiz', { user: req.user, project: null });
         }

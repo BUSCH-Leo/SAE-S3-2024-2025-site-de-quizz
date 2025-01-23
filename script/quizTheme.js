@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         const data = await response.json();
 
         if (data._id) {
-            // Créer un événement personnalisé pour passer les données
             const projectDataEvent = new CustomEvent('projectDataLoaded', {
                 detail: data
             });
