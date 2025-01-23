@@ -19,36 +19,20 @@
         <img id="title" src="../ressource/logo_quizzine fond blanc.png" alt="image_title">
 
 			<div id="menu">
-			<div id="zone_jouer" class="button_zone">
-				<img class="plate" src="../ressource/plate.png" alt="Plate Image">
+			<div id="zone_jouer" class="button_zone" onclick="location.href='jouer_page';">
+                <img class="plate" src="../ressource/plate.png" alt="Plate Image">
 				<img class="knife" src="../ressource/knife.png" >
 				<img class="fork" src="../ressource/fork.png" >
 				<button id="jouer">JOUER</button>
 			</div>
 
-			<div id="zone_créer" class="button_zone">
-				<button id="créer">CRÉER</button>
+			<div id="zone_créer" class="button_zone" onclick="location.href='creer_page';">
+                <button id="créer">CRÉER</button>
 				<img class="pan" src="../ressource/poele.png" alt="Pan Image">
 			</div>
 		</div>
     </div>
-
-    <div id="jouer-menu" class="slide-menu">
-        <button class="close-slide-menu">&times;</button>
-        <h1>Jouer</h1>
-        <button class="quiz-button" onclick="location.href='category.html';">Essayer des quiz déjà créés</button>
-        <button class="quiz-button">Sélectionner un quiz que vous avez créé</button>
-    </div>
-
-    <div id="creer-menu" class="slide-menu">
-        <button class="close-slide-menu">&times;</button>
-        <h1>Créer</h1>
-        <button class="quiz-button">Créer un nouveau quiz</button>
-        <button class="quiz-button">Continuer à créer un quiz</button>
-    </div>
-	
-	
-	<audio id="bg-music" loop>
+    <audio id="bg-music" loop>
         <source src="../ressource/menu_music.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
@@ -68,7 +52,6 @@
 	
 	<div id="burger-menu"></div>
 	<script src="../script/importer_burger.js" defer></script>
-
     <div id="profile-menu"></div>
 	<script src="../script/importer_profile.js" defer></script>
 </body>
