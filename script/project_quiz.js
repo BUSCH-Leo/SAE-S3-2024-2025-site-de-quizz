@@ -5,14 +5,11 @@ document.addEventListener('DOMContentLoaded', async function() {
     let timer;
     let timeLeft;
 
-    // Function to decode HTML entities
     function decodeHTMLEntities(text) {
         const textArea = document.createElement('textarea');
         textArea.innerHTML = text;
         return textArea.value;
     }
-
-    // Load quiz data
     const projectDataScript = document.getElementById('project-data');
     if (projectDataScript) {
         try {

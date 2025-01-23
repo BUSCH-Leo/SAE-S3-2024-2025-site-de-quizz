@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             this.initializeElements();
             this.bindEvents();
             this.addNewQuestion();
+            this.setupProjectDataListener();
         }
 
         initializeElements() {
@@ -28,6 +29,44 @@ document.addEventListener('DOMContentLoaded', function() {
                 standart: document.getElementById('standartBtn')
             };
         }
+        setupProjectDataListener() {
+            document.addEventListener('projectDataLoaded', (event) => {
+                const projectData = event.detail;
+                this.loadProjectData(projectData);
+            });
+        }
+        loadProjectData(projectData) {
+            if (projectData.questions && projectData.questions.length > 0) {
+                this.questionData = projectData.questions.map(q => ({
+                    text: q.questionText || q.text || '',
+                    type: q.type || 'multiple',
+                    answers: q.answerOptions || [],
+                    media: q.mediaUrl || q.media || '',
+                    time: q.timeLimit || q.time || 30,
+                    points: q.points || 10
+                }));
+                
+                this.currentQuestionIndex = 0;
+                this.loadQuestion(0);
+                this.renderQuestionsList();
+                this.highlightSelectedQuestion();
+            }
+
+            // Charger les paramètres généraux si présents
+            if (projectData.theme) {
+                document.body.style.backgroundImage = `url(${projectData.theme})`;
+            }
+            if (projectData.font) {
+                document.body.style.fontFamily = projectData.font;
+            }
+            if (projectData.points) {
+                document.getElementById('defaultPoints').value = projectData.points;
+            }
+            if (projectData.enableTimeBonus !== undefined) {
+                document.getElementById('enableBonus').checked = projectData.enableTimeBonus;
+            }
+        }
+
 
         bindEvents() {
             this.addQuestionBtn.addEventListener('click', () => this.addNewQuestion());
@@ -485,7 +524,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.error) {
                     alert(`Error: ${data.error}`);
                 } else {
-                    alert('Quiz submitted successfully!');
+                    window.location.href = '/jouer_page';
                 }
             })
             .catch(error => {
