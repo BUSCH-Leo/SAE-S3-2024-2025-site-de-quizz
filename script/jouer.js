@@ -74,3 +74,13 @@ document.addEventListener('DOMContentLoaded', function() {
         validateButton.classList.add('disabled');
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const projectItems = document.querySelectorAll('.project-item');
+    projectItems.forEach(item => {
+        item.addEventListener('click', () => {
+            const projectId = item.getAttribute('data-project-id');
+            window.location.href = `/quiz?projectId=${projectId}`;
+        });
+    });
+});

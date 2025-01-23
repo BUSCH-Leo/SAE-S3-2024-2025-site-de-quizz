@@ -13,6 +13,7 @@ const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile'); 
 const quizRoutes = require('./routes/quiz');
 const isAuthenticated = require('./middleware/auth');
+const { getUserProjects, getProjectById } = require('./controllers/projectController');
 const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -127,8 +128,24 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.get('/quiz', (req, res) => {
-    res.render('play_quiz', { user: req.user });
+app.get('/quiz', async (req, res) => {
+    try {
+        const projectId = req.query.projectId;
+        if (projectId) {
+            const project = await MyQuiz.findOne({ _id: projectId, creator: req.user._id });
+
+            if (!project) {
+                return res.status(404).send('Projet non trouvé');
+            }
+
+            res.render('play_project_quiz', { user: req.user, project: project });
+        } else {
+            res.render('play_quiz', { user: req.user, project: null });
+        }
+    } catch (error) {
+        console.error('Erreur lors de la récupération du projet:', error);
+        res.status(500).send('Erreur lors de la récupération du projet');
+    }
 });
 
 // Route pour parametre
@@ -145,8 +162,15 @@ app.get('/profile', (req, res) => {
     res.render('profile', { user: req.user });
 });
 
-app.get('/jouer_page', (req, res) => {
-    res.render('jouer_page', { user: req.user }); 
+app.get('/jouer_page', async (req, res) => {
+    try {
+        const user = req.user;
+        const projects = user ? await getUserProjects(user._id) : [];
+        res.render('jouer_page', { user: user, projects: projects });
+    } catch (error) {
+        console.error('Erreur lors de la récupération des projets:', error);
+        res.status(500).send('Erreur lors de la récupération des projets');
+    }
 });
 
 app.get('/connexion', (req, res) => {

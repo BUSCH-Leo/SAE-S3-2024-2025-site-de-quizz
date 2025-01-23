@@ -78,8 +78,18 @@ const getProjectById = async (req, res) => {
         });
     }
 };
+const getUserProjects = async (userId) => {
+    try {
+        const projects = await MyQuiz.find({ creator: userId });
+        return projects;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des projets:', error);
+        throw error;
+    }
+};
 
 module.exports = {
     createProject,
-    getProjectById
+    getProjectById,
+    getUserProjects
 };

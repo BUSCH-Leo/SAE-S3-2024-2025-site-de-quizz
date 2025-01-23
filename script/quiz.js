@@ -433,6 +433,27 @@ function applyBackgroundForCategory(categoryId) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    const projectDataScript = document.getElementById('project-data');
+    if (projectDataScript) {
+        const project = JSON.parse(projectDataScript.textContent);
+        quizData = [{ questions: shuffleArray(project.questions) }];
+        currentQuizIndex = 0;
+        currentQuestionIndex = 0;
+        userAnswers = [];
+        displayCurrentQuestion();
+        startTimer();
+    } else {
+        const categoryId = getCategoryFromURL();
+        if (categoryId) {
+            fetchQuizzes();
+        } else {
+            const { count, difficulty } = getQuickQuizParams();
+            if (count && difficulty) {
+                fetchQuickQuizzes(count, difficulty);
+            }
+        }
+    }
+
     const categoryId = getCategoryFromURL();
     if (categoryId) {
         applyBackgroundForCategory(categoryId);
@@ -440,6 +461,4 @@ document.addEventListener("DOMContentLoaded", () => {
         console.warn("Aucune catégorie spécifiée dans l'URL.");
     }
 });
-
-// Démarrer le quiz
 fetchQuizzes();
