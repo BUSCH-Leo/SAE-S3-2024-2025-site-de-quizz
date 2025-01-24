@@ -29,7 +29,7 @@ document.getElementById('toggle-password-confirm').addEventListener('click', fun
 });
 
 document.querySelector('.registration-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Empêche la soumission par défaut du formulaire
+    event.preventDefault();
 
     const userName = document.getElementById('userName').value;
     const email = document.getElementById('email').value;

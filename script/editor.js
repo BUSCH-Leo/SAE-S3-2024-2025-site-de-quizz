@@ -2,12 +2,11 @@
 const timeSlider = document.getElementById('timeSlider');
 const timeDisplay = document.getElementById('timeDisplay');
 
-// Mise à jour dynamique lors du déplacement du slider
 timeSlider.addEventListener('input', () => {
     timeDisplay.textContent = `${timeSlider.value}s`;
 });
 
-// Toggle panels
+// Panneaux latéraux
 const leftPanel = document.querySelector('.left-panel');
 const rightPanel = document.querySelector('.right-panel');
 const mainContent = document.querySelector('.main-content');
@@ -34,11 +33,10 @@ const tabContents = document.querySelectorAll('.tab-content');
 
 tabButtons.forEach(button => {
     button.addEventListener('click', () => {
-        // Désactive tous les onglets
+
         tabButtons.forEach(btn => btn.classList.remove('active'));
         tabContents.forEach(content => content.classList.remove('active'));
 
-        // Active l'onglet cliqué
         button.classList.add('active');
         const tabId = button.getAttribute('data-tab');
         document.getElementById(`${tabId}-content`).classList.add('active');

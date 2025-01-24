@@ -84,9 +84,9 @@ const saveProjectNameButton = document.getElementById('save-project-name-btn');
 const cancelProjectNameButton = document.getElementById('cancel-project-name-btn');
 const projectNameInput = document.getElementById('project-name-input');
 
-// Ouvrir la modale pour le nom du projet
+
 newQuizButton.addEventListener('click', function() {
-    projectNameModal.style.display = 'flex'; // Afficher la modale pour le nom du projet
+    projectNameModal.style.display = 'flex'; 
 });
 
 window.addEventListener('click', function(event) {
@@ -100,14 +100,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const projectNameInput = document.getElementById('project-name-input');
     const newQuizBtn = document.getElementById('new-quiz-btn');
 
-    // Afficher la modale
     if (newQuizBtn) {
         newQuizBtn.addEventListener('click', () => {
             modal.style.display = 'flex';
         });
     }
 
-    // Fermer la modale en cliquant en dehors
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
@@ -135,7 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.success) {
-                // Rediriger vers l'éditeur avec l'ID du projet
                 window.location.href = `/editor.html?projectId=${data.project.id}`;
             } else {
                 alert(data.message || 'Erreur lors de la création du projet');

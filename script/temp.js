@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let isMusicPlaying = false;
 
-    // Set up audio context for analyzing the music
+    // Configuration de l'analyseur audio
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = audioContext.createAnalyser();
     const source = audioContext.createMediaElementSource(music);
@@ -19,14 +19,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
 
-    // Show popup on page load to request permission for music
+    // Affiche une popup au chargement de la page pour demander l'autorisation de la musique
     musicPopup.style.display = 'block';
 
     acceptMusic.addEventListener('click', function() {
         music.play().then(() => {
             isMusicPlaying = true;
             toggleIcon.src = 'ressource/speaker_on.png';
-            audioContext.resume(); // Ensure audio context is running
+            audioContext.resume(); 
         }).catch(error => {
             console.error('Error playing music:', error);
         });
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         musicPopup.style.display = 'none';
     });
 
-    // Toggle music on/off when clicking the speaker button
+    // Gestion du bouton pour activer/désactiver la musique
     musicToggle.addEventListener('click', function() {
         if (isMusicPlaying) {
             music.pause();
@@ -52,12 +52,12 @@ document.addEventListener('DOMContentLoaded', function() {
         isMusicPlaying = !isMusicPlaying;
     });
 
-    // Adjust title size based on music loudness
+    // Animation du titre
     function updateTitleSize() {
         if (isMusicPlaying) {
             analyser.getByteFrequencyData(dataArray);
             const average = dataArray.reduce((sum, value) => sum + value) / dataArray.length;
-            const scale = 1 + average / 100; // Adjust scaling factor as needed
+            const scale = 1 + average / 100;
             title.style.transform = `translate(-50%, -50%) scale(${scale})`;
         }
         requestAnimationFrame(updateTitleSize);

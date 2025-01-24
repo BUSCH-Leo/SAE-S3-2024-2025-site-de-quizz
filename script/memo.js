@@ -32,7 +32,6 @@ function displayMemos() {
                 ${memo.questions.map((q, questionIndex) => {
                     globalQuestionIndex++;
 
-                    // Ajouter des classes dynamiques pour les réponses
                     const userAnswerClass = q.userAnswer === q.correctAnswer ? 'text-success' : 'text-danger';
 
                     return `

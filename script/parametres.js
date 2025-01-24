@@ -199,7 +199,7 @@ document.querySelector('#change-password-btn').addEventListener('click', async (
     if (newPassword !== newPasswordConfirm) {
         passwordErrorMessage.textContent = "Les mots de passe ne correspondent pas.";
         passwordErrorMessage.style.display = 'block';
-        return; // Arrête l'exécution en cas d'erreur
+        return; 
     }
 
     try {

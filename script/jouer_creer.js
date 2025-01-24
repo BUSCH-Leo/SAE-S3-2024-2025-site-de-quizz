@@ -18,5 +18,5 @@ window.addEventListener('load', function() {
             button.style.opacity = 1;
             button.style.transform = 'translateY(0)';
         });
-    }, 500); // Délai avant que les boutons apparaissent
+    }, 500); 
 });

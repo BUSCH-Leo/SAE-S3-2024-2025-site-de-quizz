@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     setTimeout(() => {
         title.classList.remove('clicked');
-    }, 200);  // durée animation (0.2s)
+    }, 200);  
     });
     
     musicPopup.style.display = 'block';

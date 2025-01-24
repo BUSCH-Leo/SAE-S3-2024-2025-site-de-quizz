@@ -14,7 +14,7 @@ document.getElementById('toggle-password').addEventListener('click', function ()
 });
 
 document.querySelector('.login-form').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Empêche le comportement par défaut de soumission du formulaire
+    event.preventDefault(); 
 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;

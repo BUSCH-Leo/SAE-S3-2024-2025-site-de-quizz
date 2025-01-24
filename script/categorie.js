@@ -57,7 +57,7 @@ function displayCategories(page, categoriesToDisplay) {
     const paginatedCategories = categoriesToDisplay.slice(start, end);
 
     const categoryContainer = document.getElementById('category-container');
-    categoryContainer.innerHTML = ''; // Vide le container avant de le remplir
+    categoryContainer.innerHTML = ''; 
 
     paginatedCategories.forEach(category => {
         const categoryElement = document.createElement('div');
@@ -123,7 +123,7 @@ document.getElementById('current-page').addEventListener('change', function(even
         displayCategories(currentPage, filteredCategories);
         updatePagination(filteredCategories);
     } else {
-        event.target.value = currentPage; // Rétablir la valeur actuelle si hors limite
+        event.target.value = currentPage; 
     }
 });
 
@@ -136,7 +136,7 @@ function updatePagination(categoriesToDisplay) {
     document.getElementById('current-page').value = currentPage;
 }
 
-// Fetch categories and initialize
+// Recuperation des  categories et initialisation de la pagination
 async function fetchCategories() {
   try {
       const response = await fetch('/api/categories');
