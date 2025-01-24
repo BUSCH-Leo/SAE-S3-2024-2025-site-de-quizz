@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3001"
+    environment:
+      - MONGO_URI=mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/
+    networks:
+      - quizzine_network
+
+networks:
+  quizzine_network:
+    driver: bridge
