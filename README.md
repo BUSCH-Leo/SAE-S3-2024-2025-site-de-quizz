@@ -50,9 +50,9 @@ Une fois le serveur en cours d'exécution, vous pouvez accéder au site web à l
 ## Utilisateurs de test
 
 **UtilisateurDeTest** -
-> **Adresse Mail** : utilisateur@test.fr
+> **Adresse Mail** : quizzine@gmail.com
 
-> **Mot de passe** : MotDePasseUtilisateurTest
+> **Mot de passe** : Azerty1234
 
 **TestUtilisateur** -
 > **Adresse Mail** : test.utilisateur@quizzine.fr
