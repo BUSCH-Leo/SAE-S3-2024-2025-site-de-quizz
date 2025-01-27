@@ -62,8 +62,11 @@
                     <p class="text-gray-600">Déposez les fichiers média ici ou</p>
                     <input type="file" id="file-input" accept="image/*" class="hidden" />
                     <button onclick="document.getElementById('file-input').click()" class="text-blue-500 hover:text-blue-700 transition-colors duration-300">Parcourir les fichiers</button>
-                    <div id="imagePreview" class="mt-4"></div>
+                    <div id="imagePreview" class="mt-4">
+                        <img id="previewImage" class="hidden" alt="Aperçu de l'image" />
+                    </div>
                 </div>
+
                 
                 
                  <!--Slider Section -->
