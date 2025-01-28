@@ -233,7 +233,7 @@ document.querySelector('#confirm-delete-btn').addEventListener('click', async ()
 
         if (response.ok) {
             const data = await response.json();
-            window.location.href = 'index.html'; 
+            window.location.href = './'; 
         } else {
             console.error('Erreur lors de la suppression du compte');
         }

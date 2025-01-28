@@ -444,13 +444,30 @@ document.addEventListener('DOMContentLoaded', function() {
         handleFileUpload(e) {
             const file = e.target.files[0];
             if (file) {
+                this.fileInput.value = '';
                 const reader = new FileReader();
                 reader.onload = (e) => {
-                    this.imagePreview.innerHTML = `<img src="${e.target.result}" class="max-w-full h-auto rounded">`;
+                    this.imagePreview.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    img.style.maxHeight = '100%';
+                    img.style.objectFit = 'cover';
+                    this.imagePreview.appendChild(img);
                     this.mediaUpload.classList.add('has-file');
-                    this.saveCurrentQuestion();
+                    
+                    // Store image data in current question
+                    if (this.currentQuestionIndex !== null) {
+                        this.questionData[this.currentQuestionIndex].media = e.target.result;
+                    }
                 };
                 reader.readAsDataURL(file);
+            } else {
+                this.imagePreview.innerHTML = '';
+                this.mediaUpload.classList.remove('has-file');
+                if (this.currentQuestionIndex !== null) {
+                    this.questionData[this.currentQuestionIndex].media = null;
+                }
             }
         }
 

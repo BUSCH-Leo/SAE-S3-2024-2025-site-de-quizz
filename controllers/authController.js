@@ -40,6 +40,6 @@ exports.login = (req, res, next) => {
 exports.logout = (req, res) => {
     req.logout((err) => {
         if (err) return res.status(500).json({ message: 'Erreur lors de la déconnexion' });
-        res.redirect('/index.html');
+        res.redirect('/');
     });
 };

@@ -47,7 +47,6 @@ app.use('/script', express.static(path.join(__dirname, 'script')));
 app.use('/css', express.static(path.join(__dirname, 'css')));
 app.use('/views', express.static(path.join(__dirname, 'views')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes); 
 app.use('/quizzes', quizRoutes);
