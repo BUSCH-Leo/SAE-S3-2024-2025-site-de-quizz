@@ -132,17 +132,19 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         getMultipleChoiceTemplate(index, text = "", isCorrect = false) {
+            const placeholderText = index <= 2 ? `Réponse ${index} (obligatoire)` : `Réponse ${index} (facultative)`;
             return `
                 <div class="answer-option flex items-center gap-4 bg-white p-3 rounded-lg shadow-md transition-all duration-300 hover:shadow-lg">
                     <div class="flex-1">
-                        <input type="text" placeholder="Réponse ${index}" value="${text}" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+                        <input type="text" placeholder="${placeholderText}" value="${text}" class="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
                     </div>
                     <button class="p-2 ${isCorrect ? 'text-green-500' : 'text-gray-400'} hover:text-green-500 rounded correct-toggle transition-colors duration-300">
                         <i class="fas ${isCorrect ? 'fa-check' : 'fa-times'}"></i>
                     </button>
+                    ${index > 4 ? `
                     <button class="p-2 text-red-500 hover:text-red-700 rounded delete-option transition-colors duration-300">
                         <i class="fas fa-trash"></i>
-                    </button>
+                    </button>` : ''}
                 </div>
             `;
         }
@@ -336,8 +338,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.imagePreview.innerHTML = `<img src="${question.media}" class="max-w-full h-auto rounded">`;
                     this.mediaUpload.classList.add('has-file');
                 }
-        
-                // Update question type and layout
+
                 Object.entries(this.questionTypeButtons).forEach(([type, button]) => {
                     if (type === question.type) {
                         button.classList.add('active');
@@ -347,8 +348,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
         
                 this.updateLayout();
-        
-                // Restore answers and correct states
                 question.answers.forEach((answer, index) => {
                     const optionDiv = this.answerOptionsContainer.children[index];
                     if (optionDiv) {
@@ -372,7 +371,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
         
-                // Update the visibility of the add option button
                 if (question.type === 'truefalse' || question.type === 'price') {
                     this.addOptionBtn.style.display = 'none';
                 } else {
@@ -456,7 +454,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     this.imagePreview.appendChild(img);
                     this.mediaUpload.classList.add('has-file');
                     
-                    // Store image data in current question
                     if (this.currentQuestionIndex !== null) {
                         this.questionData[this.currentQuestionIndex].media = e.target.result;
                     }
@@ -482,8 +479,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('Project ID is missing in the URL');
                 return;
             }
-        
-            // Vérifiez et complétez les données des questions
             const completeQuestionData = this.questionData.map(question => {
                 const formattedQuestion = {
                     ...question,
@@ -496,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     answerOptions: question.answers || []
                 };
         
-                // Supprimer les champs inutiles selon le type de question
+
                 if (question.type !== 'truefalse') {
                     delete formattedQuestion.correctAnswer;
                 }
