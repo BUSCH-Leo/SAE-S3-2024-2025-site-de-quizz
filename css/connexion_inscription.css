@@ -10,6 +10,7 @@ body {
     align-items: center;
 }
 
+/* Conteneurs et mise en page */
 .content-box {
     background-color: rgba(255, 255, 255, 0.8);
     border-radius: 15px;
@@ -20,19 +21,6 @@ body {
     width: 100%;
 }
 
-.page-title {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: rgb(251, 188, 0);
-    margin-bottom: 20px;
-}
-
-.login-form .form-control {
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 15px;
-}
-
 .button-container {
     display: flex;
     flex-direction: column;
@@ -40,6 +28,54 @@ body {
     justify-content: center;
 }
 
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+/* Typographie */
+.page-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: rgb(251, 188, 0);
+    margin-bottom: 20px;
+}
+
+p {
+    margin-bottom: 2px;
+}
+
+#champ_obligatoire {
+    font-size: 12px;
+    color: red;
+}
+
+::placeholder {
+    font-size: 15px;
+}
+
+/* Formulaires */
+.login-form .form-control {
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 15px;
+}
+
+.toggle-password {
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.5s ease;
+    color: #6c757d;
+}
+
+.toggle-password:hover {
+    color: #000000;
+}
+
+/* Boutons et liens */
 .quiz-button {
     background-color: rgb(251, 188, 0);
     color: white;
@@ -56,6 +92,22 @@ body {
 
 .quiz-button:hover {
     background-color: #9b7f2a;
+}
+
+.btn {
+    background-color: rgba(255, 255, 255, 0.895) !important;
+    transition: color 0.5s ease !important;
+    color: #c98210 !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 10px 15px !important;
+    text-decoration: none !important;
+    font-size: 16px !important;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.btn:hover {
+    color: #ff9d00 !important;
 }
 
 .back-button {
@@ -80,10 +132,7 @@ body {
     margin-right: 5px;
 }
 
-::placeholder {
-    font-size: 15px;
-}
-
+/* Liens textuels */
 #mdp_oublie {
     transition: color 0.5s ease;
     color: black;
@@ -92,63 +141,14 @@ body {
 }
 
 #mdp_oublie:hover {
-    transition: color 0.5s ease;
-    color:rgb(107, 107, 107);
+    color: rgb(107, 107, 107);
 }
 
-#inscription,#connexion {
+#inscription, #connexion {
     transition: color 0.5s ease;
     color: black;
 }
 
-#inscription:hover,#connexion:hover {
-    transition: color 0.5s ease;
-    color:rgb(107, 107, 107);
-}
-
-p {
-    margin-bottom: 2px;
-}
-
-#champ_obligatoire {
-    font-size: 12px;
-    color: red;
-}
-
-.position-relative {
-    position: relative;
-}
-.position-absolute {
-    position: absolute;
-}
-
-.toggle-password {
-    right: 15px;
-    cursor: pointer;
-    transition: color 0.5s ease;
-    color: #6c757d;
-}
-
-.toggle-password:hover {
-    transition: color 0.5s ease;
-    color: #000000;
-}
-
-.btn {
-    background-color: rgba(255, 255, 255, 0.895) !important;
-    transition: color 0.5s ease !important;
-    color: #c98210 !important;
-    border: none !important;
-    border-radius: 5px !important;
-    padding: 10px 15px !important;
-    text-decoration: none !important;
-    font-size: 16px !important;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2) !important;
-
-}
-
-.btn:hover{
-    transition: color 0.5s ease !important;
-    color: #ff9d00 !important;
-    background-color: rgba(255, 255, 255, 0.895) !important;
+#inscription:hover, #connexion:hover {
+    color: rgb(107, 107, 107);
 }

@@ -5,27 +5,14 @@
     font-family: Arial, sans-serif;
 }
 
-body {
-	margin:0;
-    background-color: gray;
-    
-}
-#imageDisplay{
-    height: 300px ;
-    width: 1000px;
-}
-
 body, html {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-.labelSelect{
-    font-size: 12px;
-    color: white;
-    align-items: center;
+    background-color: gray;
 }
 
+/* Structure principale */
 .quiz-container {
     max-width: 90%;
     margin: 0 auto;
@@ -58,11 +45,9 @@ body, html {
     border-radius: 50%;
 }
 
-
+/* Formulaire de création du quiz */
 .quiz-creation-form {
-/*    background-color: #fff;*/
     padding: 20px;
-/*    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -79,6 +64,21 @@ body, html {
     border-radius: 50px;
     background: #ffc1079c;
 }
+
+.quiz-title:focus {
+    outline: none;
+}
+
+/* Gestion des images */
+.image-upload {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    margin: 20px auto; 
+    max-width: 60%;
+}
+
 .image-upload img {
     max-width: 100%;
     height: auto;
@@ -86,28 +86,11 @@ body, html {
     object-fit: cover;
 }
 
-.image-upload {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-    margin: 20px auto; 
-    max-width:60%;
-}
-
 .png {
     width: 40%;
     height: 40%;
     border: solid black 1px;
     border-radius: 8px;
-}
-
-#imagePreview img {
-    max-width: 100%; 
-    height: auto; 
-    object-fit: cover; 
-    border-radius: 5px;
-    margin-top: 10px; 
 }
 
 .image-label {
@@ -133,11 +116,24 @@ body, html {
     margin-top: 10px;
 }
 
+#imagePreview img {
+    max-width: 100%; 
+    height: auto; 
+    object-fit: cover; 
+    border-radius: 5px;
+    margin-top: 10px; 
+}
+
+#imageDisplay {
+    height: 300px;
+    width: 1000px;
+}
+
+/* Section des questions */
 .question-section {
     padding: 20px 0px 0px 0px;
     background-color: #ffffff54;
     border-radius: 20px;
-
 }
 
 .question-input {
@@ -150,6 +146,12 @@ body, html {
     background: #ddd;
 }
 
+.question-input:focus {
+    outline: none;
+    border: none;
+}
+
+/* Timer */
 .timer {
     margin-bottom: 15px;
 }
@@ -189,7 +191,8 @@ body, html {
     margin-left: 10px;
     color: #ffffff;
 }
-/*Zone reponse*/
+
+/* Zone réponses */
 .answers {
     display: flex;
     flex-wrap: wrap; 
@@ -205,15 +208,6 @@ body, html {
     max-width: 3000px;
     min-width: 150px;
 }
-.answer-input:focus,
-.question-input:focus {
-    outline: none; 
-    border: none;
-}
-
-.quiz-title:focus {
-    outline: none;
-}
 
 .answer-letter {
     position: absolute;
@@ -226,9 +220,11 @@ body, html {
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
+
 .answer-letter.clicked {
     color: #7bd634;
 }
+
 .answer-letter.disabled {
     cursor: not-allowed;
     color: #ddd;
@@ -247,28 +243,23 @@ body, html {
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
 }
 
+.answer-input:focus {
+    outline: none;
+    border: none;
+}
+
 .answer-input::placeholder {
     color: rgba(255, 255, 255, 0.7); 
     opacity: 1;
 }
 
-@media (max-width: 600px) {
-    .answer-input-container {
-        flex: 1 1 100%;
-        max-width: none;
-    }
-}
-@media (max-width: 768px) {
-    #imageDisplay {
-        width: 100%;
-        height: auto;
-    }
-    .quiz-title {
-        font-size: 20px;
-    }
+.labelSelect {
+    font-size: 12px;
+    color: white;
+    align-items: center;
 }
 
-
+/* Bouton de soumission */
 .submit-btn {
     display: block;
     width: 50%;
@@ -280,9 +271,28 @@ body, html {
     cursor: pointer;
     font-size: 25px;
     margin-top: 30px;
-    color:#fff;
+    color: #fff;
 }
 
 .submit-btn:hover {
     background-color: #ffb800;
+}
+
+/* Media queries */
+@media (max-width: 600px) {
+    .answer-input-container {
+        flex: 1 1 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 768px) {
+    #imageDisplay {
+        width: 100%;
+        height: auto;
+    }
+    
+    .quiz-title {
+        font-size: 20px;
+    }
 }

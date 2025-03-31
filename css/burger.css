@@ -1,35 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-.burger-menu {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1001;
-}
-
-.burger-icon {
-    cursor: pointer;
-    width: 40px;
-    height: 40px;
-    transition: transform 0.5s ease;
-}
-
-.menu-logo-container {
-    display: none;
-}
-
-.menu.active .menu-logo-container {
-    display: block;
-    position: absolute;
-    top: 20px;
-    right: 20px;
-}
-
-.menu-logo {
-    width: 50px;
-    height: auto;
-}
-
+/* Menu principal */
 .menu {
     position: fixed;
     top: 0;
@@ -44,6 +15,11 @@
     transition: left 0.3s ease;
 }
 
+.menu.active {
+    left: 0;
+}
+
+/* Navigation */
 .menu ul {
     list-style-type: none;
     padding: 80px 0 0;
@@ -66,17 +42,19 @@
     color: white;
 }
 
-.menu.active {
-    left: 0;
+/* Icône du menu burger */
+.burger-menu {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
 }
 
-.menu-footer {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-    text-align: center;
-    font-size: 14px;
-    color: rgb(0, 0, 0);
+.burger-icon {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    transition: transform 0.5s ease;
 }
 
 .rotate-open {
@@ -85,4 +63,31 @@
 
 .rotate-close {
     transform: rotate(0deg);
+}
+
+/* Logo dans le menu */
+.menu-logo-container {
+    display: none;
+}
+
+.menu.active .menu-logo-container {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.menu-logo {
+    width: 50px;
+    height: auto;
+}
+
+/* Pied de menu */
+.menu-footer {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    color: rgb(0, 0, 0);
 }

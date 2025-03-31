@@ -1,3 +1,4 @@
+/* Structure de base */
 body {
     font-family: 'Arial', sans-serif;
     background-image: url('../../ressource/categorie/general1.jpg');
@@ -30,10 +31,7 @@ header {
     margin-bottom: 20px;
 }
 
-.mt-5 {
-    margin-top: 20px;
-}
-
+/* Typographie */
 h1 {
     text-align: center;
     margin-bottom: 20px;
@@ -41,21 +39,30 @@ h1 {
     font-weight: 600;
 }
 
+.text-center {
+    text-align: center;
+}
+
+.status {
+    color: rgb(0, 0, 0);
+}
+
+/* Barres de progression */
 .progress {
     position: relative;
     height: 30px;
     background-color: #e0e0e0;
     border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .progress-bar {
     background-color: #f39c12;
+    height: 100%;
     transition: width 0.4s ease;
+    position: relative;
     border-radius: 15px;
-}
-
-#progress-bar-box {
-    margin-top: 40px;
 }
 
 .timer {
@@ -66,12 +73,16 @@ h1 {
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
 }
 
-.text-center {
-    text-align: center;
+#progress-bar-box {
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 0 20px;
 }
 
+/* Boutons */
 .btn-primary {
     background-color: #f39c12;
     color: #fff;
@@ -89,18 +100,6 @@ h1 {
 
 .btn-primary:hover {
     background-color: #e67e22;
-}
-
-.profile-img {
-    height: 50px;
-}
-
-.img-fluid {
-    height: 60px;
-}
-
-.status {
-    color: rgb(0, 0, 0);
 }
 
 .back-button {
@@ -128,53 +127,18 @@ h1 {
 
 .back-button:hover {
     background-color: rgb(240, 240, 240);
-    transition: background-color 0.2s ease;
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
+/* Images */
+.profile-img {
+    height: 50px;
 }
 
-#modal-message {
-    margin-bottom: 0px;
+.img-fluid {
+    height: 60px;
 }
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
-    text-align: center;
-    position: relative; 
-}
-
-.close {
-    color: #ff9900;
-    font-size: 30px;
-    font-weight: bold;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    transition: color 0.3s;
-}
-
-.close:hover,
-.close:focus {
-    color: #b86d03; 
-    cursor: pointer;
-}
-
+/* Boîtes de questions */
 .question-box {
     background-color: #fff;
     border-radius: 10px;
@@ -193,6 +157,7 @@ h1 {
     margin-right: 10px;
 }
 
+/* Résultats */
 .results {
     background-color: #fff;
     border-radius: 10px;
@@ -200,34 +165,53 @@ h1 {
     padding: 20px;
     margin-bottom: 20px;
 }
-.progress {
-    height: 30px;
-    background-color: #e0e0e0;
-    border-radius: 15px;
-    overflow: hidden;
-    position: relative;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
 
-.progress-bar {
-    background-color: #f39c12;
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
     height: 100%;
-    transition: width 0.4s ease;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    text-align: center;
     position: relative;
 }
 
-.timer {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+#modal-message {
+    margin-bottom: 0px;
 }
 
-#progress-bar-box {
-    margin: 20px auto;
-    max-width: 800px;
-    padding: 0 20px;
+.close {
+    color: #ff9900;
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    transition: color 0.3s;
+}
+
+.close:hover,
+.close:focus {
+    color: #b86d03;
+    cursor: pointer;
+}
+
+/* Utilitaires */
+.mt-5 {
+    margin-top: 20px;
 }

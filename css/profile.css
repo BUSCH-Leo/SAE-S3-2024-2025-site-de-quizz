@@ -1,10 +1,11 @@
+/* Menu de profil */
 .profile-menu {
     position: fixed;
     display: flex;
-    flex-direction: row-reverse; /* Place l'image à droite et les boutons à gauche */
-    align-items: center; /* Aligne verticalement l'image et les boutons au centre */
+    flex-direction: row-reverse;
+    align-items: center;
     top: 20px;
-    right: 20px; /* Positionne l'ensemble du menu à droite de la page */
+    right: 20px;
     z-index: 1000;
 }
 
@@ -14,27 +15,26 @@
     border: 2px solid #e3ad0a;
     cursor: pointer;
     z-index: 1000;
-    margin-left: 10px; /* Espace entre l'image et les boutons */
+    margin-left: 10px;
 }
 
 .profile-menu .button-div {
     display: flex;
-    flex-direction: column; /* Empile les boutons verticalement */
+    flex-direction: column;
     margin-bottom: 5px;
-    align-items: flex-start; /* Aligne les boutons à gauche */
-    visibility: hidden; /* Cache les boutons au départ */
-    opacity: 0; /* Rendre invisible */
-    transform: rotateY(-90deg); /* Initialement tourné sur le côté */
-    transition: transform 0.2s ease-out, visibility 0s 0.2s, opacity 0.2s ease-out; /* Animation fluide */
+    align-items: flex-start;
+    visibility: hidden;
+    opacity: 0;
+    transform: rotateY(-90deg);
+    transition: transform 0.2s ease-out, visibility 0s 0.2s, opacity 0.2s ease-out;
 }
 
 .profile-menu .button-div.visible {
-    transform: rotateY(0); /* Restaure la position d'origine */
-    visibility: visible; /* Les boutons deviennent visibles */
-    opacity: 1; /* Les boutons deviennent visibles */
-    transition: transform 0.2s ease-in, opacity 0.3s ease; /* Transition fluide pour l'apparition */
+    transform: rotateY(0);
+    visibility: visible;
+    opacity: 1;
+    transition: transform 0.2s ease-in, opacity 0.3s ease;
 }
-
 
 .profile-menu button {
     background-color: white;
@@ -47,6 +47,94 @@
     text-overflow: ellipsis;
     padding: 5px 10px;
     font-weight: bold;
-    width: 170px; /* Largeur uniforme des boutons */
+    width: 170px;
     text-align: left;
+}
+
+.profile-menu button:hover {
+    background-color: #f5f5f5;
+    color: #e3ad0a;
+}
+
+/* État de connexion */
+.connection-status {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 8px 12px;
+    border-radius: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.online {
+    background-color: #4CAF50;
+}
+
+.offline {
+    background-color: #F44336;
+}
+
+.status-text {
+    font-size: 14px;
+    color: #333;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.notification.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid #4CAF50;
+}
+
+.notification.error {
+    border-left: 4px solid #F44336;
+}
+
+.notification.warning {
+    border-left: 4px solid #FF9800;
+}
+
+/* Animation pour le profil */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(227, 173, 10, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(227, 173, 10, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(227, 173, 10, 0);
+    }
+}
+
+.profile-highlight {
+    animation: pulse 2s infinite;
 }

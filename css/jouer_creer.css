@@ -1,3 +1,4 @@
+/* Structure de base */
 body {
     font-family: Arial, sans-serif;
     background-size: cover;
@@ -11,6 +12,7 @@ body {
     justify-content: center;
 }
 
+/* Conteneurs */
 .content-box {
     background-color: rgba(255, 255, 255, 0.292);
     border-radius: 15px;
@@ -20,6 +22,24 @@ body {
     max-width: 80%;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-connect {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(231, 231, 231);
+    height: 100%;
+    border-radius: 10px;
+}
+
+/* Texte et titres */
 .page-title {
     font-size: 6rem;
     font-weight: bold;
@@ -30,13 +50,14 @@ body {
     transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+.page-text {
+    font-size: 30px;
+    opacity: 0;
+    transform: translateY(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
+/* Boutons */
 .quiz-button {
     background-color: rgb(251, 188, 0);
     color: white;
@@ -78,21 +99,4 @@ body {
     width: 20px;
     height: auto;
     margin-right: 5px;
-}
-
-.page-text {
-    font-size: 30px;
-    opacity: 0;
-    transform: translateY(-50px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.button-connect {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(231, 231, 231);
-    height: 100%;
-    border-radius: 10px;
 }

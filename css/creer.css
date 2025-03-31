@@ -1,3 +1,4 @@
+/* Fenêtre modale */
 .modal {
     display: flex;
     flex-direction: row;
@@ -15,7 +16,7 @@
 #upload-modal,
 #projects-modal {
     width: 30%;
-    display: flex; /* Pour s'assurer que le contenu est centré */
+    display: flex;
 }
 
 .modal-content {
@@ -29,6 +30,14 @@
     overflow: auto;
 }
 
+#project-name-modal .modal-content {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+/* Liste des projets */
 #projects-list {
     list-style-type: none;
     padding: 0;
@@ -51,6 +60,7 @@
     background-color: #9b7f2a;
 }
 
+/* Zone de dépôt */
 .drop-zone {
     border: 2px dashed #bbb;
     padding: 20px;
@@ -62,20 +72,13 @@
     background-color: #f0f0f0;
 }
 
-/* Styles pour les boutons */
+/* Boutons */
 button {
     margin-top: 10px;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-/* Flexbox pour centrer les boutons */
-.button-container-fenetre {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
 }
 
 button.disabled {
@@ -92,17 +95,15 @@ button:hover:not(.disabled) {
     background-color: #9b7f2a;
 }
 
-/* Styles pour les boutons dans la fenêtre modale */
 #validate-button,
 #remove-button {
     margin: 5px;
     color: white;
 }
 
-#project-name-modal .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 90%;
-    margin: 0 auto;
+/* Conteneurs */
+.button-container-fenetre {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }

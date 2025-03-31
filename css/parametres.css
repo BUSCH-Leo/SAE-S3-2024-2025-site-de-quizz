@@ -1,3 +1,4 @@
+/* Base et structure */
 body {
     font-family: Arial, sans-serif;
     background-size: cover;
@@ -25,6 +26,22 @@ body {
     width: 100%;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+/* Typographie */
 .page-title {
     text-align: center;
     font-size: 2.5rem;
@@ -33,11 +50,143 @@ body {
     margin-bottom: 20px;
 }
 
-.button-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+h1 {
+    color: rgb(251, 188, 0);
+    font-size: 30px;
+    text-align: left;
+}
+
+h3 {
+    text-align: left;
+    color: black;
+    font-size: 20px;
+}
+
+p {
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.name {
+    font-size: 25px;
+}
+
+.infos {
+    text-align: left;
+}
+
+::placeholder {
+    font-size: 15px;
+}
+
+/* Formulaires et entrées */
+input {
+    border-radius: 5px;
+    width: 50%;
+}
+
+#inputs {
+    text-align: left;
+}
+
+#inputs input {
+    margin-bottom: 10px;
+}
+
+.toggle-password {
+    right: 15px;
+    cursor: pointer;
+    transition: color 0.5s ease;
+    color: #6c757d;
+}
+
+.toggle-password:hover {
+    color: #000000;
+}
+
+/* Boutons */
+.button-div {
+    margin-top: 10px;
+    text-align: center;
+}
+
+button, 
+.btn-outline-primary, 
+.mt-2, 
+#confirm-avatar {
+    background-color: rgba(255, 255, 255, 0.895);
+    color: #c98210;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: color 0.5s ease;
+}
+
+button:hover, 
+.btn-outline-primary:hover, 
+.my-2:hover, 
+#confirm-avatar:hover {
+    color: #fdb94c;
+    background-color: rgba(255, 255, 255, 0.895);
+}
+
+button:active, 
+.btn-outline-primary:active, 
+.my-2:active {
+    color: #fdb94c !important;
+    background-color: rgba(255, 255, 255, 0.895) !important;
+}
+
+.btn-outline-secondary {
+    background-color: rgba(235, 173, 29, 0.895);
+    color: #ffffff;
+    transition: background-color 0.5s ease;
+}
+
+.btn-outline-secondary:hover {
+    background-color: rgba(190, 136, 9, 0.895);
+}
+
+.btn-outline-secondary:active {
+    background-color: rgba(190, 136, 9, 0.895) !important;
+    color: #ffffff !important;
+}
+
+.btn.btn-warning {
+    all: unset;
+    background-color: rgba(255, 255, 255, 0.895);
+    color: #c98210;
+    border-radius: 5px;
+    padding: 10px 15px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn.btn-warning:hover {
+    color: #ff9d00;
+    background-color: rgba(255, 255, 255, 0.895);
+}
+
+.btn.btn-warning:active {
+    background-color: rgba(255, 255, 255, 0.895);
+}
+
+.btn-danger {
+    background-color: rgba(168, 23, 23, 0.895);
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 16px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.5s ease;
+}
+
+.btn-danger:hover {
+    background-color: rgba(255, 0, 0, 0.895);
 }
 
 .back-button {
@@ -62,159 +211,15 @@ body {
     margin-right: 5px;
 }
 
-::placeholder {
-    font-size: 15px;
-}
-
-p {
-    margin-bottom: 2px;
-    text-align: left;
-}
-
-.name {
-    font-size: 25px;
-}
-
-.infos {
-    text-align: left;
-}
-
-h1 {
-    color:rgb(251, 188, 0);
-    font-size: 30px;
-    text-align: left;
-}
-
-input {
-    border-radius: 5px;
-    width: 50%;
-}
-
-.button-div {
-    margin-top: 10px;
-    text-align: center;
-}
-
-button, .btn-outline-primary, .mt-2, #confirm-avatar{
-    background-color: rgba(255, 255, 255, 0.895);
-    transition: color 0.5s ease;
-    color: #c98210;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 16px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-
-}
-
-button:hover, .btn-outline-primary:hover, .my-2:hover, #confirm-avatar:hover{
-    transition: color 0.5s ease;
-    color: #fdb94c;
-    background-color: rgba(255, 255, 255, 0.895);
-}
-
-button:active, .btn-outline-primary:active, .my-2:active{
-    color: #fdb94c !important;
-    background-color: rgba(255, 255, 255, 0.895) !important;
-}
-
-.btn-outline-secondary {
-    background-color: rgba(235, 173, 29, 0.895);
-    transition: background-color 0.5s ease;
-    color: #ffffff;
-}
-
-.btn-outline-secondary:hover {
-    background-color: rgba(190, 136, 9, 0.895);
-    transition: background-color 0.5s ease;
-}
-
-.btn-outline-secondary:active {
-    background-color: rgba(190, 136, 9, 0.895) !important;
-    color: #ffffff !important;
-}
-
-.btn.btn-warning {
-    all: unset;
-    background-color: rgba(255, 255, 255, 0.895);
-    color: #c98210;
-    border-radius: 5px;
-    padding: 10px 15px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-}
-
-.btn.btn-warning:hover {
-    transition: color 0.5s ease;
-    color: #ff9d00;
-    background-color: rgba(255, 255, 255, 0.895);
-}
-
-.btn.btn-warning:active {
-    background-color: rgba(255, 255, 255, 0.895);
-}
-
 #jouer {
     margin-right: 30px;
-}
-
-h3 {
-    text-align: left;
-    color: black;
-    font-size: 20px;
-}
-
-.position-relative {
-    position: relative;
-}
-.position-absolute {
-    position: absolute;
-}
-
-.toggle-password {
-    right: 15px;
-    cursor: pointer;
-    transition: color 0.5s ease;
-    color: #6c757d;
-}
-
-.toggle-password:hover {
-    transition: color 0.5s ease;
-    color: #000000;
-}
-
-#inputs {
-    text-align: left;
-}
-
-#inputs input {
-    margin-bottom: 10px;
 }
 
 #button-delete {
     text-align: left;
 }
 
-::-webkit-scrollbar {
-    width: 20px;
-}
-
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgb(251, 188, 0);
-    border-radius: 10px;
-}
-
-/*Firefox */
-* {
-    scrollbar-width: inherit;
-    scrollbar-color: rgb(251, 188, 0) rgba(255, 255, 255, 0.2);
-}
-
-/* Styles pour la sélection d'avatar et le modal */
+/* Gestion des avatars */
 .avatar-options {
     max-height: 300px;
     overflow-y: auto;
@@ -234,14 +239,10 @@ h3 {
     border: 2px solid rgb(251, 188, 0);
 }
 
-#avatarModal .modal-content {
-    border-radius: 15px;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-#avatarModal .modal-header, #avatarModal .modal-footer {
-    border: none;
+.selected-avatar {
+    border: 2px solid rgb(251, 188, 0);
+    background-color: rgba(251, 188, 0, 0.3); 
+    border-radius: 8px;
 }
 
 #profile-preview {
@@ -252,26 +253,34 @@ h3 {
     margin-top: 10px;
     border: 2px solid rgba(255, 183, 0, 0.8);
 }
-.selected-avatar {
-    border: 2px solid rgb(251, 188, 0);
-    background-color: rgb(251, 188, 0, 0.3); 
-    border-radius: 8px;
+
+/* Modal */
+#avatarModal .modal-content {
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
-.btn-danger {
-    background-color: rgba(168, 23, 23, 0.895);
-    transition: background-color 0.5s ease;
-    color: #ffffff;
+#avatarModal .modal-header, 
+#avatarModal .modal-footer {
     border: none;
-    border-radius: 5px;
-    padding: 10px 15px;
-    text-decoration: none;
-    font-size: 16px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-
 }
 
-.btn-danger:hover{
-    transition: background-color 0.5s ease;
-    background-color: rgba(255, 0, 0, 0.895);
+/* Barre de défilement */
+::-webkit-scrollbar {
+    width: 20px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(251, 188, 0);
+    border-radius: 10px;
+}
+
+* {
+    scrollbar-width: inherit;
+    scrollbar-color: rgb(251, 188, 0) rgba(255, 255, 255, 0.2);
 }
