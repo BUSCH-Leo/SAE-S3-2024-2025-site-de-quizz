@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function playRandomAudio() {
         const randomNumber = getRandomAudioNumber();
-        const audioFilePath = `../ressource/la quizzine ${randomNumber}.mp3`;
+        const audioFilePath = `/ressource/la quizzine ${randomNumber}.mp3`;
         console.log(`Playing audio: ${audioFilePath}`);
         
         const audio = new Audio(audioFilePath);
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     acceptMusic.addEventListener('click', function() {
         music.play().then(() => {
             isMusicPlaying = true;
-            toggleIcon.src = '../ressource/speaker_on.png';
+            toggleIcon.src = '/ressource/speaker_on.png';
             console.log('Background music is playing');
         }).catch(error => {
             console.error('Error playing music:', error);
@@ -68,11 +68,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Music toggle clicked');
         if (isMusicPlaying) {
             music.pause();
-            toggleIcon.src = '../ressource/speaker_off.png';
+            toggleIcon.src = '/ressource/speaker_off.png';
             console.log('Music paused');
         } else {
             music.play().then(() => {
-                toggleIcon.src = '../ressource/speaker_on.png';
+                toggleIcon.src = '/ressource/speaker_on.png';
                 console.log('Music playing');
             }).catch(error => {
                 console.error('Error playing music:', error);

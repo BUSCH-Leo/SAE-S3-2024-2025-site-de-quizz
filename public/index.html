@@ -4,42 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quizzine - Accueil</title>
-    <link rel="stylesheet" href="../css/menu.css">
-	<link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
-    <script src="../script/menu.js" defer></script>
-    <script src="../script/No_Zoomies.js" defer></script>
+    <link rel="stylesheet" href="/css/menu.css">
+	<link rel="icon" href="/ressource/logo_quizzine_petit.png" type="image/x-icon">
+    <script src="/script/menu.js" defer></script>
+    <script src="/script/No_Zoomies.js" defer></script>
 </head>
 <body>
     <div id="container">
         <div id="background">
-            <img id="background_img" src="../ressource/quizine2.jpeg" alt="Background">
+            <img id="background_img" src="/ressource/quizine2.jpeg" alt="Background">
         </div>
 
 
-        <img id="title" src="../ressource/logo_quizzine fond blanc.png" alt="image_title">
+        <img id="title" src="/ressource/logo_quizzine fond blanc.png" alt="image_title">
 
 			<div id="menu">
 			<div id="zone_jouer" class="button_zone" onclick="location.href='jouer_page';">
-                <img class="plate" src="../ressource/plate.png" alt="Plate Image">
-				<img class="knife" src="../ressource/knife.png" >
-				<img class="fork" src="../ressource/fork.png" >
+                <img class="plate" src="/ressource/plate.png" alt="Plate Image">
+				<img class="knife" src="/ressource/knife.png" >
+				<img class="fork" src="/ressource/fork.png" >
 				<button id="jouer">JOUER</button>
 			</div>
 
 			<div id="zone_créer" class="button_zone" onclick="location.href='creer_page';">
                 <button id="créer">CRÉER</button>
-				<img class="pan" src="../ressource/poele.png" alt="Pan Image">
+				<img class="pan" src="/ressource/poele.png" alt="Pan Image">
 			</div>
 		</div>
     </div>
     <audio id="bg-music" loop>
-        <source src="../ressource/menu_music.mp3" type="audio/mp3">
+        <source src="/ressource/menu_music.mp3" type="audio/mp3">
         Your browser does not support the audio element.
     </audio>
 
     <div id="music-popup" class="popup">
         <p>
-            <img src="../ressource/info.png" alt="Information" class="popup-image">
+            <img src="/ressource/info.png" alt="Information" class="popup-image">
             Voulez-vous activer la musique de fond ?
         </p>
         <button class="popup_button" id="accept-music">Oui</button>
@@ -47,12 +47,12 @@
     </div>    
 
     <div id="music-toggle" class="toggle">
-        <img src="../ressource/speaker_off.png" alt="Music Toggle" id="toggle-icon">
+        <img src="/ressource/speaker_off.png" alt="Music Toggle" id="toggle-icon">
     </div>
 	
 	<div id="burger-menu"></div>
-	<script src="../script/importer_burger.js" defer></script>
+	<script src="/script/importer_burger.js" defer></script>
     <div id="profile-menu"></div>
-	<script src="../script/importer_profile.js" defer></script>
+	<script src="/script/importer_profile.js" defer></script>
 </body>
 </html>

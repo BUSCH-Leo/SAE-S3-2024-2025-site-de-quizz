@@ -4,8 +4,8 @@ services:
     build: .
     ports:
       - "3001:3001"
-    environment:
-      - MONGO_URI=mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/
+    env_file:
+      - .env
     networks:
       - quizzine_network
 

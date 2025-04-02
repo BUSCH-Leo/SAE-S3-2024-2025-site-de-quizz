@@ -1,7 +1,7 @@
 /* Structure de base */
 body {
     font-family: 'Arial', sans-serif;
-    background-image: url('../../ressource/categorie/general1.jpg');
+    background-image: url('..//ressource/categorie/general1.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

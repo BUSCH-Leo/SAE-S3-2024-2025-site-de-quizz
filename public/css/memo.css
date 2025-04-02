@@ -1,6 +1,6 @@
 /* Structure de base */
 body {
-    background-image: url('../ressource/background_memo.jpg');
+    background-image: url('/ressource/background_memo.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
