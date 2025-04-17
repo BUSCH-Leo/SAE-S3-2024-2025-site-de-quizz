@@ -122,19 +122,6 @@
     border-left: 4px solid #FF9800;
 }
 
-/* Animation pour le profil */
-@keyframes pulse {
-    0% {
-        box-shadow: 0 0 0 0 rgba(227, 173, 10, 0.7);
-    }
-    70% {
-        box-shadow: 0 0 0 10px rgba(227, 173, 10, 0);
-    }
-    100% {
-        box-shadow: 0 0 0 0 rgba(227, 173, 10, 0);
-    }
-}
-
 .profile-highlight {
     animation: pulse 2s infinite;
 }
