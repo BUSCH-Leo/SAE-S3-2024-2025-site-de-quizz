@@ -144,11 +144,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Modifier le bouton continuer pour utiliser notre fonction
     const continueButton = modal.querySelector('button');
     continueButton.onclick = handleProjectCreation;
 
-    // Gérer la soumission avec la touche Entrée
+
     projectNameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             handleProjectCreation();
@@ -159,5 +158,175 @@ document.querySelectorAll('.project-item').forEach(item => {
     item.addEventListener('click', function() {
         const projectId = this.dataset.projectId;
         window.location.href = `/editor.html?projectId=${projectId}`;
+    });
+});
+
+// Fonction pour afficher un toast
+function showToast(type, title, message, duration = 5000) {
+    const toast = document.getElementById('toast');
+    const toastTitle = document.getElementById('toast-title');
+    const toastDescription = document.getElementById('toast-description');
+    const toastIcon = document.getElementById('toast-icon');
+    const toastProgress = document.querySelector('.toast-progress::before');
+    
+    // Réinitialiser les classes
+    toast.className = 'toast';
+    
+    // Ajouter la classe de type
+    toast.classList.add(type);
+    
+    // Définir l'icône en fonction du type
+    if (type === 'success') {
+        toastIcon.className = 'fas fa-check-circle';
+    } else if (type === 'error') {
+        toastIcon.className = 'fas fa-exclamation-circle';
+    } else if (type === 'warning') {
+        toastIcon.className = 'fas fa-exclamation-triangle';
+    } else {
+        toastIcon.className = 'fas fa-info-circle';
+    }
+    
+    // Définir le contenu du toast
+    toastTitle.textContent = title;
+    toastDescription.textContent = message;
+    
+    // Afficher le toast
+    setTimeout(() => {
+        toast.classList.add('active');
+    }, 100);
+    
+    // Définir la durée de la barre de progression
+    document.documentElement.style.setProperty('--progress-duration', `${duration}ms`);
+    
+    // Masquer le toast après la durée spécifiée
+    const timeoutId = setTimeout(() => {
+        hideToast();
+    }, duration);
+    
+    // Gérer la fermeture manuelle
+    const closeButton = toast.querySelector('.toast-close');
+    closeButton.onclick = () => {
+        clearTimeout(timeoutId);
+        hideToast();
+    };
+    
+    function hideToast() {
+        toast.classList.remove('active');
+    }
+}
+
+// Modification de la partie de suppression du projet
+document.addEventListener('DOMContentLoaded', function() {
+    const confirmModal = document.getElementById('confirm-delete-modal');
+    const confirmYesBtn = document.getElementById('confirm-yes');
+    const confirmNoBtn = document.getElementById('confirm-no');
+    let projectToDeleteId = null;
+    let projectToDeleteName = null;
+
+    // Attacher les gestionnaires d'événements aux boutons de suppression
+    document.querySelectorAll('.delete-project-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.stopPropagation(); // Empêcher la propagation au parent (qui ouvrirait le projet)
+            projectToDeleteId = this.getAttribute('data-project-id');
+            // Récupérer le nom du projet pour un message plus personnalisé
+            const projectItem = this.closest('.project-item');
+            projectToDeleteName = projectItem.querySelector('.project-name').textContent;
+            confirmModal.style.display = 'flex';
+        });
+    });
+
+    // Gestion du bouton de confirmation de suppression
+    confirmYesBtn.addEventListener('click', async function() {
+        if (projectToDeleteId) {
+            // Afficher un indicateur de chargement
+            confirmYesBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Suppression...';
+            confirmYesBtn.disabled = true;
+            
+            try {
+                const response = await fetch(`/projects/${projectToDeleteId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Supprimer l'élément de la liste avec une animation
+                    const projectItem = document.querySelector(`.project-item .delete-project-btn[data-project-id="${projectToDeleteId}"]`).closest('.project-item');
+                    if (projectItem) {
+                        // Animation de disparition
+                        projectItem.style.transition = 'opacity 0.3s, transform 0.3s';
+                        projectItem.style.opacity = '0';
+                        projectItem.style.transform = 'translateX(30px)';
+                        
+                        setTimeout(() => {
+                            projectItem.remove();
+                            
+                            // Si la liste est vide, afficher "Aucun projet trouvé"
+                            const projectsList = document.getElementById('projects-list');
+                            if (projectsList.children.length === 0) {
+                                projectsList.innerHTML = '<li class="project-item">Aucun projet trouvé</li>';
+                            }
+                        }, 300);
+                    }
+                    
+                    // Afficher un message de succès avec toast
+                    setTimeout(() => {
+                        showToast(
+                            'success', 
+                            'Projet supprimé', 
+                            `Le projet "${projectToDeleteName}" a été supprimé avec succès.`
+                        );
+                    }, 300);
+                } else {
+                    // Afficher un message d'erreur avec toast
+                    showToast(
+                        'error', 
+                        'Échec de la suppression', 
+                        data.message || 'Erreur lors de la suppression du projet'
+                    );
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+                // Afficher un message d'erreur avec toast
+                showToast(
+                    'error', 
+                    'Erreur système', 
+                    'Une erreur est survenue lors de la suppression du projet'
+                );
+            } finally {
+                // Réinitialiser le bouton et fermer la modale
+                confirmYesBtn.innerHTML = 'Oui, supprimer';
+                confirmYesBtn.disabled = false;
+                confirmModal.style.display = 'none';
+                projectToDeleteId = null;
+                projectToDeleteName = null;
+            }
+        }
+    });
+
+    // Le reste du code reste inchangé
+    confirmNoBtn.addEventListener('click', function() {
+        confirmModal.style.display = 'none';
+        projectToDeleteId = null;
+        projectToDeleteName = null;
+    });
+
+    confirmModal.addEventListener('click', function(e) {
+        if (e.target === confirmModal) {
+            confirmModal.style.display = 'none';
+            projectToDeleteId = null;
+            projectToDeleteName = null;
+        }
+    });
+
+    // Ajoutez ceci pour gérer le clic sur le bouton de fermeture du toast
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.toast-close')) {
+            const toast = document.getElementById('toast');
+            toast.classList.remove('active');
+        }
     });
 });

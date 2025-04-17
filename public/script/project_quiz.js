@@ -41,52 +41,134 @@ document.addEventListener('DOMContentLoaded', async function() {
             function displayQuestion() {
                 const question = quizData[currentQuestionIndex];
                 const container = document.getElementById('quiz-container');
+                
+                // Animation de transition
+                container.classList.add('fade-out');
+                
+                setTimeout(() => {
+                    let answersHTML = '';
+                    
+                    if (question.type === 'multiple') {
+                        answersHTML = question.answerOptions.map((answer, index) => `
+                            <div class="answer-card col-12 col-md-6 mb-3">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="answer${index}" data-index="${index}">
+                                    <label class="custom-control-label" for="answer${index}">
+                                        <span class="answer-letter">${String.fromCharCode(65 + index)}</span>
+                                        <span class="answer-text">${answer.text}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else if (question.type === 'price') {
+                        answersHTML = `
+                            <div class="price-input-container">
+                                <div class="price-input-wrapper">
+                                    <span class="price-currency">€</span>
+                                    <input type="number" id="price-input" class="form-control" placeholder="Entrez le prix">
+                                </div>
+                            </div>
+                        `;
+                    } else if (question.type === 'truefalse') {
+                        answersHTML = `
+                            <div class="tf-container row">
+                                <div class="col-12 col-md-6 mb-3">
+                                    <div class="answer-card true-option">
+                                        <input type="radio" name="tf" id="true" value="true">
+                                        <label for="true">
+                                            <i class="fas fa-check-circle"></i> Vrai
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 mb-3">
+                                    <div class="answer-card false-option">
+                                        <input type="radio" name="tf" id="false" value="false">
+                                        <label for="false">
+                                            <i class="fas fa-times-circle"></i> Faux
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        answersHTML = question.answerOptions.map((answer, index) => `
+                            <div class="col-12 col-md-6 mb-3">
+                                <div class="answer-card">
+                                    <input type="radio" name="answer" id="answer${index}" data-index="${index}">
+                                    <label for="answer${index}">
+                                        <span class="answer-letter">${String.fromCharCode(65 + index)}</span>
+                                        <span class="answer-text">${answer.text}</span>
+                                    </label>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+            
+                    container.innerHTML = `
+                        <div class="question-container">
+                            <div class="question-info">
+                                <span class="question-number">Question ${currentQuestionIndex + 1}/${quizData.length}</span>
+                                <span class="question-points">${question.points || 10} points</span>
+                            </div>
+                            
+                            <div class="question-content">
+                                <h2 class="question-text">${question.questionText}</h2>
+                                ${question.mediaUrl ? 
+                                    `<div class="question-media">
+                                        <img src="${question.mediaUrl}" alt="Question Media" class="img-fluid rounded question-img-large">
+                                    </div>` : ''
+                                }
+                            </div>
+                            
+                            <div class="answers-container row g-4">
+                                ${answersHTML}
+                            </div>
+                        </div>
+                    `;
+                    
+                    if (question.type === 'multiple') {
+                        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                            checkbox.parentElement.parentElement.addEventListener('click', (e) => {
+                                const input = e.currentTarget.querySelector('input');
+                                if (e.target !== input) {
+                                    input.checked = !input.checked;
+                                }
+                                toggleSelectedClass(e.currentTarget);
+                            });
+                        });
+                    } else if (question.type === 'truefalse' || question.type === 'standart') {
+                        document.querySelectorAll('.answer-card').forEach(card => {
+                            card.addEventListener('click', (e) => {
+                                const input = card.querySelector('input');
+                                input.checked = true;
+                                clearSelectedClass();
+                                card.classList.add('selected');
+                            });
+                        });
+                    }
+                    
+                    container.classList.remove('fade-out');
+                    container.classList.add('fade-in');
+                    
+                    startTimer(question.timeLimit);
+                    updateProgressBar();
+                }, 300);
+            }
+            
 
-                let answersHTML = '';
-                if (question.type === 'multiple') {
-                    answersHTML = question.answerOptions.map((answer, index) => `
-                        <div class="answer-option col-12 col-md-6">
-                            <input type="checkbox" id="answer${index}" data-index="${index}">
-                            <label for="answer${index}">${answer.text}</label>
-                        </div>
-                    `).join('');
-                } else if (question.type === 'price') {
-                    answersHTML = `
-                        <input type="number" id="price-input" class="form-control" placeholder="Entrez le prix">
-                    `;
-                } else if (question.type === 'truefalse') {
-                    answersHTML = `
-                        <div class="answer-option col-12 col-md-6">
-                            <input type="radio" name="tf" id="true" value="true">
-                            <label for="true">Vrai</label>
-                        </div>
-                        <div class="answer-option col-12 col-md-6">
-                            <input type="radio" name="tf" id="false" value="false">
-                            <label for="false">Faux</label>
-                        </div>
-                    `;
+            function toggleSelectedClass(element) {
+                const input = element.querySelector('input');
+                if (input.checked) {
+                    element.classList.add('selected');
                 } else {
-                    answersHTML = question.answerOptions.map((answer, index) => `
-                        <div class="answer-option col-12 col-md-6">
-                            <input type="radio" name="answer" id="answer${index}" data-index="${index}">
-                            <label for="answer${index}">${answer.text}</label>
-                        </div>
-                    `).join('');
+                    element.classList.remove('selected');
                 }
-
-                container.innerHTML = `
-                    <div class="question-box p-4 mb-4">
-                        <h3 class="mb-3">Question ${currentQuestionIndex + 1}/${quizData.length}</h3>
-                        <h2 class="mb-4">${question.questionText}</h2>
-                        ${question.mediaUrl ? `<img src="${question.mediaUrl}" alt="Question Media" class="img-fluid mb-3">` : ''}
-                        <div class="answers-grid row g-3">
-                            ${answersHTML}
-                        </div>
-                    </div>
-                `;
-
-                startTimer(question.timeLimit);
-                updateProgressBar();
+            }
+            
+            function clearSelectedClass() {
+                document.querySelectorAll('.answer-card').forEach(card => {
+                    card.classList.remove('selected');
+                });
             }
 
             function startTimer(duration) {
