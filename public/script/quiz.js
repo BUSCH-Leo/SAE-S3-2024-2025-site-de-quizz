@@ -292,124 +292,124 @@ document.getElementById('submit').addEventListener('click', () => {
 });
 const categoryBackgrounds = {
     "6713a755f012fc38a3f26092": [
-        "../ressource/categorie/music1.jpg",
-        "../ressource/categorie/music2.jpg",
-        "../ressource/categorie/music3.jpg"
+        "/ressource/categorie/music1.jpg",
+        "/ressource/categorie/music2.jpg",
+        "/ressource/categorie/music3.jpg"
     ],
     "6713a755f012fc38a3f26098": [
-        "../ressource/categorie/film1.jpg",
-        "../ressource/categorie/film2.jpg",
-        "../ressource/categorie/film3.jpg"
+        "/ressource/categorie/film1.jpg",
+        "/ressource/categorie/film2.jpg",
+        "/ressource/categorie/film3.jpg"
     ],
     "6713a755f012fc38a3f2609f": [
-        "../ressource/categorie/theatre1.jpg",
-        "../ressource/categorie/theatre2.jpg",
-        "../ressource/categorie/theatre3.jpg"
+        "/ressource/categorie/theatre1.jpg",
+        "/ressource/categorie/theatre2.jpg",
+        "/ressource/categorie/theatre3.jpg"
     ],
     "6713a756f012fc38a3f260a5": [
-        "../ressource/categorie/videogame1.jpg",
-        "../ressource/categorie/videogame2.jpg",
-        "../ressource/categorie/videogame3.jpg"
+        "/ressource/categorie/videogame1.jpg",
+        "/ressource/categorie/videogame2.jpg",
+        "/ressource/categorie/videogame3.jpg"
     ],
     "6713a756f012fc38a3f260ab": [
-        "../ressource/categorie/computer1.jpg",
-        "../ressource/categorie/computer2.jpg",
-        "../ressource/categorie/computer3.jpg"
+        "/ressource/categorie/computer1.jpg",
+        "/ressource/categorie/computer2.jpg",
+        "/ressource/categorie/computer3.jpg"
     ],
     "6713a756f012fc38a3f260b1": [
-        "../ressource/categorie/nature1.jpg",
-        "../ressource/categorie/nature2.jpg",
-        "../ressource/categorie/nature3.jpg"
+        "/ressource/categorie/nature1.jpg",
+        "/ressource/categorie/nature2.jpg",
+        "/ressource/categorie/nature3.jpg"
     ],
     "6713a756f012fc38a3f260b7": [
-        "../ressource/categorie/television1.jpg",
-        "../ressource/categorie/television2.jpg",
-        "../ressource/categorie/television3.jpg"
+        "/ressource/categorie/television1.jpg",
+        "/ressource/categorie/television2.jpg",
+        "/ressource/categorie/television3.jpg"
     ],
     "6713a756f012fc38a3f260c1": [
-        "../ressource/categorie/generalknownledge1.jpg",
-        "../ressource/categorie/generalknownledge2.jpg",
-        "../ressource/categorie/generalknownledge3.jpg"
+        "/ressource/categorie/generalknownledge1.jpg",
+        "/ressource/categorie/generalknownledge2.jpg",
+        "/ressource/categorie/generalknownledge3.jpg"
     ],
     "6713a756f012fc38a3f260c7": [
-        "../ressource/categorie/vehicles1.jpg",
-        "../ressource/categorie/vehicles2.jpg",
-        "../ressource/categorie/vehicles3.jpg"
+        "/ressource/categorie/vehicles1.jpg",
+        "/ressource/categorie/vehicles2.jpg",
+        "/ressource/categorie/vehicles3.jpg"
     ],
     "6713a757f012fc38a3f260d5": [
-        "../ressource/categorie/geography1.jpg",
-        "../ressource/categorie/geography2.jpg",
-        "../ressource/categorie/geography3.jpg"
+        "/ressource/categorie/geography1.jpg",
+        "/ressource/categorie/geography2.jpg",
+        "/ressource/categorie/geography3.jpg"
     ],
     "6713a757f012fc38a3f260e7": [
-        "../ressource/categorie/books1.jpg",
-        "../ressource/categorie/books2.jpg",
-        "../ressource/categorie/books3.jpg"
+        "/ressource/categorie/books1.jpg",
+        "/ressource/categorie/books2.jpg",
+        "/ressource/categorie/books3.jpg"
     ],
     "6713a757f012fc38a3f260ed": [
-        "../ressource/categorie/history1.jpg",
-        "../ressource/categorie/history2.jpg",
-        "../ressource/categorie/history3.jpg"
+        "/ressource/categorie/history1.jpg",
+        "/ressource/categorie/history2.jpg",
+        "/ressource/categorie/history3.jpg"
     ],
     "6713a758f012fc38a3f260fb": [
-        "../ressource/categorie/mythology1.jpg",
-        "../ressource/categorie/mythology2.jpg",
-        "../ressource/categorie/mythology3.jpg"
+        "/ressource/categorie/mythology1.jpg",
+        "/ressource/categorie/mythology2.jpg",
+        "/ressource/categorie/mythology3.jpg"
     ],
     "6713a758f012fc38a3f26111": [
-        "../ressource/categorie/cartoon1.jpg",
-        "../ressource/categorie/cartoon2.jpg",
-        "../ressource/categorie/cartoon3.jpg"
+        "/ressource/categorie/cartoon1.jpg",
+        "/ressource/categorie/cartoon2.jpg",
+        "/ressource/categorie/cartoon3.jpg"
     ],
     "6713a758f012fc38a3f2611b": [
-        "../ressource/categorie/comics1.jpg",
-        "../ressource/categorie/comics2.jpg",
-        "../ressource/categorie/comics3.jpg"
+        "/ressource/categorie/comics1.jpg",
+        "/ressource/categorie/comics2.jpg",
+        "/ressource/categorie/comics3.jpg"
     ],
     "6713a759f012fc38a3f26135": [
-        "../ressource/categorie/gadgets1.jpg",
-        "../ressource/categorie/gadgets2.jpg",
-        "../ressource/categorie/gadgets3.jpg"
+        "/ressource/categorie/gadgets1.jpg",
+        "/ressource/categorie/gadgets2.jpg",
+        "/ressource/categorie/gadgets3.jpg"
     ],
     "6713a75ef012fc38a3f261f7": [
-        "../ressource/categorie/animals1.jpg",
-        "../ressource/categorie/animals2.jpg",
-        "../ressource/categorie/animals3.jpg"
+        "/ressource/categorie/animals1.jpg",
+        "/ressource/categorie/animals2.jpg",
+        "/ressource/categorie/animals3.jpg"
     ],
     "6713a75ef012fc38a3f26209": [
-        "../ressource/categorie/animemanga1.jpg",
-        "../ressource/categorie/animemanga2.jpg",
-        "../ressource/categorie/animemanga3.jpg"
+        "/ressource/categorie/animemanga1.jpg",
+        "/ressource/categorie/animemanga2.jpg",
+        "/ressource/categorie/animemanga3.jpg"
     ],
     "6713a75ef012fc38a3f2621f": [
-        "../ressource/categorie/sports1.jpg",
-        "../ressource/categorie/sports2.jpg",
-        "../ressource/categorie/sports3.jpg"
+        "/ressource/categorie/sports1.jpg",
+        "/ressource/categorie/sports2.jpg",
+        "/ressource/categorie/sports3.jpg"
     ],
     "6713a75ff012fc38a3f26245": [
-        "../ressource/categorie/boardgames1.jpg",
-        "../ressource/categorie/boardgames2.jpg",
-        "../ressource/categorie/boardgames3.jpg"
+        "/ressource/categorie/boardgames1.jpg",
+        "/ressource/categorie/boardgames2.jpg",
+        "/ressource/categorie/boardgames3.jpg"
     ],
     "6713a760f012fc38a3f26267": [
-        "../ressource/categorie/art1.jpg",
-        "../ressource/categorie/art2.jpg",
-        "../ressource/categorie/art3.jpg"
+        "/ressource/categorie/art1.jpg",
+        "/ressource/categorie/art2.jpg",
+        "/ressource/categorie/art3.jpg"
     ],
     "6713a763f012fc38a3f262d5": [
-        "../ressource/categorie/celebrity1.jpg",
-        "../ressource/categorie/celebrity2.jpg",
-        "../ressource/categorie/celebrity3.jpg"
+        "/ressource/categorie/celebrity1.jpg",
+        "/ressource/categorie/celebrity2.jpg",
+        "/ressource/categorie/celebrity3.jpg"
     ],
     "6713a768f012fc38a3f263c7": [
-        "../ressource/categorie/politics1.jpg",
-        "../ressource/categorie/politics2.jpg",
-        "../ressource/categorie/politics3.jpg"
+        "/ressource/categorie/politics1.jpg",
+        "/ressource/categorie/politics2.jpg",
+        "/ressource/categorie/politics3.jpg"
     ],
     "6713a76bf012fc38a3f26439": [
-        "../ressource/categorie/maths1.jpg",
-        "../ressource/categorie/maths2.jpg",
-        "../ressource/categorie/maths3.jpg"
+        "/ressource/categorie/maths1.jpg",
+        "/ressource/categorie/maths2.jpg",
+        "/ressource/categorie/maths3.jpg"
     ]
 };
 

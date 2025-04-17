@@ -7,8 +7,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="../css/editor.css">
-    <link rel="icon" href="../ressource/logo_quizzine_petit.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/editor.css">
+    <link rel="icon" href="/ressource/logo_quizzine_petit.png" type="image/x-icon">
 </head>
 <body>
     <!-- Left Panel - Questions List -->
@@ -41,7 +41,7 @@
         </button>
 
         <a href="./" class="back-button">
-            <img src="../ressource/pages_secondaires/back.png" alt="Retour" class="back-icon">
+            <img src="/ressource/pages_secondaires/back.png" alt="Retour" class="back-icon">
             Retour au menu
         </a>
     </div>
@@ -49,7 +49,7 @@
     <!-- Main Content -->
     <div class="main-content p-8">
         <div id="profile-menu"></div>
-	    <script src="../script/importer_profile.js" defer></script>
+	    <script src="/script/importer_profile.js" defer></script>
 
         <div class="max-w-4xl mx-auto">
             <!-- Question Editor -->
@@ -177,16 +177,16 @@
                     <h3 class="font-semibold mb-4">Themes</h3>
                     <div class="grid grid-cols-2 gap-4" id="theme-previews">
                         <div class="theme-preview">
-                            <img src="../ressource/editor/nature.jpeg" alt="Theme 1" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme1.jpg">
+                            <img src="/ressource/editor/nature.jpeg" alt="Theme 1" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme1.jpg">
                         </div>
                         <div class="theme-preview">
-                            <img src="../ressource/editor/savane.jpeg" alt="Theme 2" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme2.jpg">
+                            <img src="/ressource/editor/savane.jpeg" alt="Theme 2" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme2.jpg">
                         </div>
                         <div class="theme-preview">
-                            <img src="../ressource/editor/standart.jpeg" alt="Theme 3" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme3.jpg">
+                            <img src="/ressource/editor/standart.jpeg" alt="Theme 3" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme3.jpg">
                         </div>
                         <div class="theme-preview">
-                            <img src="../ressource/editor/kitchen.jpeg" alt="Theme 4" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme4.jpg">
+                            <img src="/ressource/editor/kitchen.jpeg" alt="Theme 4" class="w-full h-20 object-cover rounded shadow-md transition-all duration-300 hover:shadow-lg" data-theme="theme4.jpg">
                         </div>
                     </div>
                 </div>
@@ -289,10 +289,10 @@
         
         
     </div>
-<script src="../script/editor.js"></script>
-<script src="../script/questionManager.js"></script>
-<script src="../script/theme.js"></script>
-<script src="../script/quizTheme.js"></script>
+<script src="/script/editor.js"></script>
+<script  type="module"  src="/script/questionManager.js"></script>
+<script src="/script/theme.js"></script>
+<script src="/script/quizTheme.js"></script>
 <script>
     document.querySelectorAll('.font-preview').forEach(preview => {
         preview.addEventListener('click', function() {

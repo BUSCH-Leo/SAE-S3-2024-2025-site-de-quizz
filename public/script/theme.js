@@ -128,8 +128,51 @@ const themeManager = {
 
         const optimizedSrc = canvas.toDataURL('image/jpeg', 0.95); 
         this.applyTheme(optimizedSrc);
-    }
+    },
+
+    initDragAndDrop() {
+        const mainContent = this.elements.mainContent;
+        if (!mainContent) return;
+        
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            mainContent.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+        
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            mainContent.addEventListener(eventName, () => {
+                mainContent.classList.add('drag-active');
+            });
+        });
+        
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            mainContent.addEventListener(eventName, () => {
+                mainContent.classList.remove('drag-active');
+            });
+        });
+        
+        mainContent.addEventListener('drop', (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0 && files[0].type.startsWith('image/')) {
+                this.handleImageUpload(files[0]);
+            }
+        });
+    },
+
+    applyPanelStyles() {
+        if (this.currentTheme.url) {
+            const panelStyle = 'rgba(255, 255, 255, 0.85)';
+            if (this.elements.leftPanel) this.elements.leftPanel.style.background = panelStyle;
+            if (this.elements.rightPanel) this.elements.rightPanel.style.background = panelStyle;
+        }
+    },
 };
+
 
 document.addEventListener('DOMContentLoaded', () => {
     themeManager.init();

@@ -5,12 +5,12 @@ const { renderCreerPage, renderJouerPage, renderQuizPage, renderIndexPage, rende
 
 router.get('/creer_page', isAuthenticated, renderCreerPage);
 router.get('/jouer_page', renderJouerPage);
-router.get('/quiz', renderQuizPage);
+router.get('/quiz',renderQuizPage);
 router.get('/index', renderIndexPage);
 router.get('/parametres', renderParametresPage);
 router.get('/profile', renderProfilePage);
 router.get('/connexion', renderConnexionPage);
 router.get('/inscription', renderInscriptionPage);
-router.get('/quiz_creation', isAuthenticated, renderQuizCreationPage);
+router.get('/quiz_creation', renderQuizCreationPage);
 
 module.exports = router;

@@ -87,9 +87,41 @@ const getUserProjects = async (userId) => {
         throw error;
     }
 };
+const deleteProject = async (req, res) => {
+    try {
+        const projectId = req.params.id;
+        
+        const project = await MyQuiz.findOne({
+            _id: projectId,
+            creator: req.user._id
+        });
+
+        if (!project) {
+            return res.status(404).json({
+                success: false,
+                message: 'Projet non trouvé ou vous n\'avez pas les droits pour le supprimer'
+            });
+        }
+
+        await MyQuiz.findByIdAndDelete(projectId);
+
+        res.json({
+            success: true,
+            message: 'Projet supprimé avec succès'
+        });
+
+    } catch (error) {
+        console.error('Erreur lors de la suppression du projet:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Erreur lors de la suppression du projet'
+        });
+    }
+};
 
 module.exports = {
     createProject,
     getProjectById,
-    getUserProjects
+    getUserProjects,
+    deleteProject
 };
