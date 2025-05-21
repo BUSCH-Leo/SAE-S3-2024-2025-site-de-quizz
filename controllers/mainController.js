@@ -42,10 +42,12 @@ const renderQuizPage = async (req, res) => {
             });
 
             if (!project) {
-                return res.status(404).send('Projet non trouvé');
+                return res.status(404).send('Projet non trouvé ou accès non autorisé');
             }
 
             res.render('play_project_quiz', { user: req.user, projectData: project });
+            
+            delete req.session.currentProjectId;
         } else {
             res.render('play_quiz', { user: req.user, project: null });
         }

@@ -290,9 +290,16 @@
         
     </div>
 <script src="/script/editor.js"></script>
-<script  type="module"  src="/script/questionManager.js"></script>
+<script type="module" src="/script/questionManager.js"></script>
 <script src="/script/theme.js"></script>
 <script src="/script/quizTheme.js"></script>
+<script type="module" src="/utils/quizSubmiter.js"></script>
+<script type="module">
+    // Importer le module quizSubmiter.js et l'assigner à une variable globale
+    import { submitQuiz } from '/utils/quizSubmiter.js';
+    window.submitQuiz = submitQuiz;
+    console.log('Module quizSubmiter.js chargé avec succès');
+</script>
 <script>
     document.querySelectorAll('.font-preview').forEach(preview => {
         preview.addEventListener('click', function() {
@@ -301,6 +308,34 @@
             document.querySelectorAll('.font-preview').forEach(p => p.classList.remove('selected'));
             this.classList.add('selected');
         });
+    });
+
+    document.addEventListener('DOMContentLoaded', async function() {
+        try {
+            const response = await fetch('/api/current-project');
+            const data = await response.json();
+            
+            if (data.success) {
+                // Initialiser l'éditeur avec les données du projet
+                if (typeof initEditor === 'function') {
+                    initEditor(data.project);
+                } else {
+                    console.error('La fonction initEditor n\'est pas définie');
+                }
+                
+                // Si vous avez besoin de déclencher des événements pour d'autres scripts
+                const projectDataEvent = new CustomEvent('projectDataLoaded', {
+                    detail: data.project
+                });
+                document.dispatchEvent(projectDataEvent);
+            } else {
+                alert('Erreur: ' + data.message);
+                window.location.href = '/creer_page';
+            }
+        } catch (error) {
+            console.error('Erreur lors du chargement du projet:', error);
+            alert('Erreur lors du chargement du projet');
+        }
     });
 </script>
 

@@ -133,7 +133,17 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
 
             if (data.success) {
-                window.location.href = `/editor.html?projectId=${data.project.id}`;
+                const projectSelectResponse = await fetch('/select-project?destination=editor', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ projectId: data.project.id })
+                });
+                
+                if (projectSelectResponse.ok) {
+                    window.location.href = '/editor';
+                }
             } else {
                 alert(data.message || 'Erreur lors de la création du projet');
             }
@@ -153,10 +163,29 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 document.querySelectorAll('.project-item').forEach(item => {
-    item.addEventListener('click', function() {
+    item.addEventListener('click', async function() {
         const projectId = this.dataset.projectId;
-        window.location.href = `/editor.html?projectId=${projectId}`;
+        
+        try {
+            const response = await fetch('/select-project?destination=editor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ projectId }),
+            });
+            
+            if (response.ok) {
+                window.location.href = '/editor';
+            } else {
+                console.error('Erreur lors de la sélection du projet');
+                alert('Erreur lors de la sélection du projet');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+        }
     });
 });
 
