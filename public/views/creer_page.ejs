@@ -73,7 +73,7 @@
                 <ul id="projects-list">
                 <% if (projects && projects.length > 0) { %>
                     <% projects.forEach(project => { %>
-                    <li class="project-item">
+                    <li class="project-item" data-project-id="<%= project._id %>">
                                     <span class="project-name" data-project-id="<%= project._id %>"><%= project.name %></span>
                                     <button class="delete-project-btn" data-project-id="<%= project._id %>">
                                         <i class="fas fa-trash"></i>

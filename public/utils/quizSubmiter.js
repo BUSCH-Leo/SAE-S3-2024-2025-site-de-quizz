@@ -37,7 +37,6 @@ export function submitQuiz(questionData, themeManager) {
         return formattedQuestion;
     });
 
-    // Récupérer les paramètres généraux
     const generalParams = {
         theme: themeManager.currentTheme.url,
         font: document.body.style.fontFamily || 'Arial',

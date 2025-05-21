@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development --watch"
+    "dev": "nodemon server.js"
+    
   },
   "keywords": [],
   "author": "",
@@ -23,5 +23,8 @@
     "multer": "^1.4.5-lts.1",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }

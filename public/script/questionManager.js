@@ -1,10 +1,18 @@
 import { setupQuestionEventListeners, setupAnswerEventListeners, toggleCorrectAnswer } from '../utils/eventHandler.js';
 import { getAnswersFromUI, getCorrectAnswerFromUI } from '../utils/uiManager.js';
-import { updateLayout, showSavedFeedback } from '../utils/questionUtils.js';
+import { updateLayout } from '../utils/questionUtils.js';
 import { submitQuiz } from '../utils/quizSubmiter.js';
 import { getMultipleChoiceTemplate, getTrueFalseTemplate, getPriceTemplate } from '../components/questionTypes.js';
 
 document.addEventListener('DOMContentLoaded', function() {
+        const mainContent = document.querySelector('.main-content');
+        const leftPanel = document.querySelector('.left-panel');
+        const rightPanel = document.querySelector('.right-panel');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        if (mainContent) mainContent.style.display = 'none';
+        if (leftPanel) leftPanel.style.display = 'none';
+        if (rightPanel) rightPanel.style.display = 'none';
+        if (loadingIndicator) loadingIndicator.style.display = 'flex';
     class QuizEditor {
         constructor() {
             this.questionData = [];
@@ -13,6 +21,21 @@ document.addEventListener('DOMContentLoaded', function() {
             this.bindEvents();
             this.addNewQuestion();
             this.setupProjectDataListener();
+            this.dataLoadTimeout = setTimeout(() => {
+                this.showInterface();
+                this.addNewQuestion();
+            }, 3000);
+        }
+        showInterface() {
+            if (this.dataLoadTimeout) {
+                clearTimeout(this.dataLoadTimeout);
+                this.dataLoadTimeout = null;
+            }
+            
+            if (loadingIndicator) loadingIndicator.style.display = 'none';
+            if (mainContent) mainContent.style.display = 'block';
+            if (leftPanel) leftPanel.style.display = 'block';
+            if (rightPanel) rightPanel.style.display = 'block';
         }
 
         initializeElements() {
@@ -40,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.addEventListener('projectDataLoaded', (event) => {
                 const projectData = event.detail;
                 this.loadProjectData(projectData);
+                this.showInterface();
             });
         }
 
@@ -58,6 +82,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.loadQuestion(0);
                 this.renderQuestionsList();
                 this.highlightSelectedQuestion();
+            }
+            else {
+                this.addNewQuestion();
             }
 
             // Charger les paramètres généraux si présents
@@ -97,12 +124,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
         setQuestionType(type) {
             if (this.currentQuestionIndex !== null) {
-                // Désactiver tous les boutons de type de question
+
                 Object.values(this.questionTypeButtons).forEach(button => {
                     button.classList.remove('active');
                 });
                 
-                // Activer le bouton correspondant au type sélectionné
                 if (this.questionTypeButtons[type]) {
                     this.questionTypeButtons[type].classList.add('active');
                 }
@@ -120,25 +146,33 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         addAnswerOption() {
-            // Vérifier d'abord le type de question
             const currentQuestion = this.questionData[this.currentQuestionIndex];
             if (currentQuestion.type === 'truefalse' || currentQuestion.type === 'price') {
-                return; // Ne pas ajouter d'options pour ces types
+            this.addOptionBtn.style.display = 'none';
+            return;
             }
             
             const currentOptions = this.answerOptionsContainer.querySelectorAll('.answer-option').length;
             if (currentOptions < 6) {
-                this.answerOptionsContainer.innerHTML += getMultipleChoiceTemplate(currentOptions + 1);
-                this.initializeAnswerEventListeners();
-                this.updateAddOptionButtonVisibility();
-                this.saveCurrentQuestion();
+            this.answerOptionsContainer.innerHTML += getMultipleChoiceTemplate(currentOptions + 1);
+            this.initializeAnswerEventListeners();
+            this.updateAddOptionButtonVisibility();
+            this.saveCurrentQuestion();
             }
         }
 
         updateAddOptionButtonVisibility() {
+            const currentQuestion = this.questionData[this.currentQuestionIndex];
+
+            if (currentQuestion.type === 'truefalse' || currentQuestion.type === 'price') {
+                this.addOptionBtn.style.display = 'none';
+                return;
+            }
+
             const currentOptions = this.answerOptionsContainer.querySelectorAll('.answer-option').length;
             this.addOptionBtn.style.display = currentOptions < 6 ? 'block' : 'none';
         }
+
 
         initializeAnswerEventListeners() {
             setupAnswerEventListeners(this);
@@ -190,7 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
         
                 this.renderQuestionsList();
                 this.updateAddOptionButtonVisibility();
-                showSavedFeedback();
             }
         }
 
@@ -346,3 +379,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const quizEditor = new QuizEditor();
 });
+
