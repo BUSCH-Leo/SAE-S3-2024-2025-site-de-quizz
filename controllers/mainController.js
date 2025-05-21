@@ -33,15 +33,21 @@ const renderJouerPage = async (req, res) => {
 
 const renderQuizPage = async (req, res) => {
     try {
-        const projectId = req.query.projectId;
-        if (projectId) {
-            const project = await MyQuiz.findOne({ _id: projectId, creator: req.user._id });
+        const projectId = req.session.currentProjectId;
+        
+        if (projectId && req.user) {
+            const project = await MyQuiz.findOne({ 
+                _id: projectId, 
+                creator: req.user._id 
+            });
 
             if (!project) {
-                return res.status(404).send('Projet non trouvé');
+                return res.status(404).send('Projet non trouvé ou accès non autorisé');
             }
 
             res.render('play_project_quiz', { user: req.user, projectData: project });
+            
+            delete req.session.currentProjectId;
         } else {
             res.render('play_quiz', { user: req.user, project: null });
         }

@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const validateButton = document.getElementById('validate-button');
     const removeButton = document.getElementById('remove-button');
 
-    // Ouvrir les deux modales en même temps
     selectQuizButton.addEventListener('click', function() {
         modalContainer.style.display = 'flex'; 
         uploadModal.style.display = 'flex';
@@ -23,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Gérer le drag and drop
     dropZone.addEventListener('click', function() {
         fileInput.click();
     });
@@ -51,7 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Gérer la sélection d'un fichier en cliquant sur le champ de fichier
     fileInput.addEventListener('change', function() {
         const files = fileInput.files;
         if (files.length) {
@@ -63,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Gérer la désélection d'un fichier
     removeButton.addEventListener('click', function() {
         fileInput.value = '';
         dropZone.textContent = 'Glissez et déposez un fichier ici ou cliquez pour sélectionner un fichier.';
@@ -77,9 +73,27 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', () => {
     const projectItems = document.querySelectorAll('.project-item');
     projectItems.forEach(item => {
-        item.addEventListener('click', () => {
+        item.addEventListener('click', async () => {
             const projectId = item.getAttribute('data-project-id');
-            window.location.href = `/quiz?projectId=${projectId}`;
+            
+            try {
+                const response = await fetch('/select-project', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ projectId }),
+                });
+                
+                if (response.ok) {
+                    window.location.href = '/quiz';
+                } else {
+                    console.error('Erreur lors de la sélection du projet');
+                    alert('Erreur lors de la sélection du projet');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
         });
     });
 });
