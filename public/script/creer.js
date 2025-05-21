@@ -147,7 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const continueButton = modal.querySelector('button');
     continueButton.onclick = handleProjectCreation;
 
-
     projectNameInput.addEventListener('keypress', (e) => {
         if (e.key === 'Enter') {
             handleProjectCreation();

@@ -33,12 +33,13 @@ const renderJouerPage = async (req, res) => {
 
 const renderQuizPage = async (req, res) => {
     try {
-        const projectId = req.query.projectId;
-        if (projectId) {
-
-            const query = req.user ? { _id: projectId, creator: req.user._id } : { _id: projectId };
-            
-            const project = await MyQuiz.findOne(query);
+        const projectId = req.session.currentProjectId;
+        
+        if (projectId && req.user) {
+            const project = await MyQuiz.findOne({ 
+                _id: projectId, 
+                creator: req.user._id 
+            });
 
             if (!project) {
                 return res.status(404).send('Projet non trouvé');
