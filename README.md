@@ -43,6 +43,16 @@ Pour commencer avec le projet, suivez ces étapes :
     npm start
     ```
 
+## Équipe
+
+Ce projet a été développé par :
+- Léo Busch (@BUSCH-Leo)
+- Mamadou Cisse (@Neptune2k21)
+- Léo Henriot (@LeoHenriot)
+- Besjan Koraqi (@Abstru3)
+
+Dans le cadre de la SAÉ du Semestre 3 et 4 à l'IUT Informatique de Nevers.
+
 ## Utilisation
 
 Une fois le serveur en cours d'exécution, vous pouvez accéder au site web à l'adresse `http://localhost:3001`. Inscrivez-vous ou connectez-vous pour commencer à créer et à participer aux quiz.
