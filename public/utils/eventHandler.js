@@ -35,7 +35,6 @@ export function toggleCorrectAnswer(e, questionType, container) {
     
     // Pour les questions standard et vrai/faux, une seule réponse peut être correcte
     if (questionType === 'truefalse' || questionType === 'standart') {
-        // Définir toutes les options comme incorrectes
         container.querySelectorAll('.correct-toggle').forEach(btn => {
             const otherIcon = btn.querySelector('i');
             otherIcon.classList.replace('fa-check', 'fa-times');
@@ -43,12 +42,11 @@ export function toggleCorrectAnswer(e, questionType, container) {
             btn.classList.add('text-gray-400');
         });
         
-        // Définir l'option cliquée comme correcte
+
         icon.classList.replace('fa-times', 'fa-check');
         e.currentTarget.classList.remove('text-gray-400');
         e.currentTarget.classList.add('text-green-500');
     } else if (questionType === 'multiple') {
-        // Pour les questions à choix multiples, basculer l'état
         if (icon.classList.contains('fa-times')) {
             icon.classList.replace('fa-times', 'fa-check');
             e.currentTarget.classList.remove('text-gray-400');
@@ -59,7 +57,7 @@ export function toggleCorrectAnswer(e, questionType, container) {
             e.currentTarget.classList.add('text-gray-400');
         }
         
-        // Vérifier qu'il y a au moins deux réponses correctes pour les questions à choix multiples
+
         const correctAnswers = container.querySelectorAll('.correct-toggle.text-green-500').length;
         if (correctAnswers < 2) {
             showFeedback('Les questions à choix multiples doivent avoir au moins deux bonnes réponses', 'warning');

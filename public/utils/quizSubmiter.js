@@ -59,8 +59,14 @@ export async function submitQuiz(questionData, themeManager, projectId) {
                 }));
             }
 
-            return formattedQuestion;
-        });
+
+    const generalParams = {
+        theme: themeManager.currentTheme.url,
+        font: document.body.style.fontFamily || 'Arial',
+        points: parseInt(document.getElementById('defaultPoints').value) || 10,
+        enableTimeBonus: document.getElementById('enableBonus').checked
+    };
+
 
         const generalParams = {
             theme: themeManager?.currentTheme?.url || document.body.style.backgroundImage?.replace(/url\(['"](.+)['"]\)/, '$1') || '',
