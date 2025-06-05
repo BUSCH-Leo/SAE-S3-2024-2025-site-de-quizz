@@ -354,6 +354,49 @@
             alert('Erreur lors du chargement du projet');
         }
     });
+
+    function initEditor(projectData) {
+        console.log('Initialisation de l\'éditeur avec les données du projet:', projectData);
+        
+        // Application des paramètres de thème et de police
+        if (projectData.theme) {
+            document.body.style.backgroundImage = `url('${projectData.theme}')`;
+        }
+        if (projectData.font) {
+            document.body.style.fontFamily = projectData.font;
+            
+            // Mettre à jour la prévisualisation de police sélectionnée
+            document.querySelectorAll('.font-preview').forEach(preview => {
+                if (preview.dataset.font === projectData.font) {
+                    preview.classList.add('selected');
+                } else {
+                    preview.classList.remove('selected');
+                }
+            });
+        }
+        
+        // Mettre à jour les paramètres de points
+        if (projectData.points) {
+            const defaultPointsInput = document.getElementById('defaultPoints');
+            if (defaultPointsInput) {
+                defaultPointsInput.value = projectData.points;
+            }
+        }
+        
+        // Mettre à jour le bonus de temps
+        if (projectData.enableTimeBonus !== undefined) {
+            const enableBonusCheckbox = document.getElementById('enableBonus');
+            if (enableBonusCheckbox) {
+                enableBonusCheckbox.checked = projectData.enableTimeBonus;
+            }
+        }
+        
+        // Déclencher l'événement pour les autres scripts
+        const projectDataEvent = new CustomEvent('projectDataLoaded', {
+            detail: projectData
+        });
+        document.dispatchEvent(projectDataEvent);
+    }
 </script>
 
 </body>

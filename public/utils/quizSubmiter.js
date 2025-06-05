@@ -44,34 +44,28 @@ export async function submitQuiz(questionData, themeManager, projectId) {
                 answerOptions: question.answers || question.answerOptions || []
             };
 
+            // Gestion spécifique par type de question
             if (question.type === 'truefalse') {
                 formattedQuestion.correctAnswer = !!question.correctAnswer;
             }
-            
             if (question.type === 'price') {
                 formattedQuestion.correctPrice = parseFloat(question.correctPrice) || 0;
             }
-            
             if (question.type === 'multiple' || question.type === 'standart') {
-                formattedQuestion.answerOptions = (question.answers || question.answerOptions || []).map(answer => ({
-                    text: answer.text || '',
-                    isCorrect: !!answer.isCorrect
+                formattedQuestion.answerOptions = question.answers.map(answer => ({
+                    text: answer.text,
+                    isCorrect: answer.isCorrect
                 }));
             }
 
+            return formattedQuestion;
+        });
 
-    const generalParams = {
-        theme: themeManager.currentTheme.url,
-        font: document.body.style.fontFamily || 'Arial',
-        points: parseInt(document.getElementById('defaultPoints').value) || 10,
-        enableTimeBonus: document.getElementById('enableBonus').checked
-    };
-
-
+        // Récupérer les paramètres généraux
         const generalParams = {
-            theme: themeManager?.currentTheme?.url || document.body.style.backgroundImage?.replace(/url\(['"](.+)['"]\)/, '$1') || '',
+            theme: themeManager?.currentTheme?.url || document.body.style.backgroundImage.replace(/url\(['"](.+)['"]\)/, '$1') || null,
             font: document.body.style.fontFamily || 'Arial',
-            points: parseInt(document.getElementById('defaultPoints')?.value || 10),
+            points: parseInt(document.getElementById('defaultPoints')?.value) || 10,
             enableTimeBonus: document.getElementById('enableBonus')?.checked || false
         };
 

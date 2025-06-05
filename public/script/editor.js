@@ -51,12 +51,24 @@ const settings = {
     enableBonus: false
 };
 
-const fontSelector = document.getElementById('fontSelector');
+// Remplacer ces lignes qui causent l'erreur
+// const fontSelector = document.getElementById('fontSelector');
 const defaultPointsInput = document.getElementById('defaultPoints');
 const enableBonusCheckbox = document.getElementById('enableBonus');
 
-fontSelector.addEventListener('change', (e) => {
-    settings.font = e.target.value;
+// Pas besoin de cet event listener puisque fontSelector n'existe pas
+// fontSelector.addEventListener('change', (e) => {
+//     settings.font = e.target.value;
+// });
+
+// À la place, utilisez vos previews de polices
+document.querySelectorAll('.font-preview').forEach(preview => {
+    preview.addEventListener('click', function() {
+        settings.font = this.dataset.font;
+        document.body.style.fontFamily = settings.font;
+        document.querySelectorAll('.font-preview').forEach(p => p.classList.remove('selected'));
+        this.classList.add('selected');
+    });
 });
 
 defaultPointsInput.addEventListener('input', (e) => {
