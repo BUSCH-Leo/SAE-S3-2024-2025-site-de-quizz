@@ -74,11 +74,11 @@
                 <% if (projects && projects.length > 0) { %>
                     <% projects.forEach(project => { %>
                     <li class="project-item" data-project-id="<%= project._id %>">
-                                    <span class="project-name" data-project-id="<%= project._id %>"><%= project.name %></span>
-                                    <button class="delete-project-btn" data-project-id="<%= project._id %>">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </li>
+                        <span class="project-name" data-project-id="<%= project._id %>"><%= project.name %></span>
+                        <button class="delete-project-btn" data-project-id="<%= project._id %>">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </li>
                             <% }) %>
                         <% } else { %>
                             <li class="project-item">Aucun projet trouvé</li>
@@ -98,7 +98,7 @@
             </div>
         </div>
     </div>
-    <!-- Ajouter juste avant la fermeture du body -->
+    
     <div id="toast-container" class="toast-container">
         <div id="toast" class="toast">
             <div class="toast-content">

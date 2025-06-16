@@ -46,6 +46,9 @@
 }
 
 .project-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: rgb(251, 188, 0);
     color: white;
     border: none;
@@ -53,7 +56,8 @@
     padding: 10px;
     margin: 5px 0;
     cursor: pointer;
-    text-align: center;
+    text-align: left;
+    transition: background-color 0.3s;
 }
 
 .project-item:hover {
@@ -119,20 +123,34 @@ button:hover:not(.disabled) {
 .project-name {
     cursor: pointer;
     flex-grow: 1;
+    padding-right: 10px;
 }
 
 .delete-project-btn {
-    background: none;
+    background-color: transparent !important;
     border: none;
-    color: #ff4d4d;
+    color: #ffffff;
     cursor: pointer;
     padding: 5px;
-    font-size: 16px;
+    margin: 0;
     transition: color 0.3s;
 }
 
 .delete-project-btn:hover {
     color: #ff0000;
+    background-color: transparent !important;
+}
+
+.delete-project-btn {
+    margin-top: 0 !important;
+}
+
+.project-item:hover .delete-project-btn {
+    background-color: transparent !important;
+}
+
+.delete-project-btn .fa-trash {
+    pointer-events: none;
 }
 
 .confirm-modal {
@@ -147,6 +165,7 @@ button:hover:not(.disabled) {
     justify-content: center;
     align-items: center;
 }
+
 /* Fenêtre de confirmation */
 .confirm-modal-content {
     background-color: white;
