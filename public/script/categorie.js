@@ -75,13 +75,6 @@ function displayCategories(page, categoriesToDisplay) {
     });
 }
 
-// Fonction pour mettre à jour la pagination
-function updatePagination(categoriesToDisplay) {
-    const totalPages = Math.ceil(categoriesToDisplay.length / categoriesPerPage);
-    document.getElementById('prev-page').style.display = currentPage > 1 ? 'block' : 'none';
-    document.getElementById('next-page').style.display = currentPage < totalPages ? 'block' : 'none';
-}
-
 // Navigation avec les nouveaux boutons
 document.getElementById('first-page').addEventListener('click', function(event) {
     event.preventDefault();
