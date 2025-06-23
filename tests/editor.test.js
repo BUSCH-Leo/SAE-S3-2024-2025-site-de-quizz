@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-// Mock fetch API
 global.fetch = jest.fn(() => 
   Promise.resolve({
     json: () => Promise.resolve({
@@ -34,7 +33,6 @@ global.fetch = jest.fn(() =>
   })
 );
 
-// Setup DOM
 document.body.innerHTML = `
   <div class="panel left-panel">
     <button class="toggle-button"><i class="fas fa-chevron-left"></i></button>
@@ -68,15 +66,12 @@ document.body.innerHTML = `
   </div>
 `;
 
-// Jest conformant approach: use mockImplementation instead of direct references
 jest.mock('../public/script/editor', () => {
   return {
-    __esModule: true, // Handle ES modules
-    // Mock implementation of module functions and variables
+    __esModule: true,
   };
 }, { virtual: true });
 
-// Mocking functions and components globally
 window.quizEditor = {
   questionData: [
     {
@@ -117,9 +112,7 @@ window.themeManager = {
 window.getCurrentProjectId = jest.fn().mockResolvedValue('test-project-id');
 window.submitQuiz = jest.fn().mockResolvedValue({ success: true });
 
-// Create mocks for DOM elements before tests
 const createElementMocks = () => {
-  // Mock classList functions for elements
   const createClassListMock = () => ({
     toggle: jest.fn(),
     add: jest.fn(),
@@ -127,7 +120,6 @@ const createElementMocks = () => {
     contains: jest.fn().mockReturnValue(false)
   });
 
-  // Mock elements
   const leftPanel = { classList: createClassListMock() };
   const rightPanel = { classList: createClassListMock() };
   const mainContent = { classList: createClassListMock() };
@@ -142,7 +134,6 @@ const createElementMocks = () => {
     addEventListener: jest.fn()
   };
   
-  // Mock DOM methods
   document.querySelector = jest.fn().mockImplementation((selector) => {
     if (selector === '.left-panel') return leftPanel;
     if (selector === '.right-panel') return rightPanel;
@@ -152,7 +143,6 @@ const createElementMocks = () => {
     return null;
   });
 
-  // Mock tab elements
   const tabButtons = [
     { classList: createClassListMock(), dataset: { tab: 'theme' } },
     { classList: createClassListMock(), dataset: { tab: 'settings' } }
@@ -171,7 +161,6 @@ const createElementMocks = () => {
     return [];
   });
   
-  // Submit button mock
   const submitButton = { 
     addEventListener: jest.fn()
   };
@@ -199,33 +188,26 @@ describe('Editor Page', () => {
   let mocks;
   
   beforeEach(() => {
-    // Reset all mocks
     jest.clearAllMocks();
     mocks = createElementMocks();
     
-    // Simulate the script loading
-    // We need to manually trigger the event handlers that would normally be added by the script
   });
 
   test('panel toggle buttons work correctly', () => {
-    // Get the click handler for left toggle
     const leftToggleClickHandler = mocks.leftToggle.addEventListener.mock.calls.find(
       call => call[0] === 'click'
     );
     
-    // If we found a click handler, call it
     if (leftToggleClickHandler && typeof leftToggleClickHandler[1] === 'function') {
       leftToggleClickHandler[1]();
       expect(mocks.leftPanel.classList.toggle).toHaveBeenCalledWith('collapsed');
       expect(mocks.mainContent.classList.toggle).toHaveBeenCalledWith('left-collapsed');
     }
     
-    // Get the click handler for right toggle
     const rightToggleClickHandler = mocks.rightToggle.addEventListener.mock.calls.find(
       call => call[0] === 'click'
     );
     
-    // If we found a click handler, call it
     if (rightToggleClickHandler && typeof rightToggleClickHandler[1] === 'function') {
       rightToggleClickHandler[1]();
       expect(mocks.rightPanel.classList.toggle).toHaveBeenCalledWith('collapsed');
@@ -234,41 +216,30 @@ describe('Editor Page', () => {
   });
 
   test('tab switching works correctly', () => {
-    // We need to manually simulate the tab click event
-    // First, get all tab buttons
     const tabButtons = document.querySelectorAll('.tab-btn');
     
-    // Create a mock event
     const mockEvent = {
       currentTarget: mocks.tabButtons[1]
     };
     
-    // Simulate clicking on the second tab
     const clickHandler = (event) => {
-      // Remove active class from all tabs
       tabButtons.forEach(btn => {
         btn.classList.remove('active');
       });
       
-      // Add active class to clicked tab
       event.currentTarget.classList.add('active');
       
-      // Get the tab content id
       const tabId = event.currentTarget.dataset.tab;
       
-      // Hide all content sections
       document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
       });
       
-      // Show the selected content
       document.getElementById(`${tabId}-content`).classList.add('active');
     };
     
-    // Call the handler
     clickHandler(mockEvent);
     
-    // Verify the expected behavior
     expect(mocks.tabButtons[0].classList.remove).toHaveBeenCalledWith('active');
     expect(mocks.tabButtons[1].classList.add).toHaveBeenCalledWith('active');
     expect(mocks.tabContents[0].classList.remove).toHaveBeenCalledWith('active');
@@ -276,24 +247,19 @@ describe('Editor Page', () => {
   });
 
   test('quiz submission works correctly', async () => {
-    // Get the click handler for submit button
     const submitClickHandler = mocks.submitButton.addEventListener.mock.calls.find(
       call => call[0] === 'click'
     );
     
-    // Create a submission handler
     const submitHandler = async () => {
       const projectId = await window.getCurrentProjectId();
       const questionData = window.quizEditor.getQuestionData();
       
-      // Call the submit function
       await window.submitQuiz(questionData, window.themeManager, projectId);
     };
     
-    // Call the handler
     await submitHandler();
     
-    // Verify the expected behavior
     expect(window.getCurrentProjectId).toHaveBeenCalled();
     expect(window.quizEditor.getQuestionData).toHaveBeenCalled();
     expect(window.submitQuiz).toHaveBeenCalledWith(
@@ -304,7 +270,6 @@ describe('Editor Page', () => {
   });
 
   test('project data is loaded correctly', async () => {
-    // Trigger the projectDataLoaded event
     const projectData = {
       _id: 'test-project-id',
       name: 'Test Project',
@@ -321,7 +286,6 @@ describe('Editor Page', () => {
     const event = new CustomEvent('projectDataLoaded', { detail: projectData });
     document.dispatchEvent(event);
     
-    // Wait for async operations
     await new Promise(resolve => setTimeout(resolve, 100));
   });
 });

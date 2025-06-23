@@ -2,7 +2,6 @@
  * @jest-environment jsdom
  */
 
-// Mock the fetch API
 global.fetch = jest.fn(() => 
   Promise.resolve({
     json: () => Promise.resolve([
@@ -13,7 +12,6 @@ global.fetch = jest.fn(() =>
   })
 );
 
-// Set up the DOM structure needed for the categories page
 document.body.innerHTML = `
   <div class="container">
     <input type="text" id="category-search" class="form-control">
@@ -38,13 +36,10 @@ document.body.innerHTML = `
   </div>
 `;
 
-// Create a simplified mock implementation of categorie.js functionality
-// This avoids issues with loading the actual file which has duplicate function declarations
 const categoriesPerPage = 9;
 let currentPage = 1;
 let allCategories = [];
 
-// Mock functions that would normally be in categorie.js
 function fetchCategories() {
   return fetch('/api/categories')
     .then(response => response.json())
@@ -100,7 +95,6 @@ function filterCategories(categories) {
   );
 }
 
-// Attach event handlers
 document.getElementById('next-page').addEventListener('click', () => {
   currentPage++;
   displayCategories(allCategories);
@@ -125,11 +119,9 @@ document.getElementById('start-quick-quiz').addEventListener('click', () => {
 
 describe('Categories Page', () => {
   beforeEach(() => {
-    // Reset mocks and state
     jest.clearAllMocks();
     currentPage = 1;
     
-    // Initialize the page
     fetchCategories();
   });
   
@@ -138,10 +130,8 @@ describe('Categories Page', () => {
   });
 
   test('displays categories in the container', async () => {
-    // Wait for async operations
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    // Check if categories are displayed
     const container = document.getElementById('category-container');
     expect(container.innerHTML).toContain('Musique');
     expect(container.innerHTML).toContain('Films');
@@ -151,15 +141,12 @@ describe('Categories Page', () => {
   test('pagination works correctly', async () => {
     await new Promise(resolve => setTimeout(resolve, 100));
     
-    // Initial page should be 1
     const currentPageInput = document.getElementById('current-page');
     expect(currentPageInput.value).toBe('1');
     
-    // Test next page
     document.getElementById('next-page').click();
     expect(currentPageInput.value).toBe('2');
     
-    // Test previous page
     document.getElementById('prev-page').click();
     expect(currentPageInput.value).toBe('1');
   });
@@ -169,32 +156,26 @@ describe('Categories Page', () => {
     
     const searchInput = document.getElementById('category-search');
     
-    // Simulate typing in search box
     searchInput.value = 'Musique';
     searchInput.dispatchEvent(new Event('input'));
     
-    // Check filtered results
     const container = document.getElementById('category-container');
     expect(container.innerHTML).toContain('Musique');
     expect(container.innerHTML).not.toContain('Films');
   });
 
   test('quick quiz starts with parameters', () => {
-    // Mock the location.href setter
     const hrefSetter = jest.fn();
     Object.defineProperty(window.location, 'href', {
       set: hrefSetter
     });
     
-    // Set parameters
     document.getElementById('question-count').value = '5';
     document.getElementById('difficulty').value = 'medium';
     document.getElementById('question-time').value = '20';
     
-    // Start quick quiz
     document.getElementById('start-quick-quiz').click();
     
-    // Check if redirect was attempted with correct URL
     expect(hrefSetter).toHaveBeenCalledWith('/quiz?count=5&difficulty=medium&questionTime=20');
   });
 });

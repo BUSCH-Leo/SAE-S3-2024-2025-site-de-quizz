@@ -42,9 +42,6 @@ app.get('/api/quiz/category/:categoryId', apiController.getQuizzesByCategory);
 app.get('/api/quiz/quick', apiController.getQuickQuizzes);
 app.get('/api/projects', apiController.getProjects);
 
-// Basic API test without requiring the actual Express app
-
-// Mock the fetch function
 global.fetch = jest.fn();
 
 describe('Categories API', () => {
@@ -53,7 +50,6 @@ describe('Categories API', () => {
   });
   
   test('fetchCategories calls the correct API endpoint', async () => {
-    // Setup the mock response
     fetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ([
@@ -62,7 +58,6 @@ describe('Categories API', () => {
       ])
     });
     
-    // Call the function that would make the API request
     async function fetchCategories() {
       const response = await fetch('/api/categories');
       if (response.ok) {
@@ -73,10 +68,8 @@ describe('Categories API', () => {
     
     const result = await fetchCategories();
     
-    // Check that the fetch was called with the correct endpoint
     expect(fetch).toHaveBeenCalledWith('/api/categories');
     
-    // Check that the result is what we expect
     expect(result).toEqual([
       { _id: '1', name: 'Musique' },
       { _id: '2', name: 'Films' }
@@ -84,7 +77,6 @@ describe('Categories API', () => {
   });
 
   test('getQuizzesByCategory calls the correct API endpoint', async () => {
-    // Setup the mock response
     fetch.mockResolvedValueOnce({
       ok: true,
       json: async () => ([
@@ -92,7 +84,6 @@ describe('Categories API', () => {
       ])
     });
     
-    // Function to get quizzes by category
     async function getQuizzesByCategory(categoryId) {
       const response = await fetch(`/api/quiz/category/${categoryId}`);
       if (response.ok) {
@@ -104,10 +95,8 @@ describe('Categories API', () => {
     const categoryId = '123';
     const result = await getQuizzesByCategory(categoryId);
     
-    // Check that the fetch was called with the correct endpoint
     expect(fetch).toHaveBeenCalledWith(`/api/quiz/category/${categoryId}`);
     
-    // Check that the result is what we expect
     expect(result).toEqual([
       { _id: 'quiz1', title: 'Test Quiz', questions: [] }
     ]);
@@ -157,7 +146,6 @@ describe('API Routes', () => {
 
 describe('Editor API', () => {
   test('GET /api/current-project returns the current project', async () => {
-    // Mock pour simuler une connexion et une réponse API
     global.fetch = jest.fn().mockResolvedValue({
       json: () => Promise.resolve({
         success: true,
@@ -171,23 +159,19 @@ describe('Editor API', () => {
       })
     });
     
-    // Exécute la requête
     const response = await fetch('/api/current-project');
     const data = await response.json();
     
-    // Vérifications
     expect(data.success).toBeTruthy();
     expect(data.project._id).toBe('test-project-id');
   });
 
   test('PUT /api/quizzes/:projectId updates a project quiz', async () => {
-    // Mock pour la requête de mise à jour
     global.fetch = jest.fn().mockResolvedValue({
       ok: true,
       json: () => Promise.resolve({ success: true })
     });
     
-    // Données à envoyer
     const quizData = {
       questions: [
         {
@@ -208,7 +192,6 @@ describe('Editor API', () => {
       enableTimeBonus: false
     };
     
-    // Exécute la requête
     const response = await fetch('/api/quizzes/test-project-id', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
@@ -216,7 +199,6 @@ describe('Editor API', () => {
     });
     const data = await response.json();
     
-    // Vérifications
     expect(data.success).toBeTruthy();
     expect(global.fetch).toHaveBeenCalledWith(
       '/api/quizzes/test-project-id',
