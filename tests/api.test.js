@@ -154,3 +154,77 @@ describe('API Routes', () => {
     expect(res.json).toHaveBeenCalledWith([{ _id: 'project1', name: 'Test Project' }]);
   });
 });
+
+describe('Editor API', () => {
+  test('GET /api/current-project returns the current project', async () => {
+    // Mock pour simuler une connexion et une réponse API
+    global.fetch = jest.fn().mockResolvedValue({
+      json: () => Promise.resolve({
+        success: true,
+        project: { 
+          _id: 'test-project-id', 
+          name: 'Test Project',
+          questions: [],
+          theme: '',
+          font: 'Arial'
+        }
+      })
+    });
+    
+    // Exécute la requête
+    const response = await fetch('/api/current-project');
+    const data = await response.json();
+    
+    // Vérifications
+    expect(data.success).toBeTruthy();
+    expect(data.project._id).toBe('test-project-id');
+  });
+
+  test('PUT /api/quizzes/:projectId updates a project quiz', async () => {
+    // Mock pour la requête de mise à jour
+    global.fetch = jest.fn().mockResolvedValue({
+      ok: true,
+      json: () => Promise.resolve({ success: true })
+    });
+    
+    // Données à envoyer
+    const quizData = {
+      questions: [
+        {
+          questionText: 'Test Question',
+          mediaUrl: '',
+          timeLimit: 30,
+          points: 10,
+          type: 'multiple',
+          answerOptions: [
+            { text: 'Option 1', isCorrect: true },
+            { text: 'Option 2', isCorrect: false }
+          ]
+        }
+      ],
+      theme: '/ressource/editor/nature.jpeg',
+      font: 'Arial',
+      points: 10,
+      enableTimeBonus: false
+    };
+    
+    // Exécute la requête
+    const response = await fetch('/api/quizzes/test-project-id', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(quizData)
+    });
+    const data = await response.json();
+    
+    // Vérifications
+    expect(data.success).toBeTruthy();
+    expect(global.fetch).toHaveBeenCalledWith(
+      '/api/quizzes/test-project-id',
+      expect.objectContaining({
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: expect.any(String)
+      })
+    );
+  });
+});
