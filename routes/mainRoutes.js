@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isAuthenticated = require('../middleware/auth');
+const {isAuthenticated} = require('../middleware/auth');
 const { renderCreerPage, renderJouerPage, renderQuizPage, renderIndexPage, renderParametresPage, renderProfilePage, renderConnexionPage, renderInscriptionPage, renderQuizCreationPage } = require('../controllers/mainController');
 
 router.get('/creer_page', isAuthenticated, renderCreerPage);

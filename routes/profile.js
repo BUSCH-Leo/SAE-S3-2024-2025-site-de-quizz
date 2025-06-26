@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const profileController = require('../controllers/profileController');
 const upload = require('../config/multerConfig');
-const isAuthenticated = require('../middleware/auth');
+const { isAuthenticated } = require('../middleware/auth'); 
 
 router.post('/update-profile', isAuthenticated, upload.single('profilePhoto'), profileController.updateProfilePhoto);
 router.post('/update-username', isAuthenticated, profileController.updateUsername);

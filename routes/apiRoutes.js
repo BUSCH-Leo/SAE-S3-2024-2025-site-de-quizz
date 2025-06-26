@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const isAuthenticated = require('../middleware/auth');
+const {isAuthenticated} = require('../middleware/auth');
 const MyQuiz = require('../models/project');
 const { getCategories, getQuizzesByCategory, getQuickQuizzes, getProjects } = require('../controllers/apiController');
 

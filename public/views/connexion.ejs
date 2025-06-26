@@ -15,6 +15,19 @@
         body {
             background-image: url('/ressource/gestion_comptes/background_connexion.jpg');
         }
+        
+        #mdp_oublie {
+            transition: opacity 0.3s ease;
+        }
+        
+        #mdp_oublie:hover {
+            opacity: 0.8;
+        }
+        
+        .message-container {
+            min-height: 30px;
+            margin-bottom: 15px;
+        }
     </style>
 
     <div class="content-box">
@@ -22,24 +35,28 @@
         <form class="login-form" action="/auth/login" method="POST">
             <div class="mb-3">
                 <label for="email" class="form-label">Adresse email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Entrez votre email" required>
             </div>
             
             <div class="mb-3 position-relative">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Entrez votre mot de passe" required>
                 <span id="toggle-password" class="position-absolute toggle-password" style="top: 45%">
                     <i class="fas fa-eye"></i>
                 </span>
-                <a href="#" id="mdp_oublie">
-                    <p>Mot de passe oublié</p>
+                <a href="#" id="mdp_oublie" class="d-block mt-2">
+                    <small>Mot de passe oublié ?</small>
                 </a>
             </div>
             
-            <div id="error-message" class="text-danger" style="display: none;"></div>
+            <div class="message-container">
+                <div id="error-message" class="text-danger" style="display: none;"></div>
+            </div>
 
             <div class="button-container">
-                <button type="submit" class="quiz-button">Se connecter</button>
+                <button type="submit" class="quiz-button">
+                    <span>Se connecter</span>
+                </button>
             </div>
             <p>Vous n'avez pas de compte ?</p>
             <a href="./inscription" id="inscription">
