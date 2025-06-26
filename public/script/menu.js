@@ -89,8 +89,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const creerButton = document.querySelector("#zone_créer");
 
     function closeAllMenus() {
-        jouerMenu.classList.remove("active");
-        creerMenu.classList.remove("active");
+        if (jouerMenu) jouerMenu.classList.remove("active");
+        if (creerMenu) creerMenu.classList.remove("active");
     }
 
     function closeOnClickOutside(event) {
@@ -99,17 +99,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    jouerButton.addEventListener("click", () => {
-        closeAllMenus();
-        jouerMenu.classList.add("active");
-        document.addEventListener("click", closeOnClickOutside);
-    });
+    if (jouerButton && jouerMenu) {
+        jouerButton.addEventListener("click", () => {
+            closeAllMenus();
+            jouerMenu.classList.add("active");
+            document.addEventListener("click", closeOnClickOutside);
+        });
+    }
 
-    creerButton.addEventListener("click", () => {
-        closeAllMenus();
-        creerMenu.classList.add("active");
-        document.addEventListener("click", closeOnClickOutside);
-    });
+    if (creerButton && creerMenu) {
+        creerButton.addEventListener("click", () => {
+            closeAllMenus();
+            creerMenu.classList.add("active");
+            document.addEventListener("click", closeOnClickOutside);
+        });
+    }
 
     document.querySelectorAll(".slide-menu").forEach(menu => {
         menu.addEventListener("click", (e) => e.stopPropagation());

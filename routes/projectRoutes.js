@@ -1,7 +1,7 @@
 // routes/projectRoutes.js
 const express = require('express');
 const router = express.Router();
-const isAuthenticated = require('../middleware/auth');
+const {isAuthenticated} = require('../middleware/auth');
 const { createProject, getProjectById, deleteProject } = require('../controllers/projectController');
 
 router.post('/create', isAuthenticated, createProject);

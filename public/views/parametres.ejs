@@ -108,24 +108,36 @@
         <h3><br>- Changer de mot de passe :</h3>
         <% if (user) { %>
             <div id="inputs">
-                <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe actuel">
-                <span id="toggle-password" class="position-relative toggle-password" style="top: 45%; left: -30px;">
-                    <i class="fas fa-eye"></i>
-                </span>
+                <div class="mb-3">
+                    <input type="password" id="password" name="password" placeholder="Entrez votre mot de passe actuel" class="form-control">
+                    <span id="toggle-password" class="position-relative toggle-password" style="top: 45%; left: -30px;">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
 
-                <input type="password" id="new-password" name="new-password" placeholder="Entrez votre nouveau mot de passe">
-                <span id="toggle-new-password" class="position-relative toggle-password" style="top: 45%; left: -30px;">
-                    <i class="fas fa-eye"></i>
-                </span>
+                <div class="mb-3">
+                    <input type="password" id="new-password" name="new-password" placeholder="Entrez votre nouveau mot de passe" class="form-control">
+                    <span id="toggle-new-password" class="position-relative toggle-password" style="top: 45%; left: -30px;">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
 
-                <input type="password" id="new-password-confirm" name="new-password-confirm" placeholder="Confirmez votre nouveau mot de passe">
-                <span id="toggle-new-password-confirm" class="position-relative toggle-password" style="top: 45%; left: -30px;">
-                    <i class="fas fa-eye"></i>
-                </span>
+                <div class="mb-3">
+                    <input type="password" id="new-password-confirm" name="new-password-confirm" placeholder="Confirmez votre nouveau mot de passe" class="form-control">
+                    <span id="toggle-new-password-confirm" class="position-relative toggle-password" style="top: 45%; left: -30px;">
+                        <i class="fas fa-eye"></i>
+                    </span>
+                </div>
             </div>
             
             <div style="text-align: left;">
-                <button id="change-password-btn">Changer le mot de passe</button>
+                <button id="change-password-btn" class="btn btn-primary">Changer le mot de passe</button>
+            </div>
+            
+            <!-- Conteneur pour les messages d'erreur/succès du mot de passe -->
+            <div class="mt-3">
+                <div id="password-error" class="text-danger" style="display: none;"></div>
+                <div id="password-success" class="text-success" style="display: none;"></div>
             </div>
         <% } else { %>
             <p>Non connecté</p>

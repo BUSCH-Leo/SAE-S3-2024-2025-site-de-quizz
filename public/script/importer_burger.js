@@ -14,7 +14,18 @@ function loadBurgerJS() {
     script.defer = true;
     document.body.appendChild(script);
 }
-document.getElementById('change-profile-photo-btn').addEventListener('click', function() {
-    document.getElementById('profilePhotoInput').style.display = 'block';
-    document.getElementById('submit-photo-btn').style.display = 'inline-block';
-});
+
+function initializeProfilePhotoHandler() {
+    const changeProfilePhotoBtn = document.getElementById('change-profile-photo-btn');
+    const profilePhotoInput = document.getElementById('profilePhotoInput');
+    const submitPhotoBtn = document.getElementById('submit-photo-btn');
+    
+    if (changeProfilePhotoBtn && profilePhotoInput && submitPhotoBtn) {
+        changeProfilePhotoBtn.addEventListener('click', function() {
+            profilePhotoInput.style.display = 'block';
+            submitPhotoBtn.style.display = 'inline-block';
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initializeProfilePhotoHandler);
