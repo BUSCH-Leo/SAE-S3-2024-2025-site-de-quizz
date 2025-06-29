@@ -40,7 +40,7 @@ Pour commencer avec le projet, suivez ces étapes :
     ```
 4. Démarrez le serveur de développement :
     ```bash
-    npm start
+    npm run dev
     ```
 
 ## Équipe
