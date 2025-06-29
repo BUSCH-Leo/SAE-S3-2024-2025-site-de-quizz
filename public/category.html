@@ -6,8 +6,8 @@
     <title>Quizzine - Catégories</title>
     
     <!-- Bibliothèques externes -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js" defer></script>
     
     <!-- Bootstrap et icônes -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,14 +15,12 @@
     
     <!-- Feuille de style -->
     <link rel="stylesheet" href="/css/categorie.css">
-    
-    <!-- Favicon -->
-    <link rel="icon" href="/ressource/logo_quizzine_petit.png" type="image/x-icon">
+    <link rel="icon" href="/ressource/logo_quizzine_petit.webp" type="image/x-icon">
 </head>
 
 <body>
     <a href="./jouer_page" class="back-button">
-        <img src="/ressource/pages_secondaires/back.png" alt="Retour" class="back-icon">
+        <img src="/ressource/pages_secondaires/back.webp" alt="Retour" class="back-icon" loading="lazy">
         Retour
     </a>
 
@@ -50,28 +48,19 @@
         <button id="start-quick-quiz" class="btn btn-primary">Commencer</button>
     </div>
 
-    <!-- Header Section -->
     <header class="text-center py-5">
         <div class="container">
             <h1 class="lead">Testez vos connaissances avec nos quiz par catégorie !</h1>
         </div>
     </header>
 
-    <!-- Categories Section -->
     <section class="container my-5">
-        <!-- Filtre de recherche -->
         <div class="row mb-4">
             <div class="col-md-6 mx-auto">
                 <input type="text" id="category-search" class="form-control" placeholder="Rechercher une catégorie...">
             </div>
         </div>
-
-        <!-- Conteneur des catégories -->
-        <div id="category-container" class="row text-center">
-            <!-- Les boutons seront ajoutés ici dynamiquement -->
-        </div>
-
-        <!-- Pagination controls -->
+        <div id="category-container" class="row text-center"></div>
         <nav aria-label="Pagination">
             <ul class="pagination justify-content-center mt-4">
                 <li class="page-item wrapper">
@@ -101,17 +90,35 @@
         </nav>
 
     <!-- Scripts externes -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" defer></script>
     
-    <!-- Burger Menu -->
     <div id="burger-menu"></div>
     <script src="/script/importer_burger.js" defer></script>
 
-    <!-- Script principal pour les catégories -->
-    <script src="/script/categorie.js"></script>
+    <script src="/script/categorie.js" defer></script>
     <script src="/script/quiz.js" defer></script>
     
     <div id="profile-menu"></div>
-	<script src="/script/importer_profile.js" defer></script>
+    <script src="/script/importer_profile.js" defer></script>
+    <script>
+        // Debounce pour la recherche de catégorie
+        let searchTimeout;
+        document.addEventListener('DOMContentLoaded', () => {
+            const search = document.getElementById('category-search');
+            if (search) {
+                search.addEventListener('input', function() {
+                    clearTimeout(searchTimeout);
+                    searchTimeout = setTimeout(() => {
+                        if (typeof filterCategories === 'function') {
+                            currentPage = 1;
+                            filteredCategories = filterCategories(allCategories);
+                            displayCategories(currentPage, filteredCategories);
+                            updatePagination(filteredCategories);
+                        }
+                    }, 200);
+                });
+            }
+        });
+    </script>
 </body>
 </html>

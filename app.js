@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const compression = require('compression');
 
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile'); 
@@ -57,6 +58,18 @@ const authLimiter = rateLimit({
     message: 'Trop de tentatives de connexion, réessayez dans 15 minutes.',
     skipSuccessfulRequests: true
 });
+
+// Ajouter le middleware de compression AVANT les autres middlewares
+app.use(compression({
+    level: 6,
+    threshold: 1024,
+    filter: (req, res) => {
+        if (req.headers['x-no-compression']) {
+            return false;
+        }
+        return compression.filter(req, res);
+    }
+}));
 
 // Middlewares
 app.use(errorHandler);

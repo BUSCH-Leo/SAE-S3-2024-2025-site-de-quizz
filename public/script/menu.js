@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
     acceptMusic.addEventListener('click', function() {
         music.play().then(() => {
             isMusicPlaying = true;
-            toggleIcon.src = '/ressource/speaker_on.png';
+            toggleIcon.src = '/ressource/speaker_on.webp';
             console.log('Background music is playing');
         }).catch(error => {
             console.error('Error playing music:', error);
@@ -68,11 +68,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log('Music toggle clicked');
         if (isMusicPlaying) {
             music.pause();
-            toggleIcon.src = '/ressource/speaker_off.png';
+            toggleIcon.src = '/ressource/speaker_off.webp';
             console.log('Music paused');
         } else {
             music.play().then(() => {
-                toggleIcon.src = '/ressource/speaker_on.png';
+                toggleIcon.src = '/ressource/speaker_on.webp';
                 console.log('Music playing');
             }).catch(error => {
                 console.error('Error playing music:', error);
