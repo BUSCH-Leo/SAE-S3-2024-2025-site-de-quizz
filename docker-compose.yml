@@ -1,13 +1,103 @@
-version: '3'
+version: '3.8'
+
 services:
-  app:
-    build: .
+  # Base de données MongoDB
+  mongodb:
+    image: mongo:7
+    container_name: mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin_password
+      MONGO_INITDB_DATABASE: quizzine
     ports:
-      - "3001:3001"
-    env_file:
-      - .env
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+      - ./database/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     networks:
       - quizzine_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Cache Redis (optionnel)
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - quizzine_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Application Node.js
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: quizzine
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      NODE_ENV: production
+      MONGO_URI: mongodb://quizzine:Azerty1234@mongodb:27017/quizzine?authSource=quizzine
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      SESSION_SECRET: your_super_secret_session_key_change_in_production
+      PORT: 3001
+    env_file:
+      - .env.docker
+    volumes:
+      - ./uploads:/app/uploads
+      - ./logs:/app/logs
+    networks:
+      - quizzine_network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"] 
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Service pour initialiser les données
+  data-seeder:
+    build:
+      context: .
+      dockerfile: Dockerfile.seeder
+    container_name: seeder
+    environment:
+      MONGO_URI: mongodb://quizzine:Azerty1234@mongodb:27017/quizzine?authSource=quizzine
+    networks:
+      - quizzine_network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    volumes:
+      - ./database:/app/database
+    restart: "no"
+
+volumes:
+  mongodb_data:
+    driver: local
+  redis_data:
+    driver: local
 
 networks:
   quizzine_network:

@@ -4,11 +4,8 @@ const path = require('path');
 const Quiz = require('../models/quizz');
 const Category = require('../models/category');
 
-mongoose.connect('mongodb+srv://mamadoulcisse9236:2wOI5WMcV1cP19fC@quizzine.3q907.mongodb.net/', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('Connecté à MongoDB Atlas'))
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/quizzine')
+    .then(() => console.log('Connecté à MongoDB'))
     .catch((error) => console.error('Erreur de connexion à MongoDB:', error));
 
 const quizDataPath = path.join(__dirname, '../database/quizzData.json');

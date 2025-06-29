@@ -1,7 +1,7 @@
 const Category = require('../models/category');
 const Quiz = require('../models/quizz');
 const MyQuiz = require('../models/project');
-
+const { invalidateCache } = require('../middleware/cache');
 const getCategories = async (req, res) => {
     try {
         const categories = await Category.find();
@@ -49,10 +49,21 @@ const getProjects = async (req, res) => {
         res.status(500).json({ message: 'Erreur lors de la récupération des projets' });
     }
 };
+// Fonction pour invalider le cache lors des modifications
+/*const invalidateQuizCache = async () => {
+    try {
+        await invalidateCache('cache:/api/quiz/*');
+        await invalidateCache('cache:/api/categories*');
+    } catch (error) {
+        console.error('Erreur invalidation cache:', error);
+    }
+};
+*/
 
 module.exports = {
     getCategories,
     getQuizzesByCategory,
     getQuickQuizzes,
-    getProjects
+    getProjects,
+    //invalidateQuizCache
 };

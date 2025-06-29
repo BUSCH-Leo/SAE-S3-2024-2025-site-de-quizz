@@ -13,6 +13,8 @@ const quizRoutes = require('./routes/quiz');
 const projectRoutes = require('./routes/projectRoutes');
 const mainRoutes = require('./routes/mainRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const { errorHandler } = require('./middleware/errorHandler');
+const csrf = require('csurf');
 
 const app = express();
 
@@ -57,6 +59,7 @@ const authLimiter = rateLimit({
 });
 
 // Middlewares
+app.use(errorHandler);
 app.use(staticLimiter);
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
@@ -81,7 +84,21 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 require('./config/passport')(passport);
-
+// app.use(csrf()); Desactiver temporairement fleme de mettre csrf sur tout mes formulaires
+// CSRF Token Middleware
+/*
+app.use((req, res, next) => {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
+*/
+app.get('/health', (req, res) => {
+    res.status(200).json({ 
+        status: 'OK', 
+        timestamp: new Date().toISOString(),
+        service: 'Quizzine API'
+    });
+});
 // Routes
 app.use('/auth', authLimiter, authRoutes);
 app.use('/profile',generalLimiter, profileRoutes); 
