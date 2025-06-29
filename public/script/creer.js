@@ -169,7 +169,7 @@ document.querySelectorAll('.project-item').forEach(item => {
         const projectId = this.dataset.projectId;
         
         try {
-            const response = await fetch('/select-project?destination=editor', {
+            const response = await fetch('http://localhost:3001/select-project?destination=editor', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

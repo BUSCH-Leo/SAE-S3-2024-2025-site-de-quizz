@@ -3,6 +3,7 @@ const router = express.Router();
 const {isAuthenticated} = require('../middleware/auth');
 const MyQuiz = require('../models/project');
 const { getCategories, getQuizzesByCategory, getQuickQuizzes, getProjects } = require('../controllers/apiController');
+const { categoryCacheMiddleware, quizCacheMiddleware } = require('../middleware/cache');
 
 router.get('/categories', getCategories);
 router.get('/quiz/category/:categoryId', getQuizzesByCategory);

@@ -1,0 +1,16 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copier les fichiers de dépendances
+COPY package*.json ./
+
+# Installer les dépendances
+RUN npm ci --only=production
+
+# Copier les modèles et le seeder
+COPY models/ ./models/
+COPY database/ ./database/
+
+# Script de démarrage pour le seeding
+CMD ["node", "database/seed.js"]
